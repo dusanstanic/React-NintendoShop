@@ -2,6 +2,14 @@ import axios from "axios";
 
 import GameM from "../models/GamesM";
 
+function parseDate(date: Date) {
+  const dateArray = date.toString().split("-");
+  const year = +dateArray[0];
+  const month = +dateArray[1];
+  const day = +dateArray[2];
+  return new Date(year, month, day);
+}
+
 function getGames(): Promise<GameM[]> {
   return axios
     .get<GameM[]>("http://localhost:8080/games")
@@ -24,4 +32,4 @@ function getGameById(id: number) {
     });
 }
 
-export { getGames, getGameById };
+export { getGames, getGameById, parseDate };

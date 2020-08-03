@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import * as GamsService from "../../service/GamesService";
@@ -19,6 +18,16 @@ class App extends Component<RouterProps, { games: GamesM[] }> {
         description: "description",
         releaseDate: new Date(),
         price: 8000,
+        pgRating: "E",
+        image: "",
+        genre: { id: 1, type: "Platform" },
+      },
+      {
+        id: 2,
+        title: "Super Mario Odyessy",
+        description: "description",
+        releaseDate: new Date(),
+        price: 6000,
         pgRating: "E",
         image: "",
         genre: { id: 1, type: "Platform" },

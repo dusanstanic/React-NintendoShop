@@ -1,0 +1,126 @@
+.main-game {
+  background: #dc143c;
+  border: 4px solid yellow;
+  position: relative;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  max-width: 55rem;
+}
+
+.main-game__pegiRating {
+  width: 5%;
+  position: absolute;
+  top: 11%;
+  left: 45%;
+  min-width: 1.5rem;
+}
+
+.main-game__title {
+  font-size: small;
+  font-family: cursive;
+  margin-top: 0;
+  text-align: center;
+}
+
+.main-game__releaseDate {
+  position: absolute;
+  top: 4%;
+  left: 75%;
+  text-decoration: underline;
+}
+
+.main-game__price {
+  width: 10rem;
+  background: rgb(31, 142, 211);
+  position: absolute;
+  top: 25%;
+  left: 45%;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-size: larger;
+}
+
+.main-game__image {
+  border: 5px solid black;
+  width: 20%;
+  height: 20%;
+  max-width: 15rem;
+  min-width: 9rem;
+}
+
+.main-game__description {
+  border: 1.5px solid black;
+  padding: 1.5rem;
+  background: bisque;
+  font-family: Calibri;
+  font-weight: bold;
+}
+
+@media (min-width: 32rem) {
+  .main-game {
+    padding: 2rem;
+  }
+
+  .main-game__pegiRating {
+    width: 4%;
+    top: 14%;
+    left: 35%;
+  }
+
+  .main-game__price {
+    top: 30%;
+    left: 35%;
+  }
+
+  .main-game__releaseDate {
+    top: 10%;
+    left: 80%;
+  }
+
+  .main-game__image {
+    margin-left: 0rem;
+  }
+
+  .main-game__description {
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 45rem) {
+  .main-game {
+    text-align: left;
+  }
+
+  .main-game__title {
+    font-size: large;
+  }
+
+  .main-game__pegiRating {
+    top: 14%;
+    left: 36%;
+  }
+
+  .main-game__releaseDate {
+    top: 10%;
+    left: 80%;
+  }
+
+  .main-game__price {
+    top: 35%;
+    left: 36%;
+    width: 20rem;
+    padding: 0.5rem;
+    padding-right: 10rem;
+    font-size: x-large;
+  }
+
+  .main-game__image {
+    border: 14px solid black;
+    width: 30%;
+    height: 30%;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
+  }
+}

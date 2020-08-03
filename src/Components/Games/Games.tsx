@@ -11,10 +11,10 @@ import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
 const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
-  console.log(props);
+  //console.log(props);
 
   const showGame = (id: number) => {
-    console.log(id);
+    // console.log(id);
     props.routerProps.history.push({ pathname: "/games/" + id });
   };
 
@@ -30,7 +30,11 @@ const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
         <tbody>
           {props.games.map((game: GamesM, index: number) => {
             return (
-              <Game key={index} game={game} showGame={() => showGame(index)} />
+              <Game
+                key={index}
+                game={game}
+                showGame={() => showGame(game.id)}
+              />
             );
           })}
         </tbody>
