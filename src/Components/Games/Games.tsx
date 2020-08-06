@@ -15,8 +15,6 @@ const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
     props.routerProps.history.push({ pathname: "/games/" + id });
   };
 
-  console.log(classes);
-
   return (
     <Aux>
       <table className={classes.table}>

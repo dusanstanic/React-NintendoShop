@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./ManageGames.css";
+import classes from "./ManageGames.module.css";
 
 import RouterProps from "../../models/Route";
 import GameM from "../../models/GamesM";
@@ -87,23 +87,31 @@ class ManageGames extends Component<
         return (
           <tr key={game.id}>
             <td>{game.title}</td>
-            <td>{game.price}</td>
+            <td>{game.price}din</td>
             <td>{game.releaseDate.toLocaleDateString()}</td>
             <td>
               <img
                 src={game.image}
                 alt="game"
-                className="game-list__image"
+                className={classes["game-list__image"]}
               ></img>
             </td>
             <td>{game.genre.type}</td>
             <td>
-              <button onClick={() => this.toggleUpdateForm(game.id)}>
+              <button
+                className={classes["game-update-btn"]}
+                onClick={() => this.toggleUpdateForm(game.id)}
+              >
                 Update
               </button>
             </td>
             <td>
-              <button onClick={() => this.deleteGame(game.id)}>Delete</button>
+              <button
+                className={classes["game-delete-btn"]}
+                onClick={() => this.deleteGame(game.id)}
+              >
+                Delete
+              </button>
             </td>
           </tr>
         );
@@ -112,17 +120,20 @@ class ManageGames extends Component<
 
     return (
       <Aux>
-        <div className="add-game">
-          <button onClick={this.toggleAddForm} className="add-game-button">
+        <div className={classes["add-game"]}>
+          <button
+            onClick={this.toggleAddForm}
+            className={classes["add-game-button"]}
+          >
             Add
           </button>
         </div>
 
-        <table className="game-list">
-          <thead>
-            <tr className="game-list__header">
+        <table className={classes["game-list"]}>
+          <thead className={classes["game-list__thead"]}>
+            <tr className={classes["game-list__tr"]}>
               <th>Title</th>
-              <th>Price</th>
+              <th>Price/RSD</th>
               <th>Release Date</th>
               <th>Image</th>
               <th>Genre</th>
@@ -130,7 +141,7 @@ class ManageGames extends Component<
               <th></th>
             </tr>
           </thead>
-          <tbody>{gamesList}</tbody>
+          <tbody className={classes["game-list__tbody"]}>{gamesList}</tbody>
         </table>
         <div>
           {this.state.showAddForm ? <GameForm submit={this.addGame} /> : null}

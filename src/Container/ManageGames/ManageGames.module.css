@@ -1,0 +1,94 @@
+.add-game {
+  font-family: Calibri;
+  height: 5vh;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.add-game-button {
+  width: 80%;
+  max-width: 55rem;
+  padding: 10px;
+  color: white;
+  background: green;
+  border: 1px solid yellow;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-game-button:hover,
+.add-game-button:active {
+  font-size: large;
+  color: rgb(6, 114, 47);
+  background: beige;
+
+  border: 5px solid yellow;
+}
+
+.add-game-button:focus {
+  outline: none;
+}
+
+.game-list {
+  border: 3px solid black;
+  font-family: Calibri;
+  font-weight: bold;
+  font-size: large;
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 55rem;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.game-list__thead {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  color: white;
+}
+
+.game-list__tbody {
+  color: black;
+  background: rgb(224, 245, 37);
+}
+
+.game-list__tr {
+  background: firebrick;
+}
+
+.game-update-btn {
+  border: 2px solid black;
+  font-weight: bold;
+  background: lightskyblue;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.game-update-btn:hover {
+  color: white;
+  background: rgb(17, 188, 207);
+}
+
+.game-delete-btn {
+  border: 2px solid black;
+  font-weight: bold;
+  background: red;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.game-delete-btn:hover {
+  color: white;
+  background: lightcoral;
+}
+
+.game-update-btn:focus,
+.game-delete-btn:focus {
+  outline: none;
+}
+
+.game-list__image {
+  height: 3rem;
+  width: 3rem;
+}
