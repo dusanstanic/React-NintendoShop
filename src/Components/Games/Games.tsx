@@ -17,14 +17,18 @@ const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
 
   return (
     <Aux>
-      <table className={classes.table}>
-        <thead className={classes.thead}>
-          <tr className={classes.tr}>
-            <th>Title</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody className={classes.tbody}>
+      <div className={classes["main-game-grid"]}>
+        <div className={classes["game-search-options"]}>
+          <div className={classes["game-serach-options-pgRating"]}>
+            <h4 className={classes["game-search-options-title"]}>
+              Pegi Rating
+            </h4>
+          </div>
+          <div>
+            <h4 className={classes["game-search-options-title"]}>Pick Genre</h4>
+          </div>
+        </div>
+        <div className={classes["games-list-container"]}>
           {props.games.map((game: GamesM, index: number) => {
             return (
               <Game
@@ -34,9 +38,7 @@ const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
               />
             );
           })}
-        </tbody>
-      </table>
-      <div>
+        </div>
         <Route path="/games/:id" component={GameDetails} />
       </div>
     </Aux>

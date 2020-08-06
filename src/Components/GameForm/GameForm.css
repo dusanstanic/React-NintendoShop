@@ -1,11 +1,12 @@
 .add-game-form {
   font-family: Calibri;
-  font-size: larger;
-  width: 40%;
+  font-size: large;
+  width: 80%;
+  max-width: 55rem;
   margin: auto;
   margin-top: 4rem;
   margin-bottom: 4rem;
-  padding: 2rem;
+  padding: 1rem;
   border: 1px black solid;
   background: rgb(221, 66, 105);
   border-radius: 2rem;
@@ -24,23 +25,46 @@
 .add-game-form input,
 .add-game-form textarea,
 .add-game-form select {
-  width: 50%;
+  font-family: Calibri;
+  width: 60%;
+  font-weight: bold;
   display: block;
+  height: 2rem;
   margin: auto;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
-.add-game-form .form-group-pegiRating {
-  text-align: center;
+.add-game-form textarea {
+  height: 4rem;
 }
 
-.add-game-form .form-group-pegiRating label[for="rating"],
-.add-game-form .form-group-pegiRating input[type="radio"] {
+.add-game-form .form-group-pegiRating label[for="rating"] {
+  vertical-align: bottom;
+  margin-top: 0;
   display: inline-block;
-  margin: 0.2rem;
-  margin-top: 1rem;
+  width: 1.5rem;
+}
+
+.add-game-form input[type="radio"] {
+  margin-top: 0;
+  display: inline-block;
   width: 1rem;
 }
+
+/* .add-game-form .form-group-pegiRating {
+  display: flex;
+  align-items: center;
+}
+
+.add-game-form .form-group-pegiRating label[for="rating"] {
+  display: block;
+  width: 1rem;
+}
+
+.add-game-form .form-group-pegiRating input[type="radio"] {
+  display: block;
+  width: 1rem;
+} */
 
 .add-game-form label:focus,
 .add-game-form input:focus,

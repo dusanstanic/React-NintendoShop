@@ -14,8 +14,8 @@ const GameForm = (props: any) => {
   const [enteredTitle, setEnteredTitle] = useState<string>("");
   const [enteredDescription, setEnteredDescription] = useState<string>("");
   const [enteredReleaseDate, setEnteredReleaseDate] = useState<string>("");
-  const [enteredPrice, setEnteredPrice] = useState<string>("");
-  const [enteredPegiRating, setPegeRating] = useState<string>("E");
+  const [enteredPrice, setEnteredPrice] = useState<string>("1000");
+  const [enteredPegiRating, setPegeRating] = useState<string>("");
   const [enteredImage, setEnteredImage] = useState<string>("");
   const [enteredGenre, setEntereGenre] = useState<number>(1);
 
@@ -38,17 +38,28 @@ const GameForm = (props: any) => {
   }, [props.game]);
 
   useEffect(() => {
+    isFormValid();
+  }, [
+    enteredTitle,
+    enteredImage,
+    enteredPrice,
+    enteredReleaseDate,
+    enteredPegiRating,
+  ]);
+
+  const isFormValid = () => {
     if (
       enteredTitle.length > 0 &&
       enteredImage.length > 0 &&
       enteredPrice.length > 0 &&
+      enteredPegiRating.length > 0 &&
       enteredReleaseDate.length > 0
     ) {
       setIsValid(true);
     } else {
       setIsValid(false);
     }
-  }, [enteredTitle, enteredImage, enteredPrice, enteredReleaseDate]);
+  };
 
   const submit = () => {
     let genre = genres?.find((genre) => {
@@ -56,7 +67,7 @@ const GameForm = (props: any) => {
     });
     const releaseDate = GameService.parseStringToDate(enteredReleaseDate);
     if (genre) {
-      const newGame: GameM = {
+      const game: GameM = {
         title: enteredTitle,
         description: enteredDescription,
         releaseDate: releaseDate,
@@ -65,7 +76,7 @@ const GameForm = (props: any) => {
         image: enteredImage,
         genre: genre,
       };
-      props.submit(newGame);
+      props.submit(game);
     }
   };
 
@@ -93,6 +104,8 @@ const GameForm = (props: any) => {
     if (event.target.id === "image")
       setEnteredImage(GameService.parseImagePath(event.target.value));
     if (event.target.id === "genre") setEntereGenre(+event.target.value);
+
+    isFormValid();
   };
 
   let genreOptions;
@@ -108,7 +121,7 @@ const GameForm = (props: any) => {
 
   return (
     <form className="add-game-form">
-      <label htmlFor="Title">Title</label>
+      <label htmlFor="title">Title</label>
       <input
         type="text"
         placeholder="Title"
@@ -118,7 +131,7 @@ const GameForm = (props: any) => {
           addGameHandler(event)
         }
       ></input>
-      <label htmlFor="Description">Description</label>
+      <label htmlFor="description">Description</label>
       <textarea
         placeholder="Description"
         id="description"
@@ -127,7 +140,7 @@ const GameForm = (props: any) => {
           addGameHandler(event)
         }
       ></textarea>
-      <label htmlFor="ReleaseDate">Release Date</label>
+      <label htmlFor="releaseDate">Release Date</label>
       <input
         type="date"
         id="releaseDate"
@@ -136,7 +149,7 @@ const GameForm = (props: any) => {
           addGameHandler(event)
         }
       ></input>
-      <label htmlFor="Price">Price</label>
+      <label htmlFor="price">Price/RSD</label>
       <input
         type="text"
         placeholder="Price"
@@ -146,11 +159,10 @@ const GameForm = (props: any) => {
           addGameHandler(event)
         }
       ></input>
+      <label htmlFor="pegiRating">Pegi Rating</label>
       <div className="form-group-pegiRating">
-        <label htmlFor="PegiRating">Pegi Rating</label>
-        <label htmlFor="rating">E</label>
+        <label htmlFor="rating">E:</label>
         <input
-          checked
           type="radio"
           value="E"
           name="pgRating"
@@ -159,7 +171,7 @@ const GameForm = (props: any) => {
             addGameHandler(event)
           }
         ></input>
-        <label htmlFor="rating">T</label>
+        <label htmlFor="rating">T:</label>
         <input
           type="radio"
           value="T"
@@ -169,7 +181,7 @@ const GameForm = (props: any) => {
             addGameHandler(event)
           }
         ></input>
-        <label htmlFor="rating">M</label>
+        <label htmlFor="rating">M:</label>
         <input
           type="radio"
           value="M"
@@ -181,7 +193,7 @@ const GameForm = (props: any) => {
         ></input>
       </div>
       <div className="form-group-image">
-        <label htmlFor="Image">Image</label>
+        <label htmlFor="image">Image</label>
         <input
           type="file"
           placeholder="Image"
@@ -191,7 +203,7 @@ const GameForm = (props: any) => {
           }
         ></input>
       </div>
-      <label htmlFor="Genre">Genre</label>
+      <label htmlFor="genre">Genre</label>
       <select
         id="genre"
         onChange={(event: ChangeEvent<HTMLSelectElement>) =>

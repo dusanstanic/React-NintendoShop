@@ -1,0 +1,32 @@
+.game-tile {
+  border: 5px solid black;
+  background: rgb(221, 218, 41);
+  text-align: center;
+}
+
+.game-tile-title {
+  font-family: Calibri;
+  margin: 8px;
+}
+
+.game-tile-image {
+  border: 2px solid black;
+  border-top: none;
+  height: 16rem;
+  width: 65%;
+}
+
+.game-tile-price {
+  font-size: large;
+  text-align: left;
+  color: white;
+  background: rgb(18, 170, 221);
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 2px;
+  padding-left: 10px;
+  width: 60%;
+  height: 2rem;
+  border-radius: 10px;
+}

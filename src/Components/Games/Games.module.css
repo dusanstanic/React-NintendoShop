@@ -1,3 +1,39 @@
+.main-game-grid {
+  margin: 2rem;
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-template-areas:
+    "search game"
+    "search showGame";
+}
+
+.game-search-options {
+  border: 5px solid yellow;
+  background: black;
+  grid-row-start: 1;
+  grid-row-end: span 2;
+  display: grid;
+}
+
+.game-serach-options-pgRating {
+  height: 0rem;
+}
+
+.game-search-options-title {
+  color: white;
+}
+
+.games-list-container {
+  border: 5px solid yellow;
+  background: black;
+
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows: auto auto;
+}
+
+/*
 .table {
   font-family: Calibri;
   font-weight: bold;
@@ -24,3 +60,4 @@
 .tr {
   background-color: brown;
 }
+*/

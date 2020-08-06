@@ -1,5 +1,7 @@
 import React from "react";
 
+import classes from "./Game.module.css";
+
 import Aux from "../../../hoc/Auxiliary";
 
 import GamesM from "../../../models/GamesM";
@@ -7,10 +9,16 @@ import GamesM from "../../../models/GamesM";
 const Game = (props: { game: GamesM; showGame: any }) => {
   return (
     <Aux>
-      <tr onClick={props.showGame}>
-        <td>{props.game.title}</td>
-        <td>{props.game.price} din</td>
-      </tr>
+      <div onClick={props.showGame} className={classes["game-tile"]}>
+        <img
+          src={props.game.image}
+          className={classes["game-tile-image"]}
+        ></img>
+        <h4 className={classes["game-tile-title"]}>{props.game.title}</h4>
+        <h4 className={classes["game-tile-price"]}>
+          {props.game.price} ,00 din
+        </h4>
+      </div>
     </Aux>
   );
 };
