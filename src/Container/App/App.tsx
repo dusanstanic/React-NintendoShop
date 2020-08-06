@@ -11,28 +11,7 @@ import Games from "../../Components/Games/Games";
 
 class App extends Component<RouterProps, { games: GamesM[] }> {
   state = {
-    games: [
-      {
-        id: 1,
-        title: "Luigi's Mansion 3",
-        description: "description",
-        releaseDate: new Date(),
-        price: 8000,
-        pgRating: "E",
-        image: "",
-        genre: { id: 1, type: "Platform" },
-      },
-      {
-        id: 2,
-        title: "Super Mario Odyessy",
-        description: "description",
-        releaseDate: new Date(),
-        price: 6000,
-        pgRating: "E",
-        image: "",
-        genre: { id: 1, type: "Platform" },
-      },
-    ],
+    games: [],
   };
 
   componentDidMount() {

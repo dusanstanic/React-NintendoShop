@@ -1,7 +1,7 @@
 import { GenreM } from "./GenreM";
 
 interface GameM {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   releaseDate: Date;

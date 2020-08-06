@@ -5,6 +5,7 @@ import "./Header.css";
 import Aux from "../../hoc/Auxiliary";
 
 import App from "../../Container/App/App";
+import ManageGames from "../../Container/ManageGames/ManageGames";
 
 const Header = () => {
   return (
@@ -49,13 +50,13 @@ const Header = () => {
               <NavLink
                 activeClassName="nav-item-active"
                 to={{
-                  pathname: "/games",
+                  pathname: "/manageGames",
                   hash: "#submit",
                   search: "?name=true",
                 }}
                 exact
               >
-                Merchandise
+                Manage Games
               </NavLink>
             </li>
           </ul>
@@ -63,6 +64,7 @@ const Header = () => {
       </header>
       <Switch>
         <Route path="/games" component={App} />
+        <Route path="/manageGames" component={ManageGames} />
       </Switch>
     </Aux>
   );

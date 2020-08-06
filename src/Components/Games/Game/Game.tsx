@@ -5,7 +5,6 @@ import Aux from "../../../hoc/Auxiliary";
 import GamesM from "../../../models/GamesM";
 
 const Game = (props: { game: GamesM; showGame: any }) => {
-  // console.log(props);
   return (
     <Aux>
       <tr onClick={props.showGame}>

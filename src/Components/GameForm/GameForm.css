@@ -1,0 +1,86 @@
+.add-game-form {
+  font-family: Calibri;
+  font-size: larger;
+  width: 40%;
+  margin: auto;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  padding: 2rem;
+  border: 1px black solid;
+  background: rgb(221, 66, 105);
+  border-radius: 2rem;
+  text-align: center;
+}
+
+.add-game-form label {
+  font-weight: bold;
+}
+
+.add-game-form textarea {
+  height: 5rem;
+}
+
+.add-game-form label,
+.add-game-form input,
+.add-game-form textarea,
+.add-game-form select {
+  width: 50%;
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.add-game-form .form-group-pegiRating {
+  text-align: center;
+}
+
+.add-game-form .form-group-pegiRating label[for="rating"],
+.add-game-form .form-group-pegiRating input[type="radio"] {
+  display: inline-block;
+  margin: 0.2rem;
+  margin-top: 1rem;
+  width: 1rem;
+}
+
+.add-game-form label:focus,
+.add-game-form input:focus,
+.add-game-form textarea:focus,
+.add-game-form select:focus {
+  outline: none;
+}
+
+.add-game-submit-btn {
+  font-weight: bold;
+  background: rgb(5, 218, 246);
+  border: 2px solid black;
+  display: block;
+  width: 5rem;
+  height: 2rem;
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 15px;
+}
+
+.add-game-submit-btn:hover,
+.add-game-submit-btn:active {
+  background: green;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+.add-game-submit-btn:focus {
+  outline: none;
+}
+
+.add-game-submit-btn:disabled {
+  border: 1px black solid;
+  background: lightslategray;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.add-game-submit-btn:disabled:hover {
+  background: red;
+}

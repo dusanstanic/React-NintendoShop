@@ -1,4 +1,4 @@
-table {
+.table {
   font-family: Calibri;
   font-weight: bold;
   border-collapse: collapse;
@@ -8,23 +8,19 @@ table {
   margin-top: 2rem;
 }
 
-thead {
+.thead {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
   color: white;
 }
 
-tbody {
+.tbody {
   color: rgb(11, 131, 57);
   background: rgb(224, 245, 37);
   cursor: pointer;
 }
 
-table thead {
-  background: black;
-}
-
-thead tr {
+.tr {
   background-color: brown;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Games.css";
+import classes from "./Games.module.css";
 import { Route } from "react-router-dom";
 
 import RouteProps from "../../models/Route";
@@ -11,23 +11,22 @@ import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
 const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
-  //console.log(props);
-
-  const showGame = (id: number) => {
-    // console.log(id);
+  const showGame = (id: number | undefined) => {
     props.routerProps.history.push({ pathname: "/games/" + id });
   };
 
+  console.log(classes);
+
   return (
     <Aux>
-      <table>
-        <thead>
-          <tr>
+      <table className={classes.table}>
+        <thead className={classes.thead}>
+          <tr className={classes.tr}>
             <th>Title</th>
             <th>Price</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={classes.tbody}>
           {props.games.map((game: GamesM, index: number) => {
             return (
               <Game

@@ -1,11 +1,12 @@
 .main-game {
   background: #dc143c;
-  border: 4px solid yellow;
+  border: 2px solid yellow;
   position: relative;
   margin: auto;
   margin-top: 2rem;
   padding: 1rem;
   max-width: 55rem;
+  border-radius: 10px;
 }
 
 .main-game__pegiRating {
