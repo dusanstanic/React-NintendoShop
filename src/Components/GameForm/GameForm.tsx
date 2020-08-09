@@ -85,25 +85,25 @@ const GameForm = (props: any) => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    console.log(event.target.id);
+    console.log(event.target.name);
     console.log(event.target.value);
-    if (event.target.id === "title") setEnteredTitle(event.target.value);
-    if (event.target.id === "description") {
+    if (event.target.name === "title") setEnteredTitle(event.target.value);
+    if (event.target.name === "description") {
       setEnteredDescription(event.target.value);
     }
-    if (event.target.id === "releaseDate")
+    if (event.target.name === "releaseDate")
       setEnteredReleaseDate(event.target.value);
-    if (event.target.id === "price") {
+    if (event.target.name === "price") {
       const price = event.target.value;
       const priceValid = "^\\d*$";
       if (price.match(priceValid)) {
         setEnteredPrice(event.target.value);
       }
     }
-    if (event.target.id === "rating") setPegeRating(event.target.value);
-    if (event.target.id === "image")
+    if (event.target.name === "rating") setPegeRating(event.target.value);
+    if (event.target.name === "image")
       setEnteredImage(GameService.parseImagePath(event.target.value));
-    if (event.target.id === "genre") setEntereGenre(+event.target.value);
+    if (event.target.name === "genre") setEntereGenre(+event.target.value);
 
     isFormValid();
   };
@@ -125,7 +125,7 @@ const GameForm = (props: any) => {
       <input
         type="text"
         placeholder="Title"
-        id="title"
+        name="title"
         value={enteredTitle}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           addGameHandler(event)
@@ -134,7 +134,7 @@ const GameForm = (props: any) => {
       <label htmlFor="description">Description</label>
       <textarea
         placeholder="Description"
-        id="description"
+        name="description"
         value={enteredDescription}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
           addGameHandler(event)
@@ -144,7 +144,7 @@ const GameForm = (props: any) => {
       <input
         onMouseEnter={() => console.log("hello")}
         type="date"
-        id="releaseDate"
+        name="releaseDate"
         value={enteredReleaseDate}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           addGameHandler(event)
@@ -154,7 +154,7 @@ const GameForm = (props: any) => {
       <input
         type="text"
         placeholder="Price"
-        id="price"
+        name="price"
         value={enteredPrice}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           addGameHandler(event)
@@ -166,8 +166,7 @@ const GameForm = (props: any) => {
         <input
           type="radio"
           value="E"
-          name="pgRating"
-          id="rating"
+          name="rating"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
           }
@@ -176,8 +175,7 @@ const GameForm = (props: any) => {
         <input
           type="radio"
           value="T"
-          name="pgRating"
-          id="rating"
+          name="rating"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
           }
@@ -186,8 +184,7 @@ const GameForm = (props: any) => {
         <input
           type="radio"
           value="M"
-          name="pgRating"
-          id="rating"
+          name="rating"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
           }
@@ -198,7 +195,7 @@ const GameForm = (props: any) => {
         <input
           type="file"
           placeholder="Image"
-          id="image"
+          name="image"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
           }
@@ -206,7 +203,7 @@ const GameForm = (props: any) => {
       </div>
       <label htmlFor="genre">Genre</label>
       <select
-        id="genre"
+        name="genre"
         onChange={(event: ChangeEvent<HTMLSelectElement>) =>
           addGameHandler(event)
         }
