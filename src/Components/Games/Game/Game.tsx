@@ -11,6 +11,7 @@ const Game = (props: { game: GamesM; showGame: any }) => {
     <Aux>
       <div onClick={props.showGame} className={classes["game-tile"]}>
         <img
+          alt="game"
           src={props.game.image}
           className={classes["game-tile-image"]}
         ></img>

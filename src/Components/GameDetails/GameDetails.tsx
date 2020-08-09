@@ -8,7 +8,6 @@ import GameM from "../../models/GamesM";
 import Aux from "../../hoc/Auxiliary";
 
 const GameDetails = (props: any) => {
-  console.log(classes);
   const [game, setGameData] = useState<GameM>();
 
   useEffect(() => {

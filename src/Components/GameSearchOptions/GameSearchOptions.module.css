@@ -1,0 +1,11 @@
+.game-search-option-by-pgRating,
+.game-search-option-by-genre,
+.game-search-option-by-price {
+  margin-top: 1rem;
+}
+
+.game-search-option-title {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+}

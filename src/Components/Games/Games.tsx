@@ -7,10 +7,15 @@ import GamesM from "../../models/GamesM";
 
 import Aux from "../../hoc/Auxiliary";
 
+import GameSearchOptions from "../GameSearchOptions/GameSearchOptions";
 import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
-const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
+const Games = (props: {
+  games: GamesM[];
+  routerProps: RouteProps;
+  updateDisplayedGames: Function;
+}) => {
   const showGame = (id: number | undefined) => {
     props.routerProps.history.push({ pathname: "/games/" + id });
   };
@@ -18,29 +23,23 @@ const Games = (props: { games: GamesM[]; routerProps: RouteProps }) => {
   return (
     <Aux>
       <div className={classes["main-game-grid"]}>
-        <div className={classes["game-search-options"]}>
-          <div className={classes["game-serach-options-pgRating"]}>
-            <h4 className={classes["game-search-options-title"]}>
-              Pegi Rating
-            </h4>
-          </div>
-          <div>
-            <h4 className={classes["game-search-options-title"]}>Pick Genre</h4>
-          </div>
-        </div>
+        <GameSearchOptions
+          class={classes["game-search-options"]}
+          updateDisplayedGames={props.updateDisplayedGames}
+        ></GameSearchOptions>
         <div className={classes["games-list-container"]}>
-          {props.games.map((game: GamesM, index: number) => {
+          {props.games.map((game: GamesM) => {
             return (
               <Game
-                key={index}
+                key={game.id}
                 game={game}
                 showGame={() => showGame(game.id)}
               />
             );
           })}
         </div>
-        <Route path="/games/:id" component={GameDetails} />
       </div>
+      <Route path="/games/:id" component={GameDetails} />
     </Aux>
   );
 };

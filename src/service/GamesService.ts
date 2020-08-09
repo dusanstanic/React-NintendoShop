@@ -59,6 +59,20 @@ function getGameById(id: number) {
     });
 }
 
+function getGameByPgRatings(pgRatings: String[]) {
+  if (pgRatings.length === 0) {
+    return getGames();
+  }
+  return axios
+    .get<GameM[]>("http://localhost:8080/games/pgRating/" + pgRatings)
+    .then((response) => {
+      return response.data;
+    })
+    .then((game) => {
+      return game;
+    });
+}
+
 function createGame(game: any) {
   return axios.post("http://localhost:8080/games", game).then((response) => {
     console.log(response);
@@ -86,4 +100,5 @@ export {
   parseImagePath,
   parseStringToDate,
   deleteById,
+  getGameByPgRatings,
 };

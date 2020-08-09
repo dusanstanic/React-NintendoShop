@@ -142,6 +142,7 @@ const GameForm = (props: any) => {
       ></textarea>
       <label htmlFor="releaseDate">Release Date</label>
       <input
+        onMouseEnter={() => console.log("hello")}
         type="date"
         id="releaseDate"
         value={enteredReleaseDate}
