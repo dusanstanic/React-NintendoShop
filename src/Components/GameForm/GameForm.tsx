@@ -2,15 +2,22 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 
 import "./GameForm.css";
 
+import Aux from "../../hoc/Auxiliary";
+
 import { GenreM } from "../../models/GenreM";
 import GameM from "../../models/GamesM";
+import ConsoleM from "../../models/ConsoleM";
 
 import * as GenreService from "../../service/GenreService";
 import * as GameService from "../../service/GamesService";
+import * as ConsoleService from "../../service/ConsoleService";
+import Consoles from "../Consoles/Consoles";
 
 const GameForm = (props: any) => {
   const [isValid, setIsValid] = useState<boolean>(false);
   const [genres, setGenreData] = useState<GenreM[]>();
+  const [consoles, setConsoleData] = useState<ConsoleM[]>();
+
   const [enteredTitle, setEnteredTitle] = useState<string>("");
   const [enteredDescription, setEnteredDescription] = useState<string>("");
   const [enteredReleaseDate, setEnteredReleaseDate] = useState<string>("");
@@ -18,10 +25,14 @@ const GameForm = (props: any) => {
   const [enteredPegiRating, setPegeRating] = useState<string>("");
   const [enteredImage, setEnteredImage] = useState<string>("");
   const [enteredGenre, setEntereGenre] = useState<number>(1);
+  let [enteredConsoles, setEntereConsoles] = useState<number[]>([]);
 
   useEffect(() => {
     GenreService.getGenres().then((genres) => {
       setGenreData(genres);
+    });
+    ConsoleService.getConsoles().then((consoles) => {
+      setConsoleData(consoles);
     });
   }, []);
 
@@ -45,6 +56,7 @@ const GameForm = (props: any) => {
     enteredPrice,
     enteredReleaseDate,
     enteredPegiRating,
+    enteredConsoles,
   ]);
 
   const isFormValid = () => {
@@ -53,9 +65,11 @@ const GameForm = (props: any) => {
       enteredImage.length > 0 &&
       enteredPrice.length > 0 &&
       enteredPegiRating.length > 0 &&
-      enteredReleaseDate.length > 0
+      enteredReleaseDate.length > 0 &&
+      enteredConsoles.length > 0
     ) {
       setIsValid(true);
+      console.log(enteredConsoles);
     } else {
       setIsValid(false);
     }
@@ -76,7 +90,7 @@ const GameForm = (props: any) => {
         image: enteredImage,
         genre: genre,
       };
-      props.submit(game);
+      props.submit(game, enteredConsoles);
     }
   };
 
@@ -104,8 +118,21 @@ const GameForm = (props: any) => {
     if (event.target.name === "image")
       setEnteredImage(GameService.parseImagePath(event.target.value));
     if (event.target.name === "genre") setEntereGenre(+event.target.value);
+    if (event.target.name === "console") {
+      const selectedConsoleId = +event.target.value;
+      let consoleAlreadyExists = enteredConsoles.find((id) => {
+        return id === selectedConsoleId;
+      });
+      if (consoleAlreadyExists) {
+        const newEnteredConsoles = enteredConsoles.filter((id: number) => {
+          return id !== selectedConsoleId;
+        });
+        return setEntereConsoles(newEnteredConsoles);
+      }
+      setEntereConsoles([...enteredConsoles, selectedConsoleId]);
+    }
 
-    isFormValid();
+    // isFormValid();
   };
 
   let genreOptions;
@@ -118,6 +145,44 @@ const GameForm = (props: any) => {
       );
     });
   }
+
+  let consoleOptions;
+  if (consoles) {
+    consoleOptions = consoles.map((console) => {
+      return (
+        <Aux key={console.id}>
+          <div className="form-group-console-option">
+            <input
+              type="checkbox"
+              name="console"
+              value={console.id}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                addGameHandler(event)
+              }
+            ></input>
+            <label>{console.title}</label>
+          </div>
+        </Aux>
+      );
+    });
+  }
+
+  let pgRatingOptions;
+  pgRatingOptions = ["3", "7", "12", "16", "18"].map((pgRating) => {
+    return (
+      <Aux key={pgRating}>
+        <label htmlFor="rating">{pgRating}:</label>
+        <input
+          type="radio"
+          value={pgRating}
+          name="rating"
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            addGameHandler(event)
+          }
+        ></input>
+      </Aux>
+    );
+  });
 
   return (
     <form className="add-game-form">
@@ -142,7 +207,6 @@ const GameForm = (props: any) => {
       ></textarea>
       <label htmlFor="releaseDate">Release Date</label>
       <input
-        onMouseEnter={() => console.log("hello")}
         type="date"
         name="releaseDate"
         value={enteredReleaseDate}
@@ -161,35 +225,7 @@ const GameForm = (props: any) => {
         }
       ></input>
       <label htmlFor="pegiRating">Pegi Rating</label>
-      <div className="form-group-pegiRating">
-        <label htmlFor="rating">E:</label>
-        <input
-          type="radio"
-          value="E"
-          name="rating"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-        <label htmlFor="rating">T:</label>
-        <input
-          type="radio"
-          value="T"
-          name="rating"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-        <label htmlFor="rating">M:</label>
-        <input
-          type="radio"
-          value="M"
-          name="rating"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-      </div>
+      <div className="form-group-pegiRating">{pgRatingOptions}</div>
       <div className="form-group-image">
         <label htmlFor="image">Image</label>
         <input
@@ -210,6 +246,8 @@ const GameForm = (props: any) => {
       >
         {genreOptions}
       </select>
+      <label htmlFor="pegiRating">Console</label>
+      <div className="form-group-console">{consoleOptions}</div>
       <button
         disabled={!isValid}
         type="button"

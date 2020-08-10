@@ -1,5 +1,6 @@
 .main-game-grid {
   background: black;
+  border: 5px solid white;
   margin: 2rem;
   margin-top: 5rem;
   display: grid;
@@ -12,12 +13,11 @@
 
 .game-search-options {
   color: white;
-  border: 0px solid yellow;
   background: black;
 }
 
 .games-list-container {
-  border: 2px solid yellow;
+  border: 0px solid yellow;
   display: grid;
   grid-template-columns: repeat(4, 25%);
 }

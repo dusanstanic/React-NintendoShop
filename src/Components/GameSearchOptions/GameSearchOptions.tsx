@@ -18,7 +18,7 @@ const GameSearchOptions = (props: any) => {
     });
   }, []);
 
-  const pgRatingOptions = ["E", "T", "M"].map((pgRating) => {
+  const pgRatingOptions = ["3", "7", "12", "16", "18"].map((pgRating) => {
     return (
       <InputCheckBox
         key={pgRating}

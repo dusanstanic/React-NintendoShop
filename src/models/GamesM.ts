@@ -1,6 +1,8 @@
 import { GenreM } from "./GenreM";
+import Console from "./ConsoleM";
+import Image from "./ImageM";
 
-interface GameM {
+interface Game {
   id?: number;
   title: string;
   description: string;
@@ -9,6 +11,8 @@ interface GameM {
   pgRating: string;
   image: string;
   genre: GenreM;
+  consoles?: Console[];
+  images?: Image[];
 }
 
-export default GameM;
+export default Game;

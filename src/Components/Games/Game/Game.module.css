@@ -2,6 +2,18 @@
   border: 2px solid black;
   background: rgb(221, 218, 41);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-tile-banner {
+  color: white;
+  background: green;
+  position: absolute;
+  width: 10rem;
+  top: 0;
+  right: 0;
+  transform: rotateZ(45deg) translateY(-1rem) translateX(3rem);
 }
 
 .game-tile-title {

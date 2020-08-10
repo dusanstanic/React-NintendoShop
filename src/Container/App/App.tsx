@@ -132,6 +132,7 @@ class App extends Component<
     /*if (this.state.selectedGames.length === 0) {
       this.setState({ selectedGames: this.state.games });
     }*/
+    console.log(this.state.games);
     return (
       <Aux>
         <Games

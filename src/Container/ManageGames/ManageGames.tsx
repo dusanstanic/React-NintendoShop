@@ -49,8 +49,9 @@ class ManageGames extends Component<
     this.setState({ showUpdateForm: !this.state.showUpdateForm });
   };
 
-  addGame = (newGame: GameM) => {
-    GameService.createGame(newGame).then(() => {
+  addGame = (newGame: GameM, consoleIds: number[]) => {
+    console.log(consoleIds);
+    GameService.createGame(newGame, consoleIds).then(() => {
       GameService.getGames().then((games) => {
         this.setState({ games });
       });

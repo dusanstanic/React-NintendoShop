@@ -17,10 +17,6 @@
   font-weight: bold;
 }
 
-.add-game-form textarea {
-  height: 5rem;
-}
-
 .add-game-form label,
 .add-game-form input,
 .add-game-form textarea,
@@ -34,8 +30,25 @@
   margin-top: 0.5rem;
 }
 
+.form-group-console-option {
+  width: 60%;
+  text-align: left;
+  margin: auto;
+}
+
+.add-game-form .form-group-console input {
+  height: 1.2rem;
+  width: 5%;
+  vertical-align: bottom;
+  display: inline-block;
+}
+
+.add-game-form .form-group-console label {
+  display: inline;
+}
+
 .add-game-form textarea {
-  height: 4rem;
+  height: 5rem;
 }
 
 .add-game-form .form-group-pegiRating label[for="rating"] {
@@ -50,21 +63,6 @@
   display: inline-block;
   width: 1rem;
 }
-
-/* .add-game-form .form-group-pegiRating {
-  display: flex;
-  align-items: center;
-}
-
-.add-game-form .form-group-pegiRating label[for="rating"] {
-  display: block;
-  width: 1rem;
-}
-
-.add-game-form .form-group-pegiRating input[type="radio"] {
-  display: block;
-  width: 1rem;
-} */
 
 .add-game-form label:focus,
 .add-game-form input:focus,

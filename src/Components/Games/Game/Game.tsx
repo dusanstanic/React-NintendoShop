@@ -10,15 +10,14 @@ const Game = (props: { game: GamesM; showGame: any }) => {
   return (
     <Aux>
       <div onClick={props.showGame} className={classes["game-tile"]}>
+        <div className={classes["game-tile-banner"]}>PreOrder</div>
         <img
           alt="game"
-          src={props.game.image}
+          src={props.game.images ? props.game.images[0].destination : ""}
           className={classes["game-tile-image"]}
         ></img>
         <h4 className={classes["game-tile-title"]}>{props.game.title}</h4>
-        <h4 className={classes["game-tile-price"]}>
-          {props.game.price} ,00 din
-        </h4>
+        <h4 className={classes["game-tile-price"]}>{props.game.price} din</h4>
       </div>
     </Aux>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
-import "./Header.css";
+import classes from "./Header.module.css";
 
 import Aux from "../../hoc/Auxiliary";
 
@@ -10,30 +10,30 @@ import ManageGames from "../../Container/ManageGames/ManageGames";
 const Header = () => {
   return (
     <Aux>
-      <header className="main-header">
+      <header className={classes["main-header"]}>
         <div>
           <NavLink
             to="/"
             activeClassName="nav-item-active"
             exact
-            className="main-header__brand"
+            className={classes["main-header__brand"]}
           >
             <img
               src="http://127.0.0.1:8887/nintendoIcon.jpg"
               alt="uHost - Your favorite hosting company"
-              className="main-header__icon"
+              className={classes["main-header__icon"]}
             />
           </NavLink>
         </div>
-        <nav className="main-nav">
-          <ul className="main-nav__items">
-            <li className="main-nav__item">
+        <nav className={classes["main-nav"]}>
+          <ul className={classes["main-nav__items"]}>
+            <li className={classes["main-nav__item"]}>
               {" "}
               <NavLink to="/" activeClassName="nav-item-active" exact>
                 Home
               </NavLink>
             </li>
-            <li className="main-nav__item">
+            <li className={classes["main-nav__item"]}>
               <NavLink
                 activeClassName="nav-item-active"
                 to={{
@@ -46,7 +46,7 @@ const Header = () => {
                 Games
               </NavLink>
             </li>
-            <li className="main-nav__item">
+            <li className={classes["main-nav__item"]}>
               <NavLink
                 activeClassName="nav-item-active"
                 to={{
@@ -57,6 +57,19 @@ const Header = () => {
                 exact
               >
                 Manage Games
+              </NavLink>
+            </li>
+            <li className={classes["main-nav__item"]}>
+              <NavLink
+                activeClassName="nav-item-active"
+                to={{
+                  pathname: "/manageGames",
+                  hash: "#submit",
+                  search: "?name=true",
+                }}
+                exact
+              >
+                Manage Consoles
               </NavLink>
             </li>
           </ul>
