@@ -20,7 +20,7 @@ const Header = () => {
           >
             <img
               src="http://127.0.0.1:8887/nintendoIcon.jpg"
-              alt="uHost - Your favorite hosting company"
+              alt="Nintendo Shop"
               className={classes["main-header__icon"]}
             />
           </NavLink>

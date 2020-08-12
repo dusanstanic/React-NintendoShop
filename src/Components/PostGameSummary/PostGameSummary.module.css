@@ -1,0 +1,39 @@
+.postGameSummary {
+  margin: auto;
+}
+
+.postGameSummary-title {
+  text-align: center;
+  margin: 0;
+}
+
+.postGameSummary-post-btn {
+  height: 2rem;
+  width: 4rem;
+  margin: 5px;
+  border: 2px solid black;
+  background: rgb(19, 167, 187);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.postGameSummary-post-btn:hover {
+  background: green;
+}
+
+.postGameSummary-post-btn:focus {
+  outline: none;
+}
+
+.postGameSummary-cancel-btn {
+  height: 2rem;
+  width: 4rem;
+  color: white;
+  background: firebrick;
+  cursor: pointer;
+}
+
+.postGameSummary-cancel-btn:hover {
+  background: coral;
+}

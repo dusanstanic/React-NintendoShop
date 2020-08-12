@@ -38,7 +38,6 @@ function getGames(): Promise<GameM[]> {
   return axios
     .get<GameM[]>("http://localhost:8080/games")
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .then((games) => {
@@ -74,13 +73,8 @@ function getGameByPgRatings(pgRatings: String[]) {
     });
 }
 
-function createGame(game: any, consoleIds: number[]) {
-  const gameeee = {
-    ...game,
-    gameConsoles: [{ id: 1, game: game, console: null }],
-  };
-  console.log(gameeee);
-  return axios.post("http://localhost:8080/games", gameeee).then((response) => {
+function createGame(game: any) {
+  return axios.post("http://localhost:8080/games", game).then((response) => {
     console.log(response);
   });
 }

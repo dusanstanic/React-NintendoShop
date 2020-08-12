@@ -7,7 +7,7 @@ import { GenreM } from "../../models/GenreM";
 import * as GenreService from "../../service/GenreService";
 
 import Aux from "../../hoc/Auxiliary";
-import { InputCheckBox } from "../../shared/Input";
+import { InputCheckBox } from "../../shared/Input/Input";
 
 const GameSearchOptions = (props: any) => {
   const [genres, setGenreData] = useState<GenreM[]>();

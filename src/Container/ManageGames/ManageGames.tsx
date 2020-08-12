@@ -51,7 +51,7 @@ class ManageGames extends Component<
 
   addGame = (newGame: GameM, consoleIds: number[]) => {
     console.log(consoleIds);
-    GameService.createGame(newGame, consoleIds).then(() => {
+    GameService.createGame(newGame).then(() => {
       GameService.getGames().then((games) => {
         this.setState({ games });
       });
