@@ -253,9 +253,6 @@ const GameForm = (props: any) => {
 
   return (
     <Aux>
-      {/* <Modal show={showModal} closeModal={closeModal}>
-        <PostGameSummary />
-      </Modal> */}
       {showModal}
       <form className="add-game-form">
         <label htmlFor="title">Title</label>
