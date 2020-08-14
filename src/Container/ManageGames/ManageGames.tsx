@@ -82,6 +82,7 @@ class ManageGames extends Component<
   };
 
   render() {
+    console.log(this.props);
     let gamesList = null;
     if (this.state) {
       gamesList = this.state.games.map((game) => {

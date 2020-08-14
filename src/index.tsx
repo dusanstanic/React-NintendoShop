@@ -7,13 +7,24 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
 import { BrowserRouter } from "react-router-dom";
+import gameDisplayReducer from "./store/reducers/gameDisplay";
+import manageGameReducer from "./store/reducers/manageGames";
 import Header from "./Components/Header/Header";
+
+const rootReducer = combineReducers({
+  gameDisplay: gameDisplayReducer,
+  manageGames: manageGameReducer,
+});
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Header />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

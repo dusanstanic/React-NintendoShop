@@ -1,38 +1,39 @@
 import React, { Component, ChangeEvent } from "react";
+import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 import "./App.css";
+
+import * as actionTypes from "../../store/actions/gameDisplay";
 
 import * as GamsService from "../../service/GamesService";
 
-import RouterProps from "../../models/Route";
-import GamesM from "../../models/GamesM";
+import GameM from "../../models/GamesM";
 
 import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";
 
-class App extends Component<
-  RouterProps,
-  {
-    games: GamesM[];
-    selectedGames: (GamesM | undefined)[];
-    selectedPgRatings: string[];
-    selectedGenres: string[];
-    selectedGamesByPgRating: GamesM[];
-    selectedGamesByGenre: GamesM[];
-  }
-> {
-  state = {
-    games: [],
-    selectedGames: [],
-    selectedPgRatings: [],
-    selectedGenres: [],
-    selectedGamesByPgRating: [],
-    selectedGamesByGenre: [],
-  };
+interface RouteProps extends RouteComponentProps<{}> {
+  onIncrementCounter: Function;
+  ctr: number;
+  setGames: Function;
+  setSelectedPgRatings: Function;
+  setSelectedGenres: Function;
+  setSelectedGames: Function;
+  setSelectedGamesByPgRating: Function;
+  setSelectedGamesByGenre: Function;
+  games: GameM[];
+  selectedGames: GameM[];
+  selectedPgRatings: string[];
+  selectedGenres: string[];
+  selectedGamesByPgRating: GameM[];
+  selectedGamesByGenre: GameM[];
+}
 
+class App extends Component<RouteProps, {}> {
   componentDidMount() {
-    GamsService.getGames().then((games: GamesM[]) => {
-      this.setState({ games });
-      this.setState({ selectedGames: games });
+    GamsService.getGames().then((games: GameM[]) => {
+      this.props.setGames(games);
+      this.props.setSelectedGames(games);
     });
   }
 
@@ -52,25 +53,24 @@ class App extends Component<
       selectedOptions.push(selectedOption);
     }
 
-    console.log(selectedOptions);
     return selectedOptions;
   };
 
   updateDisplayedGames = (event: ChangeEvent<HTMLInputElement>) => {
-    let selectedGames: GamesM[] = this.state.selectedGames;
-    let selectedGamesByPgRating: GamesM[] = this.state.selectedGamesByPgRating;
-    let selectedGamesByGenre: GamesM[] = this.state.selectedGamesByGenre;
+    let selectedGames: GameM[] = this.props.selectedGames;
+    let selectedGamesByPgRating: GameM[] = this.props.selectedGamesByPgRating;
+    let selectedGamesByGenre: GameM[] = this.props.selectedGamesByGenre;
 
     if (event.target.name === "pgRating") {
-      let selectedPgRating = event.target.value; // selectedOptions
-      let selectedPgRatings: string[] = [...this.state.selectedPgRatings];
+      let selectedPgRating = event.target.value;
+      let selectedPgRatings: string[] = [...this.props.selectedPgRatings];
       selectedPgRatings = this.updateSelectedOptions(
         selectedPgRatings,
         selectedPgRating
       );
-      this.setState({ selectedPgRatings });
+      this.props.setSelectedPgRatings(selectedPgRatings);
 
-      selectedGamesByPgRating = this.state.games.filter((game: GamesM) => {
+      selectedGamesByPgRating = this.props.games.filter((game: GameM) => {
         let found = false;
         for (const pgRating of selectedPgRatings) {
           if (game.pgRating === pgRating) {
@@ -83,14 +83,14 @@ class App extends Component<
 
     if (event.target.name === "genre") {
       let selectedGenre: string = event.target.value;
-      let selectedGenres: string[] = [...this.state.selectedGenres];
+      let selectedGenres: string[] = [...this.props.selectedGenres];
       selectedGenres = this.updateSelectedOptions(
         selectedGenres,
         selectedGenre
       );
-      this.setState({ selectedGenres });
+      this.props.setSelectedGenres(selectedGenres);
 
-      selectedGamesByGenre = this.state.games.filter((game: GamesM) => {
+      selectedGamesByGenre = this.props.games.filter((game: GameM) => {
         let found = false;
         for (const genre of selectedGenres) {
           if (game.genre.type === genre) {
@@ -102,8 +102,9 @@ class App extends Component<
     }
 
     selectedGames = [...selectedGamesByPgRating, ...selectedGamesByGenre];
+
     let selectedGamesId = selectedGames
-      .map((game: GamesM) => {
+      .map((game: GameM) => {
         return game.id;
       })
       .filter((id, index, array) => {
@@ -111,21 +112,18 @@ class App extends Component<
       });
 
     let selectedGamesWithoutDuplicates: (
-      | GamesM
+      | GameM
       | undefined
     )[] = selectedGamesId.map((id) => {
-      return this.state.games.find((game: GamesM) => game.id === id);
+      return this.props.games.find((game: GameM) => game.id === id);
     });
 
-    console.log(selectedGamesWithoutDuplicates);
-
+    this.props.setSelectedGamesByPgRating(selectedGamesByPgRating);
+    this.props.setSelectedGamesByGenre(selectedGamesByGenre);
     if (selectedGames.length === 0) {
-      console.log("No game exists");
-      return this.setState({ selectedGames: this.state.games });
+      return this.props.setSelectedGames(this.props.games);
     }
-    this.setState({ selectedGames: selectedGamesWithoutDuplicates });
-    this.setState({ selectedGamesByPgRating: selectedGamesByPgRating });
-    this.setState({ selectedGamesByGenre: selectedGamesByGenre });
+    this.props.setSelectedGames(selectedGamesWithoutDuplicates);
   };
 
   render() {
@@ -134,8 +132,14 @@ class App extends Component<
     }*/
     return (
       <Aux>
+        <button
+          style={{ marginTop: "5rem" }}
+          onClick={() => this.props.onIncrementCounter()}
+        >
+          <h1>{this.props.ctr}</h1>
+        </button>
         <Games
-          games={this.state.selectedGames}
+          // games={this.props.selectedGames}
           routerProps={this.props}
           updateDisplayedGames={this.updateDisplayedGames}
         />
@@ -144,4 +148,49 @@ class App extends Component<
   }
 }
 
-export default App;
+const mapStateToProp = (state: any) => {
+  return {
+    ctr: state.manageGames.counter,
+    games: state.gameDisplay.games,
+    selectedGames: state.gameDisplay.selectedGames,
+    selectedPgRatings: state.gameDisplay.selectedPgRatings,
+    selectedGenres: state.gameDisplay.selectedGenres,
+    selectedGamesByPgRating: state.gameDisplay.selectedGamesByPgRating,
+    selectedGamesByGenre: state.gameDisplay.selectedGamesByGenre,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onIncrementCounter: () => dispatch({ type: "INCREMENT" }),
+    setGames: (games: GameM[]) =>
+      dispatch({ type: actionTypes.SET_GAMES, games: games }),
+    setSelectedPgRatings: (selectedPgRatings: string[]) =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_PGRATINGS,
+        selectedPgRatings: selectedPgRatings,
+      }),
+    setSelectedGenres: (selectedGenres: string[]) =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_GENRES,
+        selectedGenres: selectedGenres,
+      }),
+    setSelectedGames: (selectedGames: GameM[]) =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_GAMES,
+        selectedGames: selectedGames,
+      }),
+    setSelectedGamesByPgRating: (selectedGamesByPgRating: GameM[]) =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_GAMES_BY_PGRATING,
+        selectedGamesByPgRating: selectedGamesByPgRating,
+      }),
+    setSelectedGamesByGenre: (selectedGamesByGenre: GameM[]) =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_GAMES_BY_GENRE,
+        selectedGamesByGenre: selectedGamesByGenre,
+      }),
+  };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(App);
