@@ -1,5 +1,3 @@
-import * as actionTypes from "../actions/gameDisplay";
-
 const initialState = {
   counter: 0,
 };

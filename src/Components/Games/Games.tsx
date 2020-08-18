@@ -11,7 +11,7 @@ import GameSearchOptions from "../GameSearchOptions/GameSearchOptions";
 import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
-interface RouteProps extends RouteComponentProps<{}> {
+interface PropsI extends RouteComponentProps<{}> {
   onIncrementCounter: Function;
   ctr: number;
   setGames: Function;
@@ -28,13 +28,10 @@ interface RouteProps extends RouteComponentProps<{}> {
   selectedGamesByGenre: GameM[];
 }
 
-const Games = (props: {
-  routerProps: RouteProps;
-  updateDisplayedGames: Function;
-}) => {
-  console.log(props);
+const Games = (props: PropsI) => {
+  // console.log(props);
   const showGame = (id: number | undefined) => {
-    props.routerProps.history.push({ pathname: "/games/" + id });
+    props.history.push({ pathname: "/games/" + id });
   };
 
   return (
@@ -42,10 +39,10 @@ const Games = (props: {
       <div className={classes["main-game-grid"]}>
         <GameSearchOptions
           class={classes["game-search-options"]}
-          updateDisplayedGames={props.updateDisplayedGames}
+          routerProps={props}
         ></GameSearchOptions>
         <div className={classes["games-list-container"]}>
-          {props.routerProps.selectedGames.map((game: GameM) => {
+          {props.selectedGames.map((game: GameM) => {
             return (
               <Game
                 key={game.id}

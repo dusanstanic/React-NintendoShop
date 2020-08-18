@@ -42,7 +42,7 @@ const GameForm = (props: any) => {
   const [enteredImage, setEnteredImage] = useState<string>("");
   const [enteredGenre, setEntereGenre] = useState<number>(1);
   const [enteredConsoles, setEnteredConsoles] = useState<number[]>([]);
-  const [enteredImages, setEnteredImages] = useState<string[]>([]);
+  //const [enteredImages, setEnteredImages] = useState<string[]>([]);
 
   useEffect(() => {
     GenreService.getGenres().then((genres) => {
@@ -185,10 +185,10 @@ const GameForm = (props: any) => {
       event.target instanceof HTMLInputElement &&
       event.target.files !== null
     ) {
-      console.log(event.target.files);
+      /*console.log(event.target.files);
       let selectedFiles = event.target.files;
       let selectedImages = enteredImages;
-      for (let i = 0; i < selectedFiles.length; i++) {}
+      for (let i = 0; i < selectedFiles.length; i++) {}*/
     }
   };
 
@@ -339,6 +339,18 @@ const GameForm = (props: any) => {
       </form>
     </Aux>
   );
+};
+
+const mapStateToProp = (state: any) => {
+  return {
+    ctr: state.manageGames.counter,
+    games: state.gameDisplay.games,
+    selectedGames: state.gameDisplay.selectedGames,
+    selectedPgRatings: state.gameDisplay.selectedPgRatings,
+    selectedGenres: state.gameDisplay.selectedGenres,
+    selectedGamesByPgRating: state.gameDisplay.selectedGamesByPgRating,
+    selectedGamesByGenre: state.gameDisplay.selectedGamesByGenre,
+  };
 };
 
 export default GameForm;

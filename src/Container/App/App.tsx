@@ -1,148 +1,46 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import "./App.css";
 
 import * as actionTypes from "../../store/actions/gameDisplay";
-
 import * as GamsService from "../../service/GamesService";
 
 import GameM from "../../models/GamesM";
 
 import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";
+import { GameDisplayActionTypes } from "../../store/actions/gameDisplay";
+import { GameDisplayState } from "../../store/reducers/gameDisplay";
 
-interface RouteProps extends RouteComponentProps<{}> {
+interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
   onIncrementCounter: Function;
   ctr: number;
-  setGames: Function;
-  setSelectedPgRatings: Function;
-  setSelectedGenres: Function;
-  setSelectedGames: Function;
-  setSelectedGamesByPgRating: Function;
-  setSelectedGamesByGenre: Function;
-  games: GameM[];
-  selectedGames: GameM[];
-  selectedPgRatings: string[];
-  selectedGenres: string[];
-  selectedGamesByPgRating: GameM[];
-  selectedGamesByGenre: GameM[];
+  setGames: (games: GameM[]) => void;
+  setSelectedPgRatings: (pgRatings: string[]) => void;
+  setSelectedGenres: (genres: string[]) => void;
+  setSelectedGames: (games: GameM[]) => void;
+  setSelectedGamesByPgRating: (games: GameM[]) => void;
+  setSelectedGamesByGenre: (games: GameM[]) => void;
 }
 
-class App extends Component<RouteProps, {}> {
-  componentDidMount() {
-    GamsService.getGames().then((games: GameM[]) => {
-      this.props.setGames(games);
-      this.props.setSelectedGames(games);
-    });
+class App extends Component<PropsI, {}> {
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    if (this.props.selectedGames.length === 0) {
+      this.props.setSelectedGames(this.props.games);
+    }
   }
 
-  updateSelectedOptions = (
-    selectedOptions: string[],
-    selectedOption: string
-  ) => {
-    const selectedOptionsExists = selectedOptions.find((option) => {
-      return option === selectedOption;
-    });
-
-    if (selectedOptionsExists) {
-      selectedOptions = selectedOptions.filter((option) => {
-        return option !== selectedOption;
-      });
-    } else {
-      selectedOptions.push(selectedOption);
-    }
-
-    return selectedOptions;
-  };
-
-  updateDisplayedGames = (event: ChangeEvent<HTMLInputElement>) => {
-    let selectedGames: GameM[] = this.props.selectedGames;
-    let selectedGamesByPgRating: GameM[] = this.props.selectedGamesByPgRating;
-    let selectedGamesByGenre: GameM[] = this.props.selectedGamesByGenre;
-
-    if (event.target.name === "pgRating") {
-      let selectedPgRating = event.target.value;
-      let selectedPgRatings: string[] = [...this.props.selectedPgRatings];
-      selectedPgRatings = this.updateSelectedOptions(
-        selectedPgRatings,
-        selectedPgRating
-      );
-      this.props.setSelectedPgRatings(selectedPgRatings);
-
-      selectedGamesByPgRating = this.props.games.filter((game: GameM) => {
-        let found = false;
-        for (const pgRating of selectedPgRatings) {
-          if (game.pgRating === pgRating) {
-            found = true;
-          }
-        }
-        return found;
-      });
-    }
-
-    if (event.target.name === "genre") {
-      let selectedGenre: string = event.target.value;
-      let selectedGenres: string[] = [...this.props.selectedGenres];
-      selectedGenres = this.updateSelectedOptions(
-        selectedGenres,
-        selectedGenre
-      );
-      this.props.setSelectedGenres(selectedGenres);
-
-      selectedGamesByGenre = this.props.games.filter((game: GameM) => {
-        let found = false;
-        for (const genre of selectedGenres) {
-          if (game.genre.type === genre) {
-            found = true;
-          }
-        }
-        return found;
-      });
-    }
-
-    selectedGames = [...selectedGamesByPgRating, ...selectedGamesByGenre];
-
-    let selectedGamesId = selectedGames
-      .map((game: GameM) => {
-        return game.id;
-      })
-      .filter((id, index, array) => {
-        return array.indexOf(id) === index;
-      });
-
-    let selectedGamesWithoutDuplicates: (
-      | GameM
-      | undefined
-    )[] = selectedGamesId.map((id) => {
-      return this.props.games.find((game: GameM) => game.id === id);
-    });
-
-    this.props.setSelectedGamesByPgRating(selectedGamesByPgRating);
-    this.props.setSelectedGamesByGenre(selectedGamesByGenre);
-    if (selectedGames.length === 0) {
-      return this.props.setSelectedGames(this.props.games);
-    }
-    this.props.setSelectedGames(selectedGamesWithoutDuplicates);
-  };
-
   render() {
-    /*if (this.state.selectedGames.length === 0) {
-      this.setState({ selectedGames: this.state.games });
-    }*/
+    console.log("App.tsx Render");
+    console.log("SelectedGames: ");
+    console.log(this.props.selectedGames);
+    console.log("//////////////");
     return (
       <Aux>
-        <button
-          style={{ marginTop: "5rem" }}
-          onClick={() => this.props.onIncrementCounter()}
-        >
-          <h1>{this.props.ctr}</h1>
-        </button>
-        <Games
-          // games={this.props.selectedGames}
-          routerProps={this.props}
-          updateDisplayedGames={this.updateDisplayedGames}
-        />
+        <h1>hello</h1>
+        <Games {...this.props} />
       </Aux>
     );
   }
@@ -160,35 +58,34 @@ const mapStateToProp = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: (a: GameDisplayActionTypes) => void) => {
   return {
-    onIncrementCounter: () => dispatch({ type: "INCREMENT" }),
     setGames: (games: GameM[]) =>
-      dispatch({ type: actionTypes.SET_GAMES, games: games }),
+      dispatch({ type: actionTypes.SET_GAMES, payload: { games: games } }),
     setSelectedPgRatings: (selectedPgRatings: string[]) =>
       dispatch({
         type: actionTypes.SET_SELECTED_PGRATINGS,
-        selectedPgRatings: selectedPgRatings,
+        payload: { pgRatings: selectedPgRatings },
       }),
     setSelectedGenres: (selectedGenres: string[]) =>
       dispatch({
         type: actionTypes.SET_SELECTED_GENRES,
-        selectedGenres: selectedGenres,
+        payload: { genres: selectedGenres },
       }),
     setSelectedGames: (selectedGames: GameM[]) =>
       dispatch({
         type: actionTypes.SET_SELECTED_GAMES,
-        selectedGames: selectedGames,
+        payload: { games: selectedGames },
       }),
     setSelectedGamesByPgRating: (selectedGamesByPgRating: GameM[]) =>
       dispatch({
         type: actionTypes.SET_SELECTED_GAMES_BY_PGRATING,
-        selectedGamesByPgRating: selectedGamesByPgRating,
+        payload: { games: selectedGamesByPgRating },
       }),
     setSelectedGamesByGenre: (selectedGamesByGenre: GameM[]) =>
       dispatch({
         type: actionTypes.SET_SELECTED_GAMES_BY_GENRE,
-        selectedGamesByGenre: selectedGamesByGenre,
+        payload: { games: selectedGamesByGenre },
       }),
   };
 };
