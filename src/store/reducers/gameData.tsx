@@ -1,4 +1,10 @@
-const reducer = (state: any, action: any) => {
+const initialState = {
+  games: [],
+  genres: [],
+  pgRatings: [],
+};
+
+const reducer = (state = initialState, action: any) => {
   return state;
 };
 

@@ -11,8 +11,9 @@ import * as GenreService from "../../service/GenreService";
 import Aux from "../../hoc/Auxiliary";
 import { InputCheckBox } from "../../shared/Input/Input";
 
-interface PropsI extends RouteComponentProps<{}> {
-  onIncrementCounter: Function;
+import { GameDisplayState } from "../../store/reducers/gameDisplay";
+
+interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
   ctr: number;
   setGames: Function;
   setSelectedPgRatings: Function;
@@ -20,12 +21,6 @@ interface PropsI extends RouteComponentProps<{}> {
   setSelectedGames: Function;
   setSelectedGamesByPgRating: Function;
   setSelectedGamesByGenre: Function;
-  games: GameM[];
-  selectedGames: GameM[];
-  selectedPgRatings: string[];
-  selectedGenres: string[];
-  selectedGamesByPgRating: GameM[];
-  selectedGamesByGenre: GameM[];
 }
 
 const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {

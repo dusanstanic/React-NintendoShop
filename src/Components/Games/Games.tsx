@@ -12,7 +12,6 @@ import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
 interface PropsI extends RouteComponentProps<{}> {
-  onIncrementCounter: Function;
   ctr: number;
   setGames: Function;
   setSelectedPgRatings: Function;
@@ -29,7 +28,6 @@ interface PropsI extends RouteComponentProps<{}> {
 }
 
 const Games = (props: PropsI) => {
-  // console.log(props);
   const showGame = (id: number | undefined) => {
     props.history.push({ pathname: "/games/" + id });
   };

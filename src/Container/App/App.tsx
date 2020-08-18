@@ -14,7 +14,6 @@ import { GameDisplayActionTypes } from "../../store/actions/gameDisplay";
 import { GameDisplayState } from "../../store/reducers/gameDisplay";
 
 interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
-  onIncrementCounter: Function;
   ctr: number;
   setGames: (games: GameM[]) => void;
   setSelectedPgRatings: (pgRatings: string[]) => void;

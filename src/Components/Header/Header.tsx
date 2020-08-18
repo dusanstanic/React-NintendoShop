@@ -122,10 +122,10 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-const mapStateToProp = (state: any) => {
-  return {
-    games: state.gameDisplay.games,
-  };
-};
+// const mapStateToProp = (state: any) => {
+//   return {
+//     games: state.gameDisplay.games,
+//   };
+// };
 
-export default connect(mapStateToProp, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);
