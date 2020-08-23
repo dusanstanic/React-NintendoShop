@@ -5,7 +5,7 @@ import "./GameForm.css";
 import Aux from "../../hoc/Auxiliary";
 
 import { GenreM } from "../../models/GenreM";
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 import ConsoleM from "../../models/ConsoleM";
 
 import * as GenreService from "../../service/GenreService";

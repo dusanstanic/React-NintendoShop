@@ -4,9 +4,8 @@ import { RouteComponentProps } from "react-router-dom";
 import "./App.css";
 
 import * as actionTypes from "../../store/actions/gameDisplay";
-import * as GamsService from "../../service/GamesService";
 
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";
@@ -24,21 +23,28 @@ interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
 }
 
 class App extends Component<PropsI, {}> {
-  componentDidUpdate() {
-    console.log("componentDidUpdate");
-    if (this.props.selectedGames.length === 0) {
-      this.props.setSelectedGames(this.props.games);
-    }
-  }
+  // componentDidMount() {
+  //   console.log("componentDidMount");
+  //   if (this.props.selectedGames.length === 0) {
+  //     console.log("componentDidMount set state");
+  //     this.props.setSelectedGames(this.props.games);
+  //   }
+  // }
+
+  // componentDidUpdate() {
+  //   console.log("componentDidUpdate");
+  //   if (this.props.selectedGames.length === 0) {
+  //     console.log("componentDidUpdate set state");
+  //     this.props.setSelectedGames(this.props.games);
+  //   }
+  // }
 
   render() {
-    console.log("App.tsx Render");
-    console.log("SelectedGames: ");
-    console.log(this.props.selectedGames);
-    console.log("//////////////");
+    console.log("Render App");
+    console.log(this.props);
     return (
       <Aux>
-        <h1>hello</h1>
+        {/* <h1>Hello</h1> */}
         <Games {...this.props} />
       </Aux>
     );

@@ -4,41 +4,40 @@ import { connect, useSelector } from "react-redux";
 
 import classes from "./Header.module.css";
 
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 import * as GameService from "../../service/GamesService";
+import * as GenreService from "../../service/GenreService";
 
 import Aux from "../../hoc/Auxiliary";
 
-import * as actionTypes from "../../store/actions/gameDisplay";
+import * as gameDataActionTypes from "../../store/actions/gameData";
+import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
 
 import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
-import Consoles from "../Consoles/Consoles";
+import { GenreM } from "../../models/GenreM";
 
 interface PropsI {
   setGames: (games: GameM[]) => void;
+  setGenres: (genres: GenreM[]) => void;
+  setPgRatings: (pgRatings: string[]) => void;
+  setSelectedGames: (games: GameM[]) => void;
 }
 
 const Header = (props: PropsI) => {
-  console.log(props);
-
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
-      console.log("useEffect In");
       props.setGames(games);
-      console.log("useEffect In Finished");
+      props.setSelectedGames(games);
     });
-    console.log("useEffect Out");
+    GenreService.getGenres().then((genres: GenreM[]) => {
+      props.setGenres(genres);
+    });
+    props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
-  /* GameService.getGames().then((games: GameM[]) => {
-    console.log("useEffect In");
-    props.setGames(games);
-    console.log("useEffect In Finished");
-  });*/
-
-  console.log("Render Header.tsx");
+  console.log("Render header");
   return (
     <Aux>
       <header className={classes["main-header"]}>
@@ -115,17 +114,35 @@ const Header = (props: PropsI) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapStateToProp = (state: any) => {
   return {
-    setGames: (games: GameM[]) =>
-      dispatch({ type: actionTypes.SET_GAMES, payload: { games: games } }),
+    games: state.gameDisplay.games,
   };
 };
 
-// const mapStateToProp = (state: any) => {
-//   return {
-//     games: state.gameDisplay.games,
-//   };
-// };
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    setGames: (games: GameM[]) =>
+      dispatch({
+        type: gameDataActionTypes.SET_GAMES,
+        payload: { games: games },
+      }),
+    setGenres: (genres: GenreM[]) =>
+      dispatch({
+        type: gameDataActionTypes.SET_GENRES,
+        payload: { genres: genres },
+      }),
+    setPgRatings: (pgRatings: string[]) =>
+      dispatch({
+        type: gameDataActionTypes.SET_PEGIRATINGS,
+        payload: { pgRatings: pgRatings },
+      }),
+    setSelectedGames: (selectedGames: GameM[]) =>
+      dispatch({
+        type: gameDisplayActionTypes.SET_SELECTED_GAMES,
+        payload: { games: selectedGames },
+      }),
+  };
+};
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProp, mapDispatchToProps)(Header);

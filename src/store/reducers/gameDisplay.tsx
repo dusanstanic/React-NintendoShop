@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/gameDisplay";
 import { GameDisplayActionTypes } from "../actions/gameDisplay";
 
-import Game from "../../models/GamesM";
+import Game from "../../models/GameM";
 
 export interface GameDisplayState {
   games: Game[];
@@ -22,7 +22,6 @@ const initialState: GameDisplayState = {
 };
 
 const reducer = (state = initialState, action: GameDisplayActionTypes) => {
-  // console.log(action);
   switch (action.type) {
     case actionTypes.SET_GAMES:
       return { ...state, games: action.payload.games };

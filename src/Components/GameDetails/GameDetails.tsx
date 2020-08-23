@@ -3,7 +3,7 @@ import classes from "./GameDetails.module.css";
 
 import * as GameService from "../../service/GamesService";
 
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 

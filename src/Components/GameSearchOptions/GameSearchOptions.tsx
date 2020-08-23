@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./GameSearchOptions.module.css";
 
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 import { GenreM } from "../../models/GenreM";
 
 import * as GenreService from "../../service/GenreService";

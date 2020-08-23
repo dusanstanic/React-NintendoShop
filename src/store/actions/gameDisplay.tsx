@@ -1,4 +1,4 @@
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 export const SET_GAMES = "SET_GAMES";
 export const SET_SELECTED_GAMES = "SET_SELECTED_GAMES";
