@@ -4,7 +4,6 @@ import { GameDisplayActionTypes } from "../actions/gameDisplay";
 import Game from "../../models/GameM";
 
 export interface GameDisplayState {
-  games: Game[];
   selectedGames: Game[];
   selectedPgRatings: string[];
   selectedGenres: string[];
@@ -13,7 +12,6 @@ export interface GameDisplayState {
 }
 
 const initialState: GameDisplayState = {
-  games: [],
   selectedGames: [],
   selectedPgRatings: [],
   selectedGenres: [],
@@ -23,8 +21,6 @@ const initialState: GameDisplayState = {
 
 const reducer = (state = initialState, action: GameDisplayActionTypes) => {
   switch (action.type) {
-    case actionTypes.SET_GAMES:
-      return { ...state, games: action.payload.games };
     case actionTypes.SET_SELECTED_GAMES:
       return { ...state, selectedGames: action.payload.games };
     case actionTypes.SET_SELECTED_PGRATINGS:

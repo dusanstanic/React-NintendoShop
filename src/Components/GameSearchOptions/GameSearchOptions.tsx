@@ -4,17 +4,17 @@ import { RouteComponentProps } from "react-router-dom";
 import classes from "./GameSearchOptions.module.css";
 
 import GameM from "../../models/GameM";
-import { GenreM } from "../../models/GenreM";
-
-import * as GenreService from "../../service/GenreService";
 
 import Aux from "../../hoc/Auxiliary";
 import { InputCheckBox } from "../../shared/Input/Input";
 
 import { GameDisplayState } from "../../store/reducers/gameDisplay";
+import { GameDataState } from "../../store/reducers/gameData";
 
-interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
-  ctr: number;
+interface PropsI
+  extends RouteComponentProps<{}>,
+    GameDisplayState,
+    GameDataState {
   setGames: Function;
   setSelectedPgRatings: Function;
   setSelectedGenres: Function;
@@ -115,15 +115,7 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
     props.routerProps.setSelectedGames(selectedGamesWithoutDuplicates);
   };
 
-  const [genres, setGenreData] = useState<GenreM[]>();
-
-  useEffect(() => {
-    GenreService.getGenres().then((genres) => {
-      setGenreData(genres);
-    });
-  }, []);
-
-  const pgRatingOptions = ["3", "7", "12", "16", "18"].map((pgRating) => {
+  const pgRatingOptions = props.routerProps.pgRatings.map((pgRating) => {
     return (
       <InputCheckBox
         key={pgRating}
@@ -134,7 +126,7 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
     );
   });
 
-  const genreOptions = genres?.map((genre) => {
+  const genreOptions = props.routerProps.genres.map((genre) => {
     return (
       <InputCheckBox
         key={genre.id}

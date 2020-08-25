@@ -7,24 +7,23 @@ import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 
+import { GameDisplayState } from "../../store/reducers/gameDisplay";
+import { GameDataState } from "../../store/reducers/gameData";
+
 import GameSearchOptions from "../GameSearchOptions/GameSearchOptions";
 import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
-interface PropsI extends RouteComponentProps<{}> {
-  ctr: number;
-  setGames: Function;
-  setSelectedPgRatings: Function;
-  setSelectedGenres: Function;
-  setSelectedGames: Function;
-  setSelectedGamesByPgRating: Function;
-  setSelectedGamesByGenre: Function;
-  games: GameM[];
-  selectedGames: GameM[];
-  selectedPgRatings: string[];
-  selectedGenres: string[];
-  selectedGamesByPgRating: GameM[];
-  selectedGamesByGenre: GameM[];
+interface PropsI
+  extends RouteComponentProps<{}>,
+    GameDisplayState,
+    GameDataState {
+  setGames: (games: GameM[]) => void;
+  setSelectedPgRatings: (pgRatings: string[]) => void;
+  setSelectedGenres: (genres: string[]) => void;
+  setSelectedGames: (games: GameM[]) => void;
+  setSelectedGamesByPgRating: (games: GameM[]) => void;
+  setSelectedGamesByGenre: (games: GameM[]) => void;
 }
 
 const Games = (props: PropsI) => {

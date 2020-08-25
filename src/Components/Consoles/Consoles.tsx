@@ -1,26 +1,8 @@
-import React, { useEffect, Component } from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-const Consoles = (props: any) => {
-  useEffect(() => {
-    console.log("Finished Rendering Consoles");
-  });
-
-  console.log("Rendering Consoles");
-  return (
-    <div>
-      <h1>Consoles</h1>
-    </div>
-  );
-};
-
-/*
 class Consoles extends Component {
-  componentDidMount() {
-    console.log("Finished Rendering Consoles");
-  }
-
   render() {
-    console.log("Rendering Consoles");
     return (
       <div>
         <h1>Consoles</h1>
@@ -28,5 +10,11 @@ class Consoles extends Component {
     );
   }
 }
-*/
-export default Consoles;
+
+const mapStateToProp = (state: any) => {
+  return {
+    games: state.gameDisplay.games,
+  };
+};
+
+export default connect(mapStateToProp, null)(Consoles);

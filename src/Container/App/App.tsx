@@ -11,9 +11,12 @@ import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";
 import { GameDisplayActionTypes } from "../../store/actions/gameDisplay";
 import { GameDisplayState } from "../../store/reducers/gameDisplay";
+import { GameDataState } from "../../store/reducers/gameData";
 
-interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
-  ctr: number;
+interface PropsI
+  extends RouteComponentProps<{}>,
+    GameDisplayState,
+    GameDataState {
   setGames: (games: GameM[]) => void;
   setSelectedPgRatings: (pgRatings: string[]) => void;
   setSelectedGenres: (genres: string[]) => void;
@@ -23,28 +26,9 @@ interface PropsI extends RouteComponentProps<{}>, GameDisplayState {
 }
 
 class App extends Component<PropsI, {}> {
-  // componentDidMount() {
-  //   console.log("componentDidMount");
-  //   if (this.props.selectedGames.length === 0) {
-  //     console.log("componentDidMount set state");
-  //     this.props.setSelectedGames(this.props.games);
-  //   }
-  // }
-
-  // componentDidUpdate() {
-  //   console.log("componentDidUpdate");
-  //   if (this.props.selectedGames.length === 0) {
-  //     console.log("componentDidUpdate set state");
-  //     this.props.setSelectedGames(this.props.games);
-  //   }
-  // }
-
   render() {
-    console.log("Render App");
-    console.log(this.props);
     return (
       <Aux>
-        {/* <h1>Hello</h1> */}
         <Games {...this.props} />
       </Aux>
     );
@@ -53,8 +37,9 @@ class App extends Component<PropsI, {}> {
 
 const mapStateToProp = (state: any) => {
   return {
-    ctr: state.manageGames.counter,
-    games: state.gameDisplay.games,
+    games: state.gameData.games,
+    genres: state.gameData.genres,
+    pgRatings: state.gameData.pgRatings,
     selectedGames: state.gameDisplay.selectedGames,
     selectedPgRatings: state.gameDisplay.selectedPgRatings,
     selectedGenres: state.gameDisplay.selectedGenres,

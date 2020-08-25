@@ -11,6 +11,7 @@ import gameDisplayReducer from "./store/reducers/gameDisplay";
 import manageGameReducer from "./store/reducers/manageGames";
 import gameDataReducer from "./store/reducers/gameData";
 import Header from "./Components/Header/Header";
+import Consoles from "./Components/Consoles/Consoles";
 
 const logger = (store: any) => {
   return (next: any) => {

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
 import classes from "./Header.module.css";
 
@@ -37,7 +37,6 @@ const Header = (props: PropsI) => {
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
-  console.log("Render header");
   return (
     <Aux>
       <header className={classes["main-header"]}>
@@ -116,7 +115,9 @@ const Header = (props: PropsI) => {
 
 const mapStateToProp = (state: any) => {
   return {
-    games: state.gameDisplay.games,
+    games: state.gameData.games,
+    genres: state.gameData.genres,
+    pgRatings: state.gameData.pgRatings,
   };
 };
 
