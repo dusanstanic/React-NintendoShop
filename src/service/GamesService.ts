@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import GameM from "../models/GamesM";
+import GameM from "../models/GameM";
 
 function parseDate(date: Date) {
   const dateArray = date.toString().split("-");

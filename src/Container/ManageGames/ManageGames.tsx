@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import classes from "./ManageGames.module.css";
 
 import RouterProps from "../../models/Route";
-import GameM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 import * as GameService from "../../service/GamesService";
 
@@ -82,6 +82,7 @@ class ManageGames extends Component<
   };
 
   render() {
+    console.log(this.props);
     let gamesList = null;
     if (this.state) {
       gamesList = this.state.games.map((game) => {

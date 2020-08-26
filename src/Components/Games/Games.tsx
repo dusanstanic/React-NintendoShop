@@ -1,23 +1,34 @@
 import React from "react";
 import classes from "./Games.module.css";
 import { Route } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
-import RouteProps from "../../models/Route";
-import GamesM from "../../models/GamesM";
+import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
+
+import { GameDisplayState } from "../../store/reducers/gameDisplay";
+import { GameDataState } from "../../store/reducers/gameData";
 
 import GameSearchOptions from "../GameSearchOptions/GameSearchOptions";
 import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 
-const Games = (props: {
-  games: GamesM[];
-  routerProps: RouteProps;
-  updateDisplayedGames: Function;
-}) => {
+interface PropsI
+  extends RouteComponentProps<{}>,
+    GameDisplayState,
+    GameDataState {
+  setGames: (games: GameM[]) => void;
+  setSelectedPgRatings: (pgRatings: string[]) => void;
+  setSelectedGenres: (genres: string[]) => void;
+  setSelectedGames: (games: GameM[]) => void;
+  setSelectedGamesByPgRating: (games: GameM[]) => void;
+  setSelectedGamesByGenre: (games: GameM[]) => void;
+}
+
+const Games = (props: PropsI) => {
   const showGame = (id: number | undefined) => {
-    props.routerProps.history.push({ pathname: "/games/" + id });
+    props.history.push({ pathname: "/games/" + id });
   };
 
   return (
@@ -25,10 +36,10 @@ const Games = (props: {
       <div className={classes["main-game-grid"]}>
         <GameSearchOptions
           class={classes["game-search-options"]}
-          updateDisplayedGames={props.updateDisplayedGames}
+          routerProps={props}
         ></GameSearchOptions>
         <div className={classes["games-list-container"]}>
-          {props.games.map((game: GamesM) => {
+          {props.selectedGames.map((game: GameM) => {
             return (
               <Game
                 key={game.id}
