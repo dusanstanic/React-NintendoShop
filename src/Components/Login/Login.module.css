@@ -1,0 +1,63 @@
+.login {
+  width: 40%;
+  margin: auto;
+  margin-top: 4rem;
+  padding: 10px;
+  background: #fdc90e;
+  border: 5px black solid;
+  text-align: center;
+}
+
+.login-title {
+  margin: 10;
+}
+
+.login-form-group {
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.login-form-group label {
+  display: block;
+}
+
+.login-form-group input {
+  width: 80%;
+}
+
+.login-submit-btn {
+  margin-top: 10px;
+  padding: 5px 20px;
+  border: 2px solid black;
+  background: lightskyblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-submit-btn:hover {
+  color: white;
+  background: green;
+}
+
+label[for="newUser"] {
+  margin-top: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+.login-register-btn {
+  width: 40%;
+  margin-top: 10px;
+  padding: 5px 20px;
+  border: 2px solid black;
+  background: lightskyblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-register-btn:hover {
+  color: white;
+  background: green;
+}
