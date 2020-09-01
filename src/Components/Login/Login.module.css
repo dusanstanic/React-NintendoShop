@@ -1,10 +1,10 @@
 .login {
   width: 40%;
   margin: auto;
-  margin-top: 4rem;
+  margin-top: 10rem;
   padding: 10px;
   background: #fdc90e;
-  border: 5px black solid;
+  border: 2px black solid;
   text-align: center;
 }
 
@@ -25,6 +25,26 @@
 
 .login-form-group input {
   width: 80%;
+  height: 2rem;
+  border-radius: 5px;
+}
+
+/* input.valid-input.yo {
+  border: 2px green solid;
+  border-radius: 25px;
+} */
+
+input.valid-input {
+  border: 2px green solid;
+  border-radius: 25px;
+}
+
+.invalid-input {
+  border: 2px red solid;
+}
+
+.login-form-group input:focus {
+  outline: none;
 }
 
 .login-submit-btn {
@@ -39,6 +59,18 @@
 .login-submit-btn:hover {
   color: white;
   background: green;
+}
+
+.login-submit-btn:disabled {
+  color: white;
+  background: red;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-submit-btn:disabled:hover {
+  background: firebrick;
+  cursor: not-allowed;
 }
 
 label[for="newUser"] {

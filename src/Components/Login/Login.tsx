@@ -2,10 +2,15 @@ import React, { Component, ChangeEvent } from "react";
 
 import classes from "./Login.module.css";
 
+import * as CustomerService from "../../service/CustomerService";
+import { Customer } from "../../models/CustomerM";
+
 interface StateI {
   email: string;
   password: string;
   isValid: boolean;
+  isEmailValid: boolean;
+  isPasswordValid: boolean;
 }
 
 enum InputName {
@@ -14,39 +19,46 @@ enum InputName {
 }
 
 class Login extends Component<{}, StateI> {
-  state: StateI = { email: "", password: "", isValid: false };
+  state: StateI = {
+    email: "",
+    password: "",
+    isValid: false,
+    isEmailValid: false,
+    isPasswordValid: false,
+  };
 
   login = () => {
+    const { email, password } = this.state;
+    CustomerService.login(email, password).then((customer: Customer | void) => {
+      localStorage.setItem("customer", JSON.stringify(customer));
+    });
     const user = this.state;
     localStorage.setItem("user", JSON.stringify(user));
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name: inputName, value: inputValue } = event.target;
+    const {
+      name: inputName,
+      value: inputValue,
+      validity: { valid: isInputValid },
+    } = event.target;
     if (inputName === InputName.EMAIL) {
-      console.log("email");
+      this.setState({ isEmailValid: isInputValid });
       this.setState({ email: inputValue }, () => {
+        console.log(this.state);
         this.isValid();
       });
     }
     if (inputName === InputName.PASSWORD) {
-      console.log("password");
+      this.setState({ isPasswordValid: true });
       this.setState({ password: inputValue }, () => {
         this.isValid();
       });
     }
-
-    // if (this.state.email && this.state.password) {
-    //   this.setState({ isValid: true });
-    // } else {
-    //   this.setState({ isValid: false });
-    // }
-
-    // console.log(this.state);
   };
 
   isValid = () => {
-    if (this.state.email && this.state.password) {
+    if (this.state.isEmailValid && this.state.isPasswordValid) {
       this.setState({ isValid: true });
     } else {
       this.setState({ isValid: false });
@@ -54,15 +66,15 @@ class Login extends Component<{}, StateI> {
   };
 
   render() {
-    console.log("Rendering Login");
-    console.log(this.state);
+    // console.log("Rendering Login");
+    // console.log(this.state);
 
     let inputClasses;
     if (this.state.email) {
-      inputClasses = classes["valid-input"] /* + " " + classes["yo"]*/;
+      inputClasses = classes["valid-input"];
     }
 
-    console.log(classes);
+    // console.log(classes);
 
     return (
       <div className={classes["login"]}>
