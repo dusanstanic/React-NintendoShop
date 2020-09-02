@@ -9,7 +9,8 @@ const Error = (props: any) => {
     <Aux>
       <Backdrop />
       <div className={classes.Error}>
-        Error: Email or password doesn't exist
+        <h3 className={classes.title}>Error</h3>
+        <p className={classes.description}>Email or password doesn't exist</p>
       </div>
     </Aux>
   );

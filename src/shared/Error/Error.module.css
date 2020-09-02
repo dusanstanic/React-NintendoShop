@@ -1,5 +1,19 @@
 .Error {
-  height: 10rem;
-  background: rgb(223, 24, 24);
+  height: 5rem;
+  background: rgb(238, 19, 19);
   color: white;
+  border-radius: 25px;
+}
+
+.title {
+  color: black;
+  margin: 0;
+}
+
+.description {
+  font-family: cursive;
+  font-weight: bold;
+  padding: 5px;
+  margin: 0;
+  margin-top: 1rem;
 }
