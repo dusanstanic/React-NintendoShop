@@ -1,9 +1,16 @@
 import React, { Component, ChangeEvent } from "react";
+import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./Login.module.css";
 
 import * as CustomerService from "../../service/CustomerService";
 import { Customer } from "../../models/CustomerM";
+
+import Spinner from "../../shared/Spinner/Spinner";
+import Error from "../../shared/Error/Error";
+import Modal from "../../shared/Modal/Modal";
+
+interface PropsI extends RouteComponentProps<{}> {}
 
 interface StateI {
   email: string;
@@ -11,6 +18,8 @@ interface StateI {
   isValid: boolean;
   isEmailValid: boolean;
   isPasswordValid: boolean;
+  showSpinner: boolean;
+  showModal: boolean;
 }
 
 enum InputName {
@@ -18,22 +27,34 @@ enum InputName {
   PASSWORD = "password",
 }
 
-class Login extends Component<{}, StateI> {
+class Login extends Component<PropsI, StateI> {
   state: StateI = {
     email: "",
     password: "",
     isValid: false,
     isEmailValid: false,
     isPasswordValid: false,
+    showSpinner: false,
+    showModal: false,
   };
 
   login = () => {
-    const { email, password } = this.state;
-    CustomerService.login(email, password).then((customer: Customer | void) => {
-      localStorage.setItem("customer", JSON.stringify(customer));
-    });
-    const user = this.state;
-    localStorage.setItem("user", JSON.stringify(user));
+    this.setState({ showSpinner: true });
+    setTimeout(() => {
+      const { email, password } = this.state;
+      CustomerService.login(email, password).then(
+        (customer: Customer | void) => {
+          if (customer) {
+            localStorage.setItem("customer", JSON.stringify(customer));
+            this.props.history.push({ pathname: "/games" });
+          } else {
+            console.log("Customer not found");
+            this.setState({ showModal: true });
+          }
+          this.setState({ showSpinner: false });
+        }
+      );
+    }, 1000);
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +66,6 @@ class Login extends Component<{}, StateI> {
     if (inputName === InputName.EMAIL) {
       this.setState({ isEmailValid: isInputValid });
       this.setState({ email: inputValue }, () => {
-        console.log(this.state);
         this.isValid();
       });
     }
@@ -65,25 +85,39 @@ class Login extends Component<{}, StateI> {
     }
   };
 
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
   render() {
-    // console.log("Rendering Login");
-    // console.log(this.state);
+    console.log("****************");
+    console.log("Rendering Login");
+    console.log(this.state);
+    console.log("****************");
 
-    let inputClasses;
-    if (this.state.email) {
-      inputClasses = classes["valid-input"];
+    // console.log(this.props);
+
+    let emailValid = "";
+    let passwordValid = "";
+    if (this.state.isEmailValid) {
+      emailValid = classes["valid-input"];
     }
-
-    // console.log(classes);
+    if (this.state.isPasswordValid) {
+      passwordValid = classes["valid-input"];
+    }
 
     return (
       <div className={classes["login"]}>
+        <Modal show={this.state.showModal} closeModal={this.closeModal}>
+          <Error />
+        </Modal>
         <h1 className={classes["login-title"]}>Login</h1>
+        <Spinner showSpinner={this.state.showSpinner} />
         <form>
           <div className={classes["login-form-group"]}>
             <label htmlFor="username">Email</label>
             <input
-              className={inputClasses}
+              className={emailValid}
               type="email"
               placeholder="Email"
               name={InputName.EMAIL}
@@ -94,6 +128,7 @@ class Login extends Component<{}, StateI> {
           <div className={classes["login-form-group"]}>
             <label htmlFor="password">Password</label>
             <input
+              className={passwordValid}
               type="text"
               placeholder="Password"
               name={InputName.PASSWORD}
