@@ -1,12 +1,12 @@
 .modal {
-  width: 70%;
-  background: white;
-  border: 1px solid black;
-  padding: 16px;
+  width: 50%;
   position: fixed;
+  top: 42%;
+  left: 25%;
   z-index: 100;
-  left: 15%;
-  top: 30%;
+  /* padding: 20px;
+  border: 1px solid black; */
+  /* background: white; */
   transition: all 1s ease-out;
   transform: translateY(-100vh);
   opacity: 0;

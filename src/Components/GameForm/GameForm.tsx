@@ -143,32 +143,47 @@ const GameForm = (props: any) => {
     }
   };
 
+  enum InputName {
+    TITLE = "title",
+    DESCRIPTION = "description",
+    RELEASEDATE = "releaseDate",
+    PRICE = "price",
+    RATING = "rating",
+    IMAGE = "image",
+    GENRE = "genre",
+    CONSOLE = "console",
+    IMAGES = "images",
+  }
+
   const addGameHandler = (
     event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    console.log(event.target.name);
-    console.log(event.target.value);
-    if (event.target.name === "title") setEnteredTitle(event.target.value);
-    if (event.target.name === "description") {
-      setEnteredDescription(event.target.value);
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+
+    if (inputName === InputName.TITLE) {
+      setEnteredTitle(inputValue);
     }
-    if (event.target.name === "releaseDate")
-      setEnteredReleaseDate(event.target.value);
-    if (event.target.name === "price") {
-      const price = event.target.value;
+    if (inputName === InputName.DESCRIPTION) {
+      setEnteredDescription(inputValue);
+    }
+    if (inputName === InputName.RELEASEDATE) setEnteredReleaseDate(inputValue);
+
+    if (inputName === InputName.PRICE) {
+      const price = inputValue;
       const priceValid = "^\\d*$";
       if (price.match(priceValid)) {
-        setEnteredPrice(event.target.value);
+        setEnteredPrice(inputValue);
       }
     }
-    if (event.target.name === "rating") setPegeRating(event.target.value);
-    if (event.target.name === "image")
-      setEnteredImage(GameService.parseImagePath(event.target.value));
-    if (event.target.name === "genre") setEntereGenre(+event.target.value);
-    if (event.target.name === "console") {
-      const selectedConsoleId = +event.target.value;
+    if (inputName === InputName.RATING) setPegeRating(inputValue);
+    if (inputName === InputName.IMAGE)
+      setEnteredImage(GameService.parseImagePath(inputValue));
+    if (inputName === InputName.GENRE) setEntereGenre(+inputValue);
+    if (inputName === InputName.CONSOLE) {
+      const selectedConsoleId = +inputValue;
       let consoleAlreadyExists = enteredConsoles.find((id) => {
         return id === selectedConsoleId;
       });
@@ -180,8 +195,9 @@ const GameForm = (props: any) => {
       }
       setEnteredConsoles([...enteredConsoles, selectedConsoleId]);
     }
+
     if (
-      event.target.name === "images" &&
+      inputName === InputName.IMAGES &&
       event.target instanceof HTMLInputElement &&
       event.target.files !== null
     ) {
@@ -220,7 +236,7 @@ const GameForm = (props: any) => {
           <div>
             <input
               type="checkbox"
-              name="console"
+              name={InputName.CONSOLE}
               value={consolee.id}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 addGameHandler(event)
@@ -242,7 +258,7 @@ const GameForm = (props: any) => {
         <input
           type="radio"
           value={pgRating}
-          name="rating"
+          name={InputName.RATING}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
           }
@@ -259,7 +275,7 @@ const GameForm = (props: any) => {
         <input
           type="text"
           placeholder="Title"
-          name="title"
+          name={InputName.TITLE}
           value={enteredTitle}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
@@ -268,7 +284,7 @@ const GameForm = (props: any) => {
         <label htmlFor="description">Description</label>
         <textarea
           placeholder="Description"
-          name="description"
+          name={InputName.DESCRIPTION}
           value={enteredDescription}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             addGameHandler(event)
@@ -277,7 +293,7 @@ const GameForm = (props: any) => {
         <label htmlFor="releaseDate">Release Date</label>
         <input
           type="date"
-          name="releaseDate"
+          name={InputName.RELEASEDATE}
           value={enteredReleaseDate}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
@@ -287,7 +303,7 @@ const GameForm = (props: any) => {
         <input
           type="text"
           placeholder="Price"
-          name="price"
+          name={InputName.PRICE}
           value={enteredPrice}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
@@ -300,7 +316,7 @@ const GameForm = (props: any) => {
           <input
             type="file"
             placeholder="Image"
-            name="image"
+            name={InputName.IMAGE}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               addGameHandler(event)
             }
@@ -308,7 +324,7 @@ const GameForm = (props: any) => {
         </div>
         <label htmlFor="genre">Genre</label>
         <select
-          name="genre"
+          name={InputName.GENRE}
           onChange={(event: ChangeEvent<HTMLSelectElement>) =>
             addGameHandler(event)
           }
@@ -317,11 +333,10 @@ const GameForm = (props: any) => {
         </select>
         <label htmlFor="pegiRating">Console</label>
         <div className="form-group-console">{consoleOptions}</div>
-
         <label htmlFor="files">Select files:</label>
         <input
           type="file"
-          name="images"
+          name={InputName.IMAGES}
           multiple
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             addGameHandler(event)
