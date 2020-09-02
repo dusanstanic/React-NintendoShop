@@ -90,13 +90,6 @@ class Login extends Component<PropsI, StateI> {
   };
 
   render() {
-    console.log("****************");
-    console.log("Rendering Login");
-    console.log(this.state);
-    console.log("****************");
-
-    // console.log(this.props);
-
     let emailValid = "";
     let passwordValid = "";
     if (this.state.isEmailValid) {
