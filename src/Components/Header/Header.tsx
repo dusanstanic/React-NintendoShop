@@ -17,6 +17,7 @@ import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
 import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
 import { GenreM } from "../../models/GenreM";
+import Login from "../Login/Login";
 
 interface PropsI {
   setGames: (games: GameM[]) => void;
@@ -56,6 +57,11 @@ const Header = (props: PropsI) => {
         </div>
         <nav className={classes["main-nav"]}>
           <ul className={classes["main-nav__items"]}>
+            <li className={classes["main-nav__item"]}>
+              <NavLink to="/login" activeClassName="nav-item-active" exact>
+                Login
+              </NavLink>
+            </li>
             <li className={classes["main-nav__item"]}>
               <NavLink to="/" activeClassName="nav-item-active" exact>
                 Home
@@ -104,6 +110,7 @@ const Header = (props: PropsI) => {
         </nav>
       </header>
       <Switch>
+        <Route path="/login" component={Login} />
         <Route path="/games" component={App} />
         <Route path="/manageGames" component={ManageGames} />
         <Route path="/consoles" component={ManageGames} />
