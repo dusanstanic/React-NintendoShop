@@ -12,7 +12,7 @@ const Game = (props: { game: GamesM; showGame: any }) => {
       <div onClick={props.showGame} className={classes["game-tile"]}>
         <div className={classes["game-tile-banner"]}>PreOrder</div>
         <img
-          alt="game"
+          alt="Nintendo Game"
           src={props.game.images ? props.game.images[0].destination : ""}
           className={classes["game-tile-image"]}
         ></img>
