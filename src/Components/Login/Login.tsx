@@ -102,7 +102,7 @@ class Login extends Component<PropsI, StateI> {
     return (
       <div className={classes["login"]}>
         <Modal show={this.state.showModal} closeModal={this.closeModal}>
-          <Error />
+          <Error errorMessage={"Email or password is incorrect"} />
         </Modal>
         <h1 className={classes["login-title"]}>Login</h1>
         <Spinner showSpinner={this.state.showSpinner} />
