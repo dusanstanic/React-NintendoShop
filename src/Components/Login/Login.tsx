@@ -9,6 +9,7 @@ import { Customer } from "../../models/CustomerM";
 import Spinner from "../../shared/Spinner/Spinner";
 import Error from "../../shared/Error/Error";
 import Modal from "../../shared/Modal/Modal";
+import { AxiosError } from "axios";
 
 interface PropsI extends RouteComponentProps<{}> {}
 
@@ -43,7 +44,7 @@ class Login extends Component<PropsI, StateI> {
     setTimeout(() => {
       const { email, password } = this.state;
       CustomerService.login(email, password).then(
-        (customer: Customer | void) => {
+        (customer: Customer | AxiosError) => {
           if (customer) {
             localStorage.setItem("customer", JSON.stringify(customer));
             this.props.history.push({ pathname: "/games" });
@@ -102,7 +103,7 @@ class Login extends Component<PropsI, StateI> {
     return (
       <div className={classes["login"]}>
         <Modal show={this.state.showModal} closeModal={this.closeModal}>
-          <Error />
+          <Error errorMessage={"Email or password is incorrect"} />
         </Modal>
         <h1 className={classes["login-title"]}>Login</h1>
         <Spinner showSpinner={this.state.showSpinner} />
