@@ -1,5 +1,5 @@
 .add-game {
-  width: 80%;
+  width: 50%;
   font-family: Calibri;
   height: 5vh;
   margin: auto;
@@ -8,7 +8,7 @@
 }
 
 .add-game-button {
-  width: 80%;
+  width: 100%;
   max-width: 55rem;
   padding: 10px;
   color: white;
