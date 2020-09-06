@@ -41,10 +41,10 @@ class Login extends Component<PropsI, StateI> {
 
   login = () => {
     this.setState({ showSpinner: true });
-    setTimeout(() => {
+    const login = setTimeout(() => {
       const { email, password } = this.state;
       CustomerService.login(email, password).then(
-        (customer: Customer | AxiosError) => {
+        (customer: Customer | void) => {
           if (customer) {
             localStorage.setItem("customer", JSON.stringify(customer));
             this.props.history.push({ pathname: "/games" });
@@ -55,7 +55,7 @@ class Login extends Component<PropsI, StateI> {
           this.setState({ showSpinner: false });
         }
       );
-    }, 1000);
+    }, 500);
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {

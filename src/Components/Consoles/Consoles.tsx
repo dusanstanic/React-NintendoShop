@@ -1,19 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 
-class Consoles extends Component {
+import classes from "./Consoles.module.css";
+
+import ConsoleM from "../../models/ConsoleM";
+
+import Aux from "../../hoc/Auxiliary";
+import Console from "./Console/Console";
+
+interface PropsI extends RouteComponentProps<{}> {
+  consoles: ConsoleM[];
+}
+
+class Consoles extends Component<PropsI, {}> {
   render() {
+    console.log(this.props.consoles);
+    const consoles = this.props.consoles.map((console: ConsoleM) => {
+      return <Console console={console} />;
+    });
+
     return (
-      <div>
-        <h1>Consoles</h1>
-      </div>
+      <Aux>
+        <div className={classes["consoles"]}>{consoles}</div>
+      </Aux>
     );
   }
 }
 
 const mapStateToProp = (state: any) => {
   return {
-    games: state.gameDisplay.games,
+    consoles: state.consoleData.consoles,
   };
 };
 

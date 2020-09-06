@@ -27,6 +27,7 @@ interface PropsI
 
 class App extends Component<PropsI, {}> {
   render() {
+    console.log("Render App");
     return (
       <Aux>
         <Games {...this.props} />

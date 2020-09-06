@@ -18,7 +18,6 @@ interface SetGenresAction {
 interface SetPgRatingsAction {
   type: typeof SET_PEGIRATINGS;
   payload: { pgRatings: string[] };
-  gay: string;
 }
 
 export type ActionTypes = SetGamesAction | SetGenresAction | SetPgRatingsAction;

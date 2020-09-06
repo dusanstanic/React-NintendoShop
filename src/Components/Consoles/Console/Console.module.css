@@ -1,0 +1,44 @@
+.console-tile {
+  vertical-align: top;
+  height: 25rem;
+  width: 22%;
+  margin: 4rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  background: rgb(228, 206, 81);
+  display: inline-block;
+}
+
+.console-image {
+  width: 100%;
+  height: 60%;
+  text-align: center;
+  margin: auto;
+  display: block;
+}
+
+.console-logo {
+  width: 20%;
+  height: 5%;
+  text-align: center;
+  margin: auto;
+
+  display: block;
+}
+
+.console-title {
+  margin: 0;
+  text-align: center;
+}
+
+.console-price {
+  margin: auto;
+  margin-top: 1.5rem;
+  padding: 5px;
+  width: 50%;
+  background: rgb(18, 170, 221);
+  border-radius: 15px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}

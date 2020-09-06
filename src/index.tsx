@@ -7,9 +7,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 
 import { BrowserRouter } from "react-router-dom";
+
 import gameDisplayReducer from "./store/reducers/gameDisplay";
 import manageGameReducer from "./store/reducers/manageGames";
 import gameDataReducer from "./store/reducers/gameData";
+import consoleDataReducer from "./store/reducers/consoleData";
+
 import Header from "./Components/Header/Header";
 
 const logger = (store: any) => {
@@ -35,6 +38,7 @@ const rootReducer = combineReducers({
   gameDisplay: gameDisplayReducer,
   manageGames: manageGameReducer,
   gameData: gameDataReducer,
+  consoleData: consoleDataReducer,
 });
 
 const store = createStore(

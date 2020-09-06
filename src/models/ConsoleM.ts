@@ -4,8 +4,8 @@ interface Console {
   description: string;
   releaseDate: Date;
   price: number;
-  pgRating: string;
   image: string;
+  logo: string;
 }
 
 export default Console;
