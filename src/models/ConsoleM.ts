@@ -4,6 +4,7 @@ interface Console {
   description: string;
   releaseDate: Date;
   price: number;
+  type: string;
   image: string;
   logo: string;
 }

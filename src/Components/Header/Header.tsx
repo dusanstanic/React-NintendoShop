@@ -95,19 +95,6 @@ const Header = (props: PropsI) => {
               <NavLink
                 activeClassName="nav-item-active"
                 to={{
-                  pathname: "/manageGames",
-                  hash: "#submit",
-                  search: "?name=true",
-                }}
-                exact
-              >
-                Manage Games
-              </NavLink>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <NavLink
-                activeClassName="nav-item-active"
-                to={{
                   pathname: "/consoles",
                   hash: "#submit",
                   search: "?name=true",
@@ -117,16 +104,31 @@ const Header = (props: PropsI) => {
                 Consoles
               </NavLink>
             </li>
+            <li className={classes["main-nav__item"]}>
+              <NavLink
+                activeClassName="nav-item-active"
+                to={{
+                  pathname: "/manageGames",
+                  hash: "#submit",
+                  search: "?name=true",
+                }}
+                exact
+              >
+                Manage Games
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </header>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/games" component={App} />
-        <Route path="/manageGames" component={ManageGames} />
-        <Route path="/consoles" component={ConsoleMain} />
-        <Route path="/manageConsoles" component={ConsoleMain} />
-      </Switch>
+      <div className={classes["routes"]}>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/games" component={App} />
+          <Route path="/manageGames" component={ManageGames} />
+          <Route path="/consoles" component={ConsoleMain} />
+          <Route path="/manageConsoles" component={ConsoleMain} />
+        </Switch>
+      </div>
     </Aux>
   );
 };
