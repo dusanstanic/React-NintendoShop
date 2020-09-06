@@ -17,6 +17,14 @@ class ConsoleMain extends Component<PropsI, {}> {
     return (
       <Aux>
         <Consoles {...this.props} />
+        <div className={classes["banner-wrapper"]}>
+          <div className={classes["banner-info"]}>Details ...</div>
+          <img
+            className={classes["banner"]}
+            alt="consoleBanner"
+            src={"http://127.0.0.1:8887/Nintendo-Switch%20-%20Banner.jpg"}
+          />
+        </div>
       </Aux>
     );
   }

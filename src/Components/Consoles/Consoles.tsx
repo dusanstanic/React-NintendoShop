@@ -16,8 +16,9 @@ interface PropsI extends RouteComponentProps<{}> {
 class Consoles extends Component<PropsI, {}> {
   render() {
     console.log(this.props.consoles);
+
     const consoles = this.props.consoles.map((console: ConsoleM) => {
-      return <Console console={console} />;
+      return <Console key={console.id} console={console} />;
     });
 
     return (

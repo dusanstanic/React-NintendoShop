@@ -1,4 +1,6 @@
 .console-tile {
+  position: relative;
+  overflow: hidden;
   vertical-align: top;
   height: 25rem;
   width: 23%;
@@ -37,5 +39,17 @@
   border-radius: 10px;
   font-weight: bold;
   color: white;
+  text-align: center;
+}
+
+.console-banner-new {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: firebrick;
+  color: white;
+  font-weight: bold;
+  transform: rotateZ(45deg) translateX(2rem) translateY(-1rem);
+  width: 8rem;
   text-align: center;
 }
