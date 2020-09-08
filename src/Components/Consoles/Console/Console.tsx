@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import React from "react";
 
 import classes from "./Console.module.css";
 
@@ -26,7 +24,7 @@ const Console = (props: PropsI) => {
         src={gameConsole.image}
       />
       <img
-        className={classes["console-logo"] + " " + classes["larger"]}
+        className={classes["console-logo"]}
         alt="logo"
         src={gameConsole.logo}
       />

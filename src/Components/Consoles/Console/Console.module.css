@@ -9,6 +9,11 @@
   display: inline-block;
 }
 
+.console-tile:hover {
+  filter: brightness(80%);
+  cursor: pointer;
+}
+
 .console-image {
   width: 100%;
   height: 60%;
@@ -31,10 +36,12 @@
 }
 
 .console-price {
-  margin: auto;
-  margin-top: 1.5rem;
-  padding: 5px;
   width: 50%;
+  position: absolute;
+  bottom: 2rem;
+  left: 25%;
+  /* margin: auto; */
+  padding: 5px;
   background: rgb(18, 170, 221);
   border-radius: 10px;
   font-weight: bold;
@@ -49,7 +56,7 @@
   background: firebrick;
   color: white;
   font-weight: bold;
-  transform: rotateZ(45deg) translateX(2rem) translateY(-1rem);
+  transform: rotateZ(45deg) translateX(2.3rem) translateY(-1.5rem);
   width: 8rem;
   text-align: center;
 }
