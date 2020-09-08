@@ -5,6 +5,7 @@ interface Console {
   releaseDate: Date;
   price: number;
   type: string;
+  condition: string;
   image: string;
   logo: string;
 }
