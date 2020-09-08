@@ -8,6 +8,8 @@ import ConsoleM from "../../models/ConsoleM";
 
 import Aux from "../../hoc/Auxiliary";
 import Console from "./Console/Console";
+import ConsoleSearchOptions from "../ConsoleSearchOptions/ConsoleSearchOptions";
+import ConsoleSearchFilter from "../ConsoleSearchFilter/ConsoleSearchFilter";
 
 interface PropsI extends RouteComponentProps<{}> {
   consoles: ConsoleM[];
@@ -15,6 +17,7 @@ interface PropsI extends RouteComponentProps<{}> {
 
 class Consoles extends Component<PropsI, {}> {
   render() {
+    console.log("Render Consoles");
     console.log(this.props.consoles);
 
     const consoles = this.props.consoles.map((console: ConsoleM) => {
@@ -23,7 +26,15 @@ class Consoles extends Component<PropsI, {}> {
 
     return (
       <Aux>
-        <div className={classes["consoles"]}>{consoles}</div>
+        <div className={classes["consoles"]}>
+          <div className={classes["console-search-filter-container"]}>
+            <ConsoleSearchFilter />
+          </div>
+          <div className={classes["console-games-container"]}>{consoles}</div>
+          <div className={classes["console-search-options-container"]}>
+            <ConsoleSearchOptions />
+          </div>
+        </div>
       </Aux>
     );
   }
