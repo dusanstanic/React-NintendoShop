@@ -8,10 +8,11 @@ import { Provider } from "react-redux";
 
 import { BrowserRouter } from "react-router-dom";
 
-import gameDisplayReducer from "./store/reducers/gameDisplay";
-import manageGameReducer from "./store/reducers/manageGames";
 import gameDataReducer from "./store/reducers/gameData";
 import consoleDataReducer from "./store/reducers/consoleData";
+import gameDisplayReducer from "./store/reducers/gameDisplay";
+import consoleDisplayReducer from "./store/reducers/consoleDisplay";
+import manageGameReducer from "./store/reducers/manageGames";
 
 import Header from "./Components/Header/Header";
 
@@ -35,10 +36,11 @@ declare global {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  gameDisplay: gameDisplayReducer,
-  manageGames: manageGameReducer,
   gameData: gameDataReducer,
   consoleData: consoleDataReducer,
+  gameDisplay: gameDisplayReducer,
+  consoleDisplay: consoleDisplayReducer,
+  manageGames: manageGameReducer,
 });
 
 const store = createStore(
