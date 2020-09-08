@@ -1,7 +1,7 @@
 .consoles {
   position: relative;
   background: black;
-  width: 80%;
+  width: 75%;
   margin: auto;
   /* height: 20rem; */
 }
@@ -17,9 +17,16 @@
 
 .console-search-options-container {
   position: absolute;
-  top: 5rem;
+  top: 4rem;
   left: 0.5rem;
-  width: 15%;
+  width: 10%;
   color: white;
   text-align: left;
+}
+
+@media (max-width: 28rem) {
+  .console-search-options-container {
+    left: 0rem;
+    top: 8rem;
+  }
 }

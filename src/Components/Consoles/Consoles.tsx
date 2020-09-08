@@ -13,14 +13,15 @@ import ConsoleSearchFilter from "../ConsoleSearchFilter/ConsoleSearchFilter";
 
 interface PropsI extends RouteComponentProps<{}> {
   consoles: ConsoleM[];
+  selectedConsoles: ConsoleM[];
 }
 
 class Consoles extends Component<PropsI, {}> {
   render() {
     console.log("Render Consoles");
-    console.log(this.props.consoles);
+    console.log(this.props);
 
-    const consoles = this.props.consoles.map((console: ConsoleM) => {
+    const consoles = this.props.selectedConsoles.map((console: ConsoleM) => {
       return <Console key={console.id} console={console} />;
     });
 
@@ -43,6 +44,7 @@ class Consoles extends Component<PropsI, {}> {
 const mapStateToProp = (state: any) => {
   return {
     consoles: state.consoleData.consoles,
+    selectedConsoles: state.consoleDisplay.selectedConsoles,
   };
 };
 
