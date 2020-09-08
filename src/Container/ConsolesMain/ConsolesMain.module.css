@@ -1,7 +1,7 @@
 .banner-wrapper {
   position: relative;
   border: 2px solid black;
-  width: 50%;
+  width: 60%;
   margin: auto;
   margin-top: 5rem;
   margin-bottom: 10rem;
@@ -10,14 +10,16 @@
   cursor: pointer;
 }
 
+.banner-wrapper:hover {
+  filter: brightness(80%);
+}
+
 .banner {
+  width: 85%;
+  height: 25rem;
   display: block;
   margin: auto;
   transform: skewX(10deg) scale(1.3);
-}
-
-.banner:hover {
-  filter: brightness(80%);
 }
 
 .banner-info {
@@ -25,24 +27,24 @@
   z-index: 10;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 40%;
   font-weight: bold;
   background: rgb(238, 206, 25);
-  transform: translateY(10rem);
+  /* transform: translateY(5rem); */
   text-align: center;
-  animation: bannerInfo 2s 2s 4 alternate forwards;
+  animation: bannerInfo 3s 2s 2 alternate forwards;
 }
 
 @keyframes bannerInfo {
   0% {
-    background: firebrick;
-    transform: translateY(4rem);
+    background: yellow;
+    transform: translateX(0rem);
   }
   /* 50% {
     transform: translateY(0rem);
   } */
   100% {
-    background: yellow;
-    transform: translateY(10rem);
+    background: firebrick;
+    transform: translateX(15rem);
   }
 }

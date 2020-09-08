@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, MouseEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./ConsolesMain.module.css";
@@ -12,8 +12,26 @@ interface PropsI extends RouteComponentProps<{}> {
   consoles: ConsoleM[];
 }
 
-class ConsoleMain extends Component<PropsI, {}> {
+class ConsoleMain extends Component<PropsI, { bannerImage: string }> {
+  state = {
+    bannerImage: "http://127.0.0.1:8887/Nintendo-Switch%20-%20Banner.jpg",
+  };
+
+  enterBannerHandler = (event: MouseEvent<HTMLImageElement>) => {
+    this.setState({
+      bannerImage:
+        "http://127.0.0.1:8887/Nintendo%20Switch%20-%20Banner%202.jpg",
+    });
+  };
+
+  leaveBannerHandler = (event: MouseEvent<HTMLImageElement>) => {
+    this.setState({
+      bannerImage: "http://127.0.0.1:8887/Nintendo-Switch%20-%20Banner.jpg",
+    });
+  };
+
   render() {
+    console.log("Render ConsolesMain");
     return (
       <Aux>
         <Consoles {...this.props} />
@@ -22,7 +40,9 @@ class ConsoleMain extends Component<PropsI, {}> {
           <img
             className={classes["banner"]}
             alt="consoleBanner"
-            src={"http://127.0.0.1:8887/Nintendo-Switch%20-%20Banner.jpg"}
+            src={this.state.bannerImage}
+            onMouseEnter={this.enterBannerHandler}
+            onMouseLeave={this.leaveBannerHandler}
           />
         </div>
       </Aux>
