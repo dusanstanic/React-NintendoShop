@@ -15,8 +15,9 @@ import * as ConsoleService from "../../service/ConsoleService";
 import Aux from "../../hoc/Auxiliary";
 
 import * as gameDataActionTypes from "../../store/actions/gameData";
-import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
 import * as consoleDataActionTypes from "../../store/actions/consoleData";
+import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
+import * as consoleDisplayActionTypes from "../../store/actions/consoleDisplay";
 
 import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
@@ -29,6 +30,7 @@ interface PropsI {
   setPgRatings: (pgRatings: string[]) => void;
   setSelectedGames: (games: GameM[]) => void;
   setConsoles: (consoles: ConsoleM[]) => void;
+  setSelectedConsoles: (consoles: ConsoleM[]) => void;
 }
 
 const Header = (props: PropsI) => {
@@ -44,11 +46,14 @@ const Header = (props: PropsI) => {
     });
     ConsoleService.getConsoles().then((consoles: ConsoleM[]) => {
       props.setConsoles(consoles);
+      props.setSelectedConsoles(consoles);
     });
     console.log("props.setPgRatings");
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
+  console.log("props");
+  console.log(props);
   return (
     <Aux>
       <div className={classes["background"]}></div>
@@ -167,6 +172,11 @@ const mapDispatchToProps = (dispatch: any) => {
     setConsoles: (consoles: ConsoleM[]) =>
       dispatch({
         type: consoleDataActionTypes.SET_CONSOLES,
+        payload: { consoles: consoles },
+      }),
+    setSelectedConsoles: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES,
         payload: { consoles: consoles },
       }),
   };
