@@ -10,6 +10,7 @@ import Consoles from "../../Components/Consoles/Consoles";
 
 interface PropsI extends RouteComponentProps<{}> {
   consoles: ConsoleM[];
+  selectedConsoles: ConsoleM[];
 }
 
 class ConsoleMain extends Component<PropsI, { bannerImage: string }> {
