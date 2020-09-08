@@ -1,0 +1,35 @@
+.console-search-filter {
+  color: white;
+  border-bottom: 1px white solid;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.console-search-filter-title {
+  font-family: Calibri;
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 5px;
+}
+
+.console-search-sort-options {
+  margin-left: auto;
+  margin-right: 2%;
+}
+
+.console-search-show-options {
+}
+
+.console-search-sort-options label,
+.console-search-show-options label {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.console-search-sort-options select:focus,
+.console-search-show-options select:focus {
+  outline: none;
+}
