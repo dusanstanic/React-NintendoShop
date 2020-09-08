@@ -51,6 +51,7 @@ const Header = (props: PropsI) => {
 
   return (
     <Aux>
+      <div className={classes["background"]}></div>
       <header className={classes["main-header"]}>
         <div>
           <NavLink
