@@ -29,7 +29,10 @@ const Console = (props: PropsI) => {
         src={gameConsole.logo}
       />
       <h4 className={classes["console-title"]}>{gameConsole.title}</h4>
-      <div className={classes["console-price"]}>{gameConsole.price} RSD</div>
+      <div className={classes["console-price-item"]}>
+        <div className={classes["console-price"]}>{gameConsole.price} RSD</div>
+        <button className={classes["console-add-to-cart-btn"]} />
+      </div>
       {newBanner}
     </div>
   );
