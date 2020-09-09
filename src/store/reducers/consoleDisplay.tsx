@@ -8,6 +8,9 @@ export interface ConsoleDisplayState {
   selectedTypes: string[];
   selectedCondition: string;
   selectedPriceRanges: string[];
+  selectedConsolesByType: Console[];
+  selectedConsolesByCondition: Console[];
+  selectedConsolesByPriceRange: Console[];
 }
 
 const initialState: ConsoleDisplayState = {
@@ -15,6 +18,9 @@ const initialState: ConsoleDisplayState = {
   selectedTypes: [],
   selectedCondition: "",
   selectedPriceRanges: [],
+  selectedConsolesByType: [],
+  selectedConsolesByCondition: [],
+  selectedConsolesByPriceRange: [],
 };
 
 const reducer = (state = initialState, action: ConsoleDisplayActions) => {
@@ -29,6 +35,15 @@ const reducer = (state = initialState, action: ConsoleDisplayActions) => {
       return {
         ...state,
         selectedPriceRanges: action.payload.priceRanges,
+      };
+    case actionTypes.SET_SELECTED_CONSOLES_BY_TYPE:
+      return { ...state, selectedConsolesByType: action.payload.consoles };
+    case actionTypes.SET_SELECTED_CONSOLES_BY_CONDITION:
+      return { ...state, selectedConsolesByCondition: action.payload.consoles };
+    case actionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES:
+      return {
+        ...state,
+        selectedConsolesByPriceRange: action.payload.consoles,
       };
     default:
       return state;
