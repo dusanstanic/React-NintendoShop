@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, MouseEvent } from "react";
 import { connect } from "react-redux";
 
 import classes from "./ConsoleSearchOptions.module.css";
@@ -7,17 +7,24 @@ import ConsoleM from "../../models/ConsoleM";
 import * as consoleDisplayActionTypes from "../../store/actions/consoleDisplay";
 
 import { InputCheckBox } from "../../shared/Input/Input";
+import Aux from "../../hoc/Auxiliary";
 
 interface PropsI {
-  setSelectedConsoles: (consoles: ConsoleM[]) => void;
+  setSelectedConsoles: (consoles: (ConsoleM | undefined)[]) => void;
   setSelectedTypes: (types: string[]) => void;
   setSelectedCondition: (condtion: string) => void;
   setSelectedPriceRanges: (priceRanges: string[]) => void;
+  setSelectedConsolesByType: (consoles: ConsoleM[]) => void;
+  setSelectedConsolesByCondition: (consoles: ConsoleM[]) => void;
+  setSelectedConsolesByPriceRange: (consoles: ConsoleM[]) => void;
   consoles: ConsoleM[];
   selectedConsoles: ConsoleM[];
   selectedTypes: string[];
   selectedCondition: string;
   selectedPriceRanges: string[];
+  selectedConsolesByType: ConsoleM[];
+  selectedConsolesByCondition: ConsoleM[];
+  selectedConsolesByPriceRange: ConsoleM[];
 }
 
 enum InputName {
@@ -27,8 +34,6 @@ enum InputName {
 }
 
 const ConsoleSearchOptions = (props: PropsI) => {
-  console.log(classes);
-
   const updateSelectedOptions = (
     selectedOptions: string[],
     currentSelectedOption: string
@@ -49,10 +54,14 @@ const ConsoleSearchOptions = (props: PropsI) => {
     return updatedSelectedOptions;
   };
 
-  const filterConsolesBySelectedOptions = (selectedOptions: string[]) => {
+  const filterConsolesBySelectedOptions = (
+    selectedOptions: string[],
+    property: InputName
+  ) => {
     const selectedConsoles = props.consoles.filter(
       (currentConsole: ConsoleM) => {
-        return selectedOptions.includes(currentConsole.type);
+        if (property === InputName.TYPE || property === InputName.CONDITION)
+          return selectedOptions.includes(currentConsole[property]);
       }
     );
     return selectedConsoles;
@@ -61,31 +70,79 @@ const ConsoleSearchOptions = (props: PropsI) => {
   const updateDisplayedConsoles = (event: ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name;
     const currentSelectedOption = event.target.value;
-    let selectedConsolesByTypes: ConsoleM[] = [];
+    let selectedConsolesByTypes: ConsoleM[] = props.selectedConsolesByType;
+    let selectedConsolesByCondition: ConsoleM[] =
+      props.selectedConsolesByCondition;
+    let selectedConsolesByPriceRange: ConsoleM[] =
+      props.selectedConsolesByPriceRange;
 
     if (inputName === InputName.TYPE) {
       let selectedTypeOptions = updateSelectedOptions(
         props.selectedTypes,
         currentSelectedOption
       );
+
       selectedConsolesByTypes = filterConsolesBySelectedOptions(
-        selectedTypeOptions
+        selectedTypeOptions,
+        InputName.TYPE
       );
-      console.log("TYPE " + selectedTypeOptions);
+
       props.setSelectedTypes(selectedTypeOptions);
-    }
-    if (inputName === InputName.CONDITION) {
-      console.log("CONDITION " + currentSelectedOption);
-    }
-    if (inputName === InputName.PRICE_RANGE) {
-      console.log("PRICE_RANGE " + currentSelectedOption);
+      props.setSelectedConsolesByType(selectedConsolesByTypes);
     }
 
-    let selectedConsoles = [...selectedConsolesByTypes];
-    if (selectedConsoles.length === 0) {
+    if (inputName === InputName.CONDITION) {
+      selectedConsolesByCondition = filterConsolesBySelectedOptions(
+        [currentSelectedOption],
+        InputName.CONDITION
+      );
+
+      props.setSelectedConsolesByCondition(selectedConsolesByCondition);
+    }
+
+    if (inputName === InputName.PRICE_RANGE) {
+      let selectedPriceRangeOptions = updateSelectedOptions(
+        props.selectedPriceRanges,
+        currentSelectedOption
+      );
+
+      selectedConsolesByPriceRange = props.consoles.filter((console) => {
+        const isInPriceRange = selectedPriceRangeOptions.find((price) => {
+          const priceMax = +price;
+          const priceMin = priceMax - 20000;
+          return priceMin <= console.price && console.price <= priceMax;
+        });
+        return isInPriceRange;
+      });
+
+      props.setSelectedConsolesByPriceRange(selectedConsolesByPriceRange);
+      props.setSelectedPriceRanges(selectedPriceRangeOptions);
+    }
+
+    let selectedConsoles = [
+      ...selectedConsolesByTypes,
+      ...selectedConsolesByCondition,
+      ...selectedConsolesByPriceRange,
+    ];
+
+    let consoleIDS = selectedConsoles.map((console: ConsoleM) => {
+      return console.id;
+    });
+
+    let consoleIDSWithoutDuplicates = consoleIDS.filter((id, index, array) => {
+      return array.indexOf(id) === index;
+    });
+
+    let selectedConsolesWithoutDuplicates = consoleIDSWithoutDuplicates.map(
+      (id) => {
+        return props.consoles.find((console) => console.id === id);
+      }
+    );
+
+    if (selectedConsolesWithoutDuplicates.length === 0) {
       props.setSelectedConsoles(props.consoles);
     } else {
-      props.setSelectedConsoles(selectedConsoles);
+      props.setSelectedConsoles(selectedConsolesWithoutDuplicates);
     }
   };
 
@@ -96,42 +153,50 @@ const ConsoleSearchOptions = (props: PropsI) => {
         key={type}
         name={"type"}
         value={type}
+        text={type}
         click={updateDisplayedConsoles}
       />
     );
   });
 
   const priceRange = [
-    "1 - 20000 RSD",
-    "20000 - 40000 RSD",
-    "40000 - 60000 RSD",
-    "60000 - 80000 RSD",
+    { text: "1 - 20000 RSD", price: 20000 },
+    { text: "20000 - 40000 RSD", price: 40000 },
+    { text: "40000 - 60000 RSD", price: 60000 },
+    { text: "60000 - 80000 RSD", price: 80000 },
   ];
-  const priceRangeOptions = priceRange.map((priceRange: string) => {
+  const priceRangeOptions = priceRange.map(
+    (priceRange: { text: string; price: number }) => {
+      return (
+        <InputCheckBox
+          key={priceRange.price}
+          name={"priceRange"}
+          value={priceRange.price}
+          text={priceRange.text}
+          click={updateDisplayedConsoles}
+        />
+      );
+    }
+  );
+
+  const conditions = ["new", "used"];
+  const conditonOptions = conditions.map((condition: string) => {
     return (
-      <InputCheckBox
-        key={priceRange}
-        name={"priceRange"}
-        value={priceRange}
-        click={updateDisplayedConsoles}
-      />
+      <Aux key={condition}>
+        <div>
+          <input
+            type="radio"
+            name={"condition"}
+            value={condition}
+            onChange={updateDisplayedConsoles}
+          />
+          <label>{condition}</label>
+        </div>
+      </Aux>
     );
   });
 
-  const conditions = ["New", "Used"];
-  const conditonOptions = conditions.map((conditon: string) => {
-    return (
-      <InputCheckBox
-        key={conditon}
-        name={"condition"}
-        value={conditon}
-        click={updateDisplayedConsoles}
-      />
-    );
-  });
-
-  console.log("ConsoleSearchOptions");
-  console.log(props);
+  console.log("Render ConsoleSearchOptions");
 
   return (
     <div className={classes["console-search-options"]}>
@@ -158,12 +223,17 @@ const mapStateToProp = (state: any) => {
     selectedTypes: state.consoleDisplay.selectedTypes,
     selectedCondition: state.consoleDisplay.selectedCondition,
     selectedPriceRanges: state.consoleDisplay.selectedPriceRanges,
+    selectedConsolesByType: state.consoleDisplay.selectedConsolesByType,
+    selectedConsolesByCondition:
+      state.consoleDisplay.selectedConsolesByCondition,
+    selectedConsolesByPriceRange:
+      state.consoleDisplay.selectedConsolesByPriceRange,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setSelectedConsoles: (consoles: ConsoleM[]) =>
+    setSelectedConsoles: (consoles: (ConsoleM | undefined)[]) =>
       dispatch({
         type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES,
         payload: { consoles: consoles },
@@ -182,6 +252,21 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch({
         type: consoleDisplayActionTypes.SET_SELECTED_PRICE_RANGES,
         payload: { priceRanges: priceRanges },
+      }),
+    setSelectedConsolesByType: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_TYPE,
+        payload: { consoles: consoles },
+      }),
+    setSelectedConsolesByCondition: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_CONDITION,
+        payload: { consoles: consoles },
+      }),
+    setSelectedConsolesByPriceRange: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES,
+        payload: { consoles: consoles },
       }),
   };
 };

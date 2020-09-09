@@ -16,6 +16,8 @@ const Console = (props: PropsI) => {
     newBanner = <div className={classes["console-banner-new"]}>New</div>;
   }
 
+  console.log("Render Console");
+
   return (
     <div className={classes["console-tile"]}>
       <img

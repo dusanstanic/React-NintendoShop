@@ -1,11 +1,11 @@
 .console-search-filter {
-  color: white;
-  border-bottom: 1px white solid;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+  border-bottom: 1px white solid;
+  color: white;
 }
 
 .console-search-filter-title {
