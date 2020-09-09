@@ -45,6 +45,7 @@ const Header = (props: PropsI) => {
       props.setGenres(genres);
     });
     ConsoleService.getConsoles().then((consoles: ConsoleM[]) => {
+      console.log("props.setConsoles(consoles);");
       props.setConsoles(consoles);
       props.setSelectedConsoles(consoles);
     });
@@ -52,8 +53,6 @@ const Header = (props: PropsI) => {
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
-  console.log("props");
-  console.log(props);
   return (
     <Aux>
       <div className={classes["background"]}></div>
