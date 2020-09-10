@@ -5,41 +5,57 @@ import { connect } from "react-redux";
 import classes from "./Header.module.css";
 
 import GameM from "../../models/GameM";
+import { GenreM } from "../../models/GenreM";
+import ConsoleM from "../../models/ConsoleM";
 
 import * as GameService from "../../service/GamesService";
 import * as GenreService from "../../service/GenreService";
+import * as ConsoleService from "../../service/ConsoleService";
 
 import Aux from "../../hoc/Auxiliary";
 
 import * as gameDataActionTypes from "../../store/actions/gameData";
+import * as consoleDataActionTypes from "../../store/actions/consoleData";
 import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
+import * as consoleDisplayActionTypes from "../../store/actions/consoleDisplay";
 
 import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
-import { GenreM } from "../../models/GenreM";
 import Login from "../Login/Login";
+import ConsoleMain from "../../Container/ConsolesMain/ConsolesMain";
 
 interface PropsI {
   setGames: (games: GameM[]) => void;
   setGenres: (genres: GenreM[]) => void;
   setPgRatings: (pgRatings: string[]) => void;
   setSelectedGames: (games: GameM[]) => void;
+  setConsoles: (consoles: ConsoleM[]) => void;
+  setSelectedConsoles: (consoles: ConsoleM[]) => void;
 }
 
 const Header = (props: PropsI) => {
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
+      console.log("props.setGames(games);");
       props.setGames(games);
       props.setSelectedGames(games);
     });
     GenreService.getGenres().then((genres: GenreM[]) => {
+      console.log("props.setGenres(genres);");
       props.setGenres(genres);
     });
+    ConsoleService.getConsoles().then((consoles: ConsoleM[]) => {
+      console.log("props.setConsoles(consoles);");
+      props.setConsoles(consoles);
+      props.setSelectedConsoles(consoles);
+    });
+    console.log("props.setPgRatings");
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
   return (
     <Aux>
+      <div className={classes["background"]}></div>
       <header className={classes["main-header"]}>
         <div>
           <NavLink
@@ -84,13 +100,13 @@ const Header = (props: PropsI) => {
               <NavLink
                 activeClassName="nav-item-active"
                 to={{
-                  pathname: "/manageGames",
+                  pathname: "/consoles",
                   hash: "#submit",
                   search: "?name=true",
                 }}
                 exact
               >
-                Manage Games
+                Consoles
               </NavLink>
             </li>
             <li className={classes["main-nav__item"]}>
@@ -103,19 +119,21 @@ const Header = (props: PropsI) => {
                 }}
                 exact
               >
-                Consoles
+                Manage Games
               </NavLink>
             </li>
           </ul>
         </nav>
       </header>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/games" component={App} />
-        <Route path="/manageGames" component={ManageGames} />
-        <Route path="/consoles" component={ManageGames} />
-        <Route path="/manageConsoles" component={ManageGames} />
-      </Switch>
+      <div className={classes["routes"]}>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/games" component={App} />
+          <Route path="/manageGames" component={ManageGames} />
+          <Route path="/consoles" component={ConsoleMain} />
+          <Route path="/manageConsoles" component={ConsoleMain} />
+        </Switch>
+      </div>
     </Aux>
   );
 };
@@ -150,7 +168,17 @@ const mapDispatchToProps = (dispatch: any) => {
         type: gameDisplayActionTypes.SET_SELECTED_GAMES,
         payload: { games: selectedGames },
       }),
+    setConsoles: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDataActionTypes.SET_CONSOLES,
+        payload: { consoles: consoles },
+      }),
+    setSelectedConsoles: (consoles: ConsoleM[]) =>
+      dispatch({
+        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES,
+        payload: { consoles: consoles },
+      }),
   };
 };
 
-export default connect(mapStateToProp, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);

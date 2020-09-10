@@ -9,7 +9,6 @@ const Error = (props: { errorMessage: string }) => {
     <Aux>
       <Backdrop />
       <div className={classes.Error}>
-        <div className={classes.title}>Error</div>
         <p className={classes.description}>{props.errorMessage}</p>
       </div>
     </Aux>

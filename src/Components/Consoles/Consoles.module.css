@@ -1,0 +1,32 @@
+.consoles {
+  position: relative;
+  background: black;
+  width: 75%;
+  margin: auto;
+  /* height: 20rem; */
+}
+
+.console-search-filter-container {
+}
+
+.console-games-container {
+  width: 85%;
+  margin: auto;
+  margin-right: 0;
+}
+
+.console-search-options-container {
+  position: absolute;
+  top: 4rem;
+  left: 0.5rem;
+  width: 10%;
+  color: white;
+  text-align: left;
+}
+
+@media (max-width: 28rem) {
+  .console-search-options-container {
+    left: 0rem;
+    top: 8rem;
+  }
+}
