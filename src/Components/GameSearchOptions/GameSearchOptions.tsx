@@ -121,7 +121,8 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
         key={pgRating}
         name={"pgRating"}
         value={pgRating}
-        updateDisplayedGames={updateDisplayedGames}
+        text={pgRating}
+        click={updateDisplayedGames}
       />
     );
   });
@@ -132,7 +133,8 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
         key={genre.id}
         name={"genre"}
         value={genre.type}
-        updateDisplayedGames={updateDisplayedGames}
+        text={genre.type}
+        click={updateDisplayedGames}
       />
     );
   });
