@@ -34,11 +34,14 @@ const Games = (props: PropsI) => {
   return (
     <Aux>
       <div className={classes["main-game-grid"]}>
+        <div className={classes["game-search-filter-container"]}>
+          <h2>Nintendo Games</h2>
+        </div>
         <GameSearchOptions
           class={classes["game-search-options"]}
           routerProps={props}
         ></GameSearchOptions>
-        <div className={classes["games-list-container"]}>
+        <div className={classes["games-container"]}>
           {props.selectedGames.map((game: GameM) => {
             return (
               <Game

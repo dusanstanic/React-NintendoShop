@@ -17,7 +17,6 @@ const Console = (props: PropsI) => {
   }
 
   console.log("Render Console");
-
   return (
     <div className={classes["console-tile"]}>
       <img
@@ -25,6 +24,11 @@ const Console = (props: PropsI) => {
         alt="console"
         src={gameConsole.image}
       />
+      <div className={classes["console-caption-icons"]}>
+        <div className={classes["console-caption-icon-show"]}></div>
+        <div className={classes["console-caption-icon-compare"]}></div>
+        <div className={classes["console-caption-icon-favorite"]}></div>
+      </div>
       <img
         className={classes["console-logo"]}
         alt="logo"
