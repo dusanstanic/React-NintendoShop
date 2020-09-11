@@ -1,31 +1,29 @@
 .game-tile {
-  border: 2px solid black;
-  background: rgb(221, 218, 41);
-  text-align: center;
   position: relative;
   overflow: hidden;
+  background: rgb(221, 218, 41);
+  border: 2px solid black;
+  text-align: center;
+  cursor: pointer;
 }
 
-.game-tile-banner {
-  color: white;
-  background: green;
-  position: absolute;
-  width: 10rem;
-  top: 0;
-  right: 0;
-  transform: rotateZ(45deg) translateY(-1rem) translateX(3rem);
-}
-
-.game-tile-title {
-  font-family: Calibri;
-  margin: 8px;
+.game-tile:hover {
+  filter: brightness(80%);
 }
 
 .game-tile-image {
+  width: 85%;
+  height: 16rem;
   border: 2px solid black;
   border-top: none;
-  height: 16rem;
-  width: 65%;
+}
+
+.game-tile-title {
+  margin: 0;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 500;
+  font-family: Calibri;
 }
 
 .game-tile-price {
@@ -41,4 +39,15 @@
   width: 60%;
   height: 2rem;
   border-radius: 10px;
+}
+
+.game-tile-banner {
+  color: white;
+  background: green;
+  position: absolute;
+  width: 10rem;
+  /* margin-top: 5px; */
+  top: 0;
+  right: 0;
+  transform: rotateZ(45deg) translateY(-1.5rem) translateX(3rem);
 }
