@@ -1,3 +1,8 @@
+select {
+  background-color: #333333;
+  color: white;
+}
+
 .console-search-filter {
   display: flex;
   flex-direction: row;
