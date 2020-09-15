@@ -1,0 +1,111 @@
+.console-modal {
+  padding-top: 10px;
+  /* background: aqua; */
+  color: black;
+  width: 50%;
+  margin: auto;
+  margin-right: 0;
+  /* padding: 20px; */
+}
+
+.console-modal-type {
+  font-size: 13px;
+  color: #999999;
+}
+
+.console-modal-title {
+  font-size: 24px;
+}
+
+.console-modal-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  padding: 40px;
+  /* background-color: red; */
+}
+
+.console-modal-image-wrapper img {
+  width: 100%;
+  height: 85%;
+}
+
+.console-modal-image-wrapper .console-modal-image-wrapper-logo {
+  height: 15%;
+  width: 100%;
+  padding: 5% 20%;
+}
+
+.console-modal-price-content {
+  position: relative;
+  /* background-color: #3f93c0; */
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  color: white;
+  margin-top: 10rem;
+  height: 2.5rem;
+  /* padding: 5px;
+  border: 2px aqua solid; */
+}
+
+.console-modal-price-content-condition {
+  width: 20%;
+  text-align: center;
+  background-color: white;
+  font-size: 16px;
+  color: #3f93c0;
+  border: 1px #3f93c0 solid;
+  border-radius: 5px 5px 0px 0px;
+  /* float: left; */
+}
+
+.console-modal-price-content-current-price {
+  width: 70%;
+  padding: 0 10px;
+  display: inline-block;
+  background-color: #3f93c0;
+  font-size: 25px;
+  line-height: 40px;
+  height: 100%;
+  /* vertical-align: top; */
+}
+
+.console-modal-add-to-cart-btn {
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%202.2.jpg");
+  background-size: 20px 20px;
+  background-position: 12px 50%;
+  background-color: #3f93c0;
+  background-repeat: no-repeat;
+
+  position: absolute;
+  right: 3rem;
+  transition-property: width, right;
+  transition-duration: 1s;
+  width: 3rem;
+  margin-left: 0.5rem;
+  height: 100%;
+}
+
+.console-modal-add-to-cart-btn:hover {
+  right: 4rem;
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%201.1.jpg");
+  background-color: yellow;
+  width: 5rem;
+}
+.console-modal-add-to-cart-btn:hover::after {
+  margin-left: 20px;
+  content: "Add";
+  color: black;
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
