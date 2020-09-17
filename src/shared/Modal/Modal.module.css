@@ -1,19 +1,18 @@
 .modal {
-  width: 50%;
+  width: 20%;
   position: fixed;
-  top: 42%;
-  left: 25%;
+  left: 50vw;
   z-index: 100;
+  transition: all 1s ease-out;
+  transform: translateX(-50%) translateY(-100vh);
+  opacity: 0;
+
   /* padding: 20px;
   border: 1px solid black; */
   /* background: white; */
-  transition: all 1s ease-out;
-  transform: translateY(-100vh);
-  opacity: 0;
-  color: wheat;
 }
 
 .showModal {
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(10vh);
   opacity: 1;
 }
