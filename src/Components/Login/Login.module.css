@@ -4,10 +4,9 @@
   background-position: 100px 100px;
   background-repeat: no-repeat; */
   /* background-color: #fdc90e; */
-
-  width: 25rem;
-  margin: auto;
-  border: 1px black solid;
+  background-color: #fdc90e;
+  width: 100%;
+  border: 0px black solid;
 }
 
 .login-title {
@@ -43,7 +42,7 @@
 .login-form-group label {
   margin: auto;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .login-form-group input {
