@@ -7,7 +7,6 @@ import Aux from "../../hoc/Auxiliary";
 const Error = (props: { errorMessage: string }) => {
   return (
     <Aux>
-      <Backdrop />
       <div className={classes.Error}>
         <p className={classes.description}>{props.errorMessage}</p>
       </div>

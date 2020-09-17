@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -23,6 +23,7 @@ import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
 import Login from "../Login/Login";
 import ConsoleMain from "../../Container/ConsolesMain/ConsolesMain";
+import Modal from "../../shared/Modal/Modal";
 
 interface PropsI {
   setGames: (games: GameM[]) => void;
@@ -34,6 +35,8 @@ interface PropsI {
 }
 
 const Header = (props: PropsI) => {
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
       console.log("props.setGames(games);");
@@ -53,9 +56,20 @@ const Header = (props: PropsI) => {
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
+  const hideLoginModal = () => {
+    setShowModal(false);
+  };
+
+  const showLoginModal = (event: MouseEvent<HTMLAnchorElement>) => {
+    setShowModal(true);
+  };
+
   return (
     <Aux>
       <div className={classes["background"]}></div>
+      <Modal show={showModal} closeModal={hideLoginModal}>
+        <Login />
+      </Modal>
       <header className={classes["main-header"]}>
         <div>
           <NavLink
@@ -74,9 +88,14 @@ const Header = (props: PropsI) => {
         <nav className={classes["main-nav"]}>
           <ul className={classes["main-nav__items"]}>
             <li className={classes["main-nav__item"]}>
-              <NavLink to="/login" activeClassName="nav-item-active" exact>
+              <a href="#" onClick={showLoginModal}>
                 Login
-              </NavLink>
+              </a>
+            </li>
+            <li className={classes["main-nav__item"]}>
+              <a href="#" onClick={showLoginModal}>
+                Register
+              </a>
             </li>
             <li className={classes["main-nav__item"]}>
               <NavLink to="/" activeClassName="nav-item-active" exact>
@@ -127,7 +146,6 @@ const Header = (props: PropsI) => {
       </header>
       <div className={classes["routes"]}>
         <Switch>
-          <Route path="/login" component={Login} />
           <Route path="/games" component={App} />
           <Route path="/manageGames" component={ManageGames} />
           <Route path="/consoles" component={ConsoleMain} />

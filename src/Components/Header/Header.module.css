@@ -10,11 +10,10 @@
 
 .main-header {
   z-index: 1000;
-  font-family: cursive;
   width: 100%;
   position: fixed;
   top: 0;
-  background: rgb(226, 204, 10);
+  background-color: #fdc90e;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,10 +25,10 @@
 }
 */
 .main-header__icon {
-  margin-top: 1rem;
-  width: 6rem;
-  height: 2rem;
-  border-radius: 1rem;
+  margin-top: 0rem;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 2rem;
 }
 
 .main-nav {
