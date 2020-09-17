@@ -55,7 +55,7 @@ class Login extends Component<PropsI, StateI> {
           this.setState({ showSpinner: false });
         }
       );
-    }, 500);
+    }, 1000);
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +71,11 @@ class Login extends Component<PropsI, StateI> {
       });
     }
     if (inputName === InputName.PASSWORD) {
-      this.setState({ isPasswordValid: true });
+      if (inputValue.length === 0) {
+        this.setState({ isPasswordValid: false });
+      } else {
+        this.setState({ isPasswordValid: true });
+      }
       this.setState({ password: inputValue }, () => {
         this.isValid();
       });
@@ -99,13 +103,14 @@ class Login extends Component<PropsI, StateI> {
     if (this.state.isPasswordValid) {
       passwordValid = classes["valid-input"];
     }
-
     return (
       <div className={classes["login"]}>
         <Modal show={this.state.showModal} closeModal={this.closeModal}>
           <Error errorMessage={"Email or password is incorrect"} />
         </Modal>
-        <h1 className={classes["login-title"]}>Login</h1>
+        <div className={classes["login-title"]}>
+          <h1>Login</h1>
+        </div>
         <Spinner showSpinner={this.state.showSpinner} />
         <form>
           <div className={classes["login-form-group"]}>
@@ -130,6 +135,7 @@ class Login extends Component<PropsI, StateI> {
               onChange={this.loginHandler}
             />
           </div>
+          <label htmlFor="forgotPassword">Forgot Password ?</label>
           <button
             type="button"
             disabled={!this.state.isValid}
@@ -138,8 +144,10 @@ class Login extends Component<PropsI, StateI> {
           >
             Login
           </button>
-          <label htmlFor="newUser">New User ?</label>
-          <button className={classes["login-register-btn"]}>Register</button>
+          <div style={{ marginBottom: "0px", paddingBottom: "1rem" }}>
+            <label htmlFor="newUser">New User ?</label>
+            <button className={classes["login-register-btn"]}>Register</button>
+          </div>
         </form>
       </div>
     );

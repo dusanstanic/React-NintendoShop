@@ -1,38 +1,57 @@
 .login {
-  width: 40%;
+  /* background-image: url("http://127.0.0.1:8887/Nintendo%20Wallpaper%203.jpg");
+  background-size: 50% 50%;
+  background-position: 100px 100px;
+  background-repeat: no-repeat; */
+  /* background-color: #fdc90e; */
+
+  width: 25rem;
   margin: auto;
-  margin-top: 10rem;
-  padding: 10px;
-  background: #fdc90e;
-  border: 2px black solid;
-  text-align: center;
+  border: 1px black solid;
 }
 
 .login-title {
-  margin: 10;
+  height: 70px;
+  padding-top: 1.5rem;
+  background-color: #fdc90e;
+}
+
+.login-title h1 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.login form {
+  background-color: white;
 }
 
 .login-form-group {
-  width: 50%;
+  width: 90%;
   margin: auto;
-  margin-top: 20px;
-  font-weight: bold;
+  padding: 10px;
+}
+
+.login-form-group label,
+.login-form-group input {
+  display: block;
+  width: 90%;
 }
 
 .login-form-group label {
-  display: block;
+  margin: auto;
+  text-align: left;
+  font-size: 0.9rem;
 }
 
 .login-form-group input {
-  width: 80%;
   height: 2rem;
+  margin: auto;
+  border: 2px solid darkgray;
   border-radius: 5px;
 }
-
-/* input.valid-input.yo {
-  border: 2px green solid;
-  border-radius: 25px;
-} */
 
 input.valid-input {
   border: 2px green solid;
@@ -47,10 +66,25 @@ input.valid-input {
   outline: none;
 }
 
+label[for="forgotPassword"] {
+  display: block;
+  width: 80%;
+  text-align: left;
+  margin: auto;
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 12px;
+  color: rgba(237, 5, 36, 1);
+  cursor: pointer;
+}
+
 .login-submit-btn {
-  margin-top: 10px;
+  display: block;
+  width: 80%;
+  margin: auto;
+  margin-top: 1rem;
   padding: 5px 20px;
-  border: 2px solid black;
+  border: 1px solid black;
   background: lightskyblue;
   font-weight: bold;
   cursor: pointer;
@@ -64,7 +98,7 @@ input.valid-input {
 .login-submit-btn:disabled {
   color: white;
   background: red;
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -74,22 +108,31 @@ input.valid-input {
 }
 
 label[for="newUser"] {
-  margin-top: 10px;
   display: block;
+  text-align: center;
+  margin: auto;
+  margin-top: 2.5rem;
   font-weight: bold;
+  font-size: 12px;
 }
 
 .login-register-btn {
-  width: 40%;
+  display: block;
+  width: 70%;
+  margin: auto;
   margin-top: 10px;
-  padding: 5px 20px;
-  border: 2px solid black;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
   background: lightskyblue;
   font-weight: bold;
   cursor: pointer;
+  transition-property: width, border-radius;
+  transition-duration: 1s;
 }
 
 .login-register-btn:hover {
+  background: rgb(26, 133, 204);
   color: white;
-  background: green;
+  width: 80%;
+  border-radius: 10px;
 }
