@@ -1,44 +1,200 @@
 .game-tile {
+  height: 35rem;
   position: relative;
   overflow: hidden;
-  background: rgb(221, 218, 41);
+  background: rgb(228, 206, 81);
   border: 2px solid black;
-  text-align: center;
-  cursor: pointer;
+  margin: 1%;
 }
 
-.game-tile:hover {
-  filter: brightness(80%);
+.game-tile:hover .game-image-wrapper {
+  filter: brightness(90%);
+}
+
+.game-image-wrapper {
+  position: relative;
 }
 
 .game-tile-image {
-  width: 85%;
-  height: 16rem;
-  border: 2px solid black;
-  border-top: none;
+  width: 100%;
+  height: 20rem;
+  cursor: pointer;
+}
+
+.game-caption-icons {
+  position: absolute;
+  right: 0;
+  bottom: 2%;
+  width: 55%;
+  opacity: 0;
+  transition: opacity 1s;
+  cursor: pointer;
+  text-align: right;
+}
+
+.game-tile:hover .game-caption-icons {
+  opacity: 1;
+}
+
+.game-caption-icon-show,
+.game-caption-icon-compare,
+.game-caption-icon-favorite {
+  background-size: cover;
+  background-position: 2px 50%;
+  background-repeat: no-repeat;
+  background-color: #fdc90e;
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 5px;
+  border-radius: 0px;
+}
+
+.game-caption-icon-show {
+  background-size: 18px;
+  background-position: 1px 1px;
+  background-image: url("http://127.0.0.1:8887/Search%20Logo%201.jpg");
+}
+
+.game-caption-icon-compare {
+  background-position: 0px 50%;
+  background-image: url("http://127.0.0.1:8887/Compare%20Logo.png");
+}
+
+.game-caption-icon-favorite {
+  background-image: url("http://127.0.0.1:8887/Favorite%20Logo%204.png");
+  background-position: -1px 50%;
+}
+
+.game-caption-icon-show::before,
+.game-caption-icon-compare::before,
+.game-caption-icon-favorite::before {
+  position: absolute;
+  right: 10%;
+  top: -120%;
+  background: black;
+  color: white;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.game-caption-icon-show::before {
+  content: "Fast View Product";
+}
+
+.game-caption-icon-compare::before {
+  right: 5%;
+  content: "Compare";
+}
+
+.game-caption-icon-favorite::before {
+  right: 2%;
+  content: "Details";
+}
+
+.game-caption-icon-show:hover::before,
+.game-caption-icon-compare:hover::before,
+.game-caption-icon-favorite:hover::before {
+  opacity: 1;
+}
+
+.game-tile-release-date-wrapper {
+  margin: 10px 0;
+}
+
+.game-tile-release-date {
+  text-align: center;
+  font-size: 12px;
+}
+
+.game-logo {
+  width: 35%;
+  /* height: 2%; */
+  text-align: center;
+  margin: auto;
+  margin-top: 5px;
+  display: block;
 }
 
 .game-tile-title {
   margin: 0;
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 25px;
   font-weight: 500;
   font-family: Calibri;
+  text-align: center;
+}
+
+.game-tile-price-item {
+  position: absolute;
+  bottom: 10%;
+  left: 2%;
+  /* margin-top: 5rem; */
+  width: 95%;
+}
+
+.game-tile-condition {
+  width: 35%;
+  background-color: white;
+  border: 1px solid #3f93c0;
+  border-radius: 5px 5px 0px 0px;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .game-tile-price {
-  font-size: large;
-  text-align: left;
-  color: white;
-  background: rgb(18, 170, 221);
-  margin: auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding: 2px;
-  padding-left: 10px;
-  width: 60%;
+  display: inline-block;
   height: 2rem;
-  border-radius: 10px;
+  width: 85%;
+  padding: 2px 5px;
+  background: #3f93c0;
+  border-radius: 0px 5px 5px 5px;
+  font-family: "Rubik";
+  font-weight: 500;
+  font-size: large;
+  color: white;
+  text-align: left;
+}
+
+.game-add-to-cart-btn {
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%202.2.jpg");
+  background-size: 20px 20px;
+  background-position: 4px 50%;
+  background-color: #3f93c0;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 1%;
+  height: 2rem;
+  width: 2rem;
+  margin-left: 5%;
+  vertical-align: top;
+  cursor: pointer;
+  transition-property: width, right;
+  transition-duration: 0.5s;
+}
+
+.game-add-to-cart-btn:hover {
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%201.1.jpg");
+  background-color: yellow;
+  right: 5%;
+  width: 4rem;
+}
+
+.game-add-to-cart-btn:hover::after {
+  margin-left: 20px;
+  font-weight: bold;
+  content: "Buy";
+  animation: fadein 1.5s;
+  display: block;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .game-tile-banner {
@@ -49,5 +205,6 @@
   /* margin-top: 5px; */
   top: 0;
   right: 0;
-  transform: rotateZ(45deg) translateY(-1.5rem) translateX(3rem);
+  transform: rotateZ(45deg) translateY(-1.5rem) translateX(3.2rem);
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Games.module.css";
 import { Route } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
@@ -27,6 +27,28 @@ interface PropsI
 }
 
 const Games = (props: PropsI) => {
+  const [selectedGames, setSelectedGames] = useState<JSX.Element[]>();
+
+  useEffect(() => {
+    setSelectedGames(
+      props.selectedGames.map((game: GameM) => {
+        return (
+          <Game key={game.id} game={game} showGame={() => showGame(game.id)} />
+        );
+      })
+    );
+  }, [props.selectedGames]);
+
+  useEffect(() => {
+    setSelectedGames(
+      props.games.map((game: GameM) => {
+        return (
+          <Game key={game.id} game={game} showGame={() => showGame(game.id)} />
+        );
+      })
+    );
+  }, []);
+
   const showGame = (id: number | undefined) => {
     props.history.push({ pathname: "/games/" + id });
   };
@@ -41,17 +63,7 @@ const Games = (props: PropsI) => {
           class={classes["game-search-options"]}
           routerProps={props}
         ></GameSearchOptions>
-        <div className={classes["games-container"]}>
-          {props.selectedGames.map((game: GameM) => {
-            return (
-              <Game
-                key={game.id}
-                game={game}
-                showGame={() => showGame(game.id)}
-              />
-            );
-          })}
-        </div>
+        <div className={classes["games-container"]}>{selectedGames}</div>
       </div>
       <Route path="/games/:id" component={GameDetails} />
     </Aux>
