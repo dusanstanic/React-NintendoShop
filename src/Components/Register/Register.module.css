@@ -1,0 +1,99 @@
+.register {
+  margin: auto;
+  width: 80%;
+  max-width: 700px;
+  background-color: #fdc90e;
+}
+
+.header {
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header h4 {
+  margin: 0;
+  padding: 1.5rem;
+  font-size: 18px;
+  text-align: center;
+}
+
+.header button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: 0px solid black;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register form {
+  padding: 0.5rem;
+  background: white;
+}
+
+.register form .column {
+  display: inline-block;
+  width: 50%;
+  padding: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.register form .column .form-group label {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #4a4b5c;
+}
+
+.register form .column .form-group input[type="text"] {
+  height: 34px;
+  width: 100%;
+  border: 1px solid #cccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.register form .column .form-group input[type="text"],
+.register form .column .form-group label {
+  display: block;
+}
+
+.register form .column .form-group input:focus {
+  outline: none;
+}
+
+.register form .column .form-group input[type="radio"] {
+  margin: 0;
+}
+
+.register form .column .form-group label[for="genderType"] {
+  font-size: 0.9rem;
+  padding: 5px;
+  display: inline-block;
+}
+
+.submit {
+  text-align: center;
+}
+
+.register .submit button {
+  height: 2.5rem;
+  width: 50%;
+  background: black;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.register .submit button:hover {
+  background: white;
+  color: black;
+}
