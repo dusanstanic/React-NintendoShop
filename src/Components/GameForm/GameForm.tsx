@@ -129,6 +129,7 @@ const GameForm = (props: any) => {
         pgRating: enteredPegiRating,
         image: enteredImage,
         genre: genre,
+        status: "",
         consoles: selectedConsoles,
       };
       // setModal(true);

@@ -6,7 +6,6 @@ import * as GameService from "../../service/GamesService";
 import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
-import Modal from "../../shared/Modal/ModalGame/Modal";
 import Backdrop from "../../shared/Backdrop/Backdrop";
 
 const GameDetails = (props: any) => {
