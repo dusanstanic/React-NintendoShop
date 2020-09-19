@@ -39,7 +39,7 @@ const Console = (props: PropsI) => {
         <div className={classes["console-image-wrapper"]}>
           <img
             className={classes["console-image"]}
-            alt="console"
+            alt="Nintendo Console"
             src={gameConsole.image}
           />
           <div className={classes["console-caption-icons"]}>
