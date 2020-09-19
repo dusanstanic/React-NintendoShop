@@ -1,65 +1,130 @@
 .main-game {
-  background: #dc143c;
-  border: 2px solid yellow;
-  position: relative;
+  width: 70%;
+  max-width: 50rem;
+  height: 60%;
+  position: fixed;
+  top: 0;
+  left: 50vw;
+  z-index: 100;
+  transform: translateX(-50%) translateY(15vh);
+  padding-top: 4rem;
+  border-radius: 10px;
+  background: white;
+}
+
+.main-game-image-wrapper {
+  width: 40%;
+  position: absolute;
+  top: 12%;
+  left: 5%;
+}
+
+.main-game-image {
+  width: 80%;
+  height: 25rem;
+}
+
+.main-game-logo {
+  width: 40%;
+  height: 2rem;
+}
+
+.main-game-info {
+  width: 55%;
   margin: auto;
-  margin-top: 2rem;
-  padding: 1rem;
-  max-width: 55rem;
-  border-radius: 10px;
+  margin-right: 0;
 }
 
-.main-game__pegiRating {
-  width: 5%;
-  position: absolute;
-  top: 11%;
-  left: 45%;
-  min-width: 1.5rem;
+.main-game-type {
+  margin: 0;
+  font-size: 13px;
+  color: #999999;
+  text-transform: uppercase;
 }
 
-.main-game__title {
-  font-size: small;
-  font-family: cursive;
-  margin-top: 0;
+.main-game-title {
+  font-size: 22px;
+  margin-top: 1rem;
+}
+
+.main-game-pegiRating {
+  width: 10%;
+  margin-top: 1rem;
+}
+
+.main-game-description {
+  margin-top: 1rem;
+  padding: 0rem;
+  font-size: 13px;
+  color: #4d4d4d;
+}
+
+.price-content {
+  margin-top: 5rem;
+  position: relative;
+}
+
+.price-content-status {
+  width: 25%;
+  border: 1px solid rgb(31, 142, 211);
+  border-radius: 5px 5px 0px 0px;
+  background-color: white;
   text-align: center;
+  text-transform: uppercase;
 }
 
-.main-game__releaseDate {
-  position: absolute;
-  top: 4%;
-  left: 75%;
-  text-decoration: underline;
-}
-
-.main-game__price {
-  width: 10rem;
+.price-content-current-price {
+  display: inline-block;
+  width: 75%;
+  height: 2.5rem;
+  padding: 5px;
   background: rgb(31, 142, 211);
-  position: absolute;
-  top: 25%;
-  left: 45%;
-  border-radius: 10px;
-  text-align: center;
+  border-radius: 2px;
   color: white;
-  font-size: larger;
+  font-size: 25px;
+  font-weight: 500;
+  vertical-align: top;
 }
 
-.main-game__image {
-  border: 5px solid black;
-  width: 20%;
-  height: 20%;
-  max-width: 15rem;
-  min-width: 9rem;
+.add-to-cart-btn {
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%202.2.jpg");
+  background-size: 60% 60%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: rgb(31, 142, 211);
+  position: absolute;
+  right: 10%;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-left: 1rem;
+  transition-duration: 0.5s;
+  transition-property: width, right;
 }
 
-.main-game__description {
-  border: 1.5px solid black;
-  padding: 1.5rem;
-  background: bisque;
-  font-family: Calibri;
-  font-weight: bold;
+.add-to-cart-btn:hover {
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%201.1.jpg");
+  background-size: 15% 50%;
+  background-position: 5% 50%;
+  background-color: yellow;
+  right: 15%;
+  width: 10rem;
 }
 
-@media (min-width: 32rem) {
+.add-to-cart-btn::after {
+  content: "";
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 8px;
+  opacity: 0;
+  transition: all 1s;
+}
+
+.add-to-cart-btn:hover::after {
+  content: "Add to cart";
+  opacity: 1;
+}
+
+/* @media (min-width: 32rem) {
   .main-game {
     padding: 2rem;
   }
@@ -124,4 +189,4 @@
     margin-bottom: 1rem;
     margin-left: 0rem;
   }
-}
+} */
