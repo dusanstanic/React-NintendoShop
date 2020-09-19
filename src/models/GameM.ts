@@ -9,6 +9,7 @@ interface Game {
   releaseDate: Date;
   price: number;
   pgRating: string;
+  status: string;
   image: string;
   genre: GenreM;
   consoles?: Console[];
