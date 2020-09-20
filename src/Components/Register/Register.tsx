@@ -2,6 +2,19 @@ import React, { ChangeEvent } from "react";
 
 import classes from "./Register.module.css";
 
+enum InputName {
+  FIRST_NAME = "firstName",
+  LAST_NAME = "lastName",
+  EMAIL = "email",
+  PHONE_NUMBER = "phoneNumber",
+  CITY = "city",
+  POSTAL_CODE = "postalCode",
+  STREET = "street",
+  STREET_NUMBER = "streetNumber",
+  PASSWORD = "password",
+  CONFIRMPASWORD = "confirmPassword",
+}
+
 const Register = () => {
   const registerHandler = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.name);
@@ -17,13 +30,21 @@ const Register = () => {
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="firstName">First Name</label>
-            <input type="text" name="firstName" onChange={registerHandler} />
+            <input
+              type="text"
+              name={InputName.FIRST_NAME}
+              onChange={registerHandler}
+            />
           </div>
         </div>
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" name="lastName" onChange={registerHandler} />
+            <input
+              type="text"
+              name={InputName.LAST_NAME}
+              onChange={registerHandler}
+            />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -65,14 +86,14 @@ const Register = () => {
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="password">Password</label>
-            <input type="text" name="password" onChange={registerHandler} />
+            <input type="password" name="password" onChange={registerHandler} />
           </div>
         </div>
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
-              type="text"
+              type="password"
               name="confirmPassword"
               onChange={registerHandler}
             />
