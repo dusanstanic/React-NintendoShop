@@ -1,5 +1,4 @@
 import React, { Component, ChangeEvent } from "react";
-import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./Login.module.css";
 
