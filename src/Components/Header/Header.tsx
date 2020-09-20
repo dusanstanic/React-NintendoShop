@@ -24,6 +24,7 @@ import ManageGames from "../../Container/ManageGames/ManageGames";
 import Login from "../Login/Login";
 import ConsoleMain from "../../Container/ConsolesMain/ConsolesMain";
 import Modal from "../../shared/Modal/Modal";
+import Register from "../Register/Register";
 
 interface PropsI {
   setGames: (games: GameM[]) => void;
@@ -68,81 +69,158 @@ const Header = (props: PropsI) => {
     <Aux>
       <div className={classes["background"]}></div>
       <Modal show={showModal} closeModal={hideLoginModal}>
-        <Login />
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+        </Switch>
       </Modal>
-      <header className={classes["main-header"]}>
-        <div>
-          <NavLink
-            to="/"
-            activeClassName="nav-item-active"
-            exact
-            className={classes["main-header__brand"]}
-          >
-            <img
-              src="http://127.0.0.1:8887/nintendoIcon.jpg"
-              alt="Nintendo Shop"
-              className={classes["main-header__icon"]}
-            />
-          </NavLink>
+
+      <header className={classes["header"]}>
+        <div className={classes["header-top"]}>
+          <div className={classes["row"]}>
+            <div className={classes["column"]}>
+              <nav className={classes["info-link-nav"]}>
+                <ul className={classes["info-link-nav__items"]}>
+                  <li className={classes["info-link-nav__item"]}>
+                    <img
+                      alt="Contact Phone Number"
+                      src={"http://127.0.0.1:8887/telephone-icon.png"}
+                      style={{ verticalAlign: "middle" }}
+                    />
+                    <span> 065 23 23 839</span>
+                  </li>
+                  <li className={classes["info-link-nav__item"]}>
+                    <img
+                      alt="Contact Phone Number"
+                      src={"http://127.0.0.1:8887/message-icon.png"}
+                      style={{ verticalAlign: "middle" }}
+                    />
+                    <span> dusan.stanic97@hotmail.com</span>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div className={classes["column"]}>
+              <nav className={classes["info-link-nav"]}>
+                <ul className={classes["info-link-nav__items"]}>
+                  <li className={classes["info-link-nav__item"]}>
+                    <NavLink
+                      onClick={showLoginModal}
+                      to={{
+                        pathname: "/login",
+                      }}
+                      exact
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                  <li className={classes["info-link-nav__item"]}>
+                    <NavLink
+                      onClick={showLoginModal}
+                      to={{
+                        pathname: "/register",
+                      }}
+                      exact
+                    >
+                      Register
+                    </NavLink>
+                  </li>
+                  <li className={classes["info-link-nav__item"]}>
+                    <div
+                      style={{
+                        backgroundColor: "#fdc90e",
+                        color: "black",
+                        borderRadius: "5px",
+                        padding: "5px",
+                        paddingLeft: "10px",
+                      }}
+                    >
+                      <img
+                        alt="Shopping Cart"
+                        src={
+                          "http://127.0.0.1:8887/Shopping%20Cart%20-%20Icon%203.png"
+                        }
+                        style={{
+                          width: "1.5rem",
+                          height: "15px",
+                          verticalAlign: "middle",
+                        }}
+                      />
+                      <span
+                        style={{
+                          verticalAlign: "middle",
+                          display: "inline-block",
+                          paddingLeft: "5px",
+                        }}
+                      >
+                        {" "}
+                        0
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-        <nav className={classes["main-nav"]}>
-          <ul className={classes["main-nav__items"]}>
-            <li className={classes["main-nav__item"]}>
-              <a href="#" onClick={showLoginModal}>
-                Login
-              </a>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <a href="#" onClick={showLoginModal}>
-                Register
-              </a>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <NavLink to="/" activeClassName="nav-item-active" exact>
-                Home
-              </NavLink>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <NavLink
-                activeClassName="nav-item-active"
-                to={{
-                  pathname: "/games",
-                  hash: "#submit",
-                  search: "?name=true",
-                }}
-                exact
-              >
-                Games
-              </NavLink>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <NavLink
-                activeClassName="nav-item-active"
-                to={{
-                  pathname: "/consoles",
-                  hash: "#submit",
-                  search: "?name=true",
-                }}
-                exact
-              >
-                Consoles
-              </NavLink>
-            </li>
-            <li className={classes["main-nav__item"]}>
-              <NavLink
-                activeClassName="nav-item-active"
-                to={{
-                  pathname: "/manageGames",
-                  hash: "#submit",
-                  search: "?name=true",
-                }}
-                exact
-              >
-                Manage Games
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
+        <div className={classes["main-header"]}>
+          <div>
+            <NavLink
+              to="/"
+              activeClassName="nav-item-active"
+              exact
+              className={classes["main-header__brand"]}
+            >
+              <img
+                src="http://127.0.0.1:8887/nintendoIcon.jpg"
+                alt="Nintendo Shop"
+                className={classes["main-header__icon"]}
+              />
+            </NavLink>
+          </div>
+          <nav className={classes["main-nav"]}>
+            <ul className={classes["main-nav__items"]}>
+              <li className={classes["main-nav__item"]}>
+                <NavLink to="/" activeClassName="nav-item-active" exact>
+                  Home
+                </NavLink>
+              </li>
+              <li className={classes["main-nav__item"]}>
+                <NavLink
+                  activeClassName="nav-item-active"
+                  to={{
+                    pathname: "/games",
+                  }}
+                  exact
+                >
+                  Games
+                </NavLink>
+              </li>
+              <li className={classes["main-nav__item"]}>
+                <NavLink
+                  activeClassName="nav-item-active"
+                  to={{
+                    pathname: "/consoles",
+                  }}
+                  exact
+                >
+                  Consoles
+                </NavLink>
+              </li>
+              <li className={classes["main-nav__item"]}>
+                <NavLink
+                  activeClassName="nav-item-active"
+                  to={{
+                    pathname: "/manageGames",
+                  }}
+                  exact
+                >
+                  Manage Games
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <div className={classes["routes"]}>
         <Switch>
@@ -152,6 +230,7 @@ const Header = (props: PropsI) => {
           <Route path="/manageConsoles" component={ConsoleMain} />
         </Switch>
       </div>
+      <footer></footer>
     </Aux>
   );
 };
