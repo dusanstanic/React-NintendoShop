@@ -35,7 +35,13 @@ interface PropsI {
   setSelectedConsoles: (consoles: ConsoleM[]) => void;
 }
 
+enum FormType {
+  LOGIN = "login",
+  REGISTER = "register",
+}
+
 const Header = (props: PropsI) => {
+  const [userForm, setUserForm] = useState<JSX.Element>();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -57,22 +63,25 @@ const Header = (props: PropsI) => {
     props.setPgRatings(["3", "7", "12", "16", "18"]);
   }, []);
 
-  const hideLoginModal = () => {
+  const hideModal = () => {
     setShowModal(false);
+    setUserForm(<></>);
   };
 
-  const showLoginModal = (event: MouseEvent<HTMLAnchorElement>) => {
+  const showLoginModal = (type: FormType) => {
+    if (type === FormType.LOGIN) {
+      setUserForm(<Login />);
+    } else {
+      setUserForm(<Register />);
+    }
     setShowModal(true);
   };
 
   return (
     <Aux>
       <div className={classes["background"]}></div>
-      <Modal show={showModal} closeModal={hideLoginModal}>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-        </Switch>
+      <Modal show={showModal} closeModal={hideModal}>
+        {userForm}
       </Modal>
 
       <header className={classes["header"]}>
@@ -105,10 +114,8 @@ const Header = (props: PropsI) => {
                 <ul className={classes["info-link-nav__items"]}>
                   <li className={classes["info-link-nav__item"]}>
                     <NavLink
-                      onClick={showLoginModal}
-                      to={{
-                        pathname: "/login",
-                      }}
+                      onClick={() => showLoginModal(FormType.LOGIN)}
+                      to={{}}
                       exact
                     >
                       Login
@@ -116,10 +123,8 @@ const Header = (props: PropsI) => {
                   </li>
                   <li className={classes["info-link-nav__item"]}>
                     <NavLink
-                      onClick={showLoginModal}
-                      to={{
-                        pathname: "/register",
-                      }}
+                      onClick={() => showLoginModal(FormType.REGISTER)}
+                      to={{}}
                       exact
                     >
                       Register
