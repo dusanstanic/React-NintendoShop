@@ -19,4 +19,15 @@ function login(email: string, password: string) {
     });
 }
 
-export { login };
+function register(customer: Customer) {
+  return axios
+    .post<Customer>(`http://localhost:8080/customers/register`, customer)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error: AxiosError) => {
+      throw new Error(error.response?.data);
+    });
+}
+
+export { login, register };
