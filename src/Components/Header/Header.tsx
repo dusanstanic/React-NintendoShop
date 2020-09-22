@@ -181,13 +181,17 @@ const Header = (props: PropsI) => {
           <nav className={classes["main-nav"]}>
             <ul className={classes["main-nav__items"]}>
               <li className={classes["main-nav__item"]}>
-                <NavLink to="/" activeClassName="nav-item-active" exact>
+                <NavLink
+                  to="/"
+                  activeClassName={classes["nav-item-active"]}
+                  exact
+                >
                   Home
                 </NavLink>
               </li>
               <li className={classes["main-nav__item"]}>
                 <NavLink
-                  activeClassName="nav-item-active"
+                  activeClassName={classes["nav-item-active"]}
                   to={{
                     pathname: "/games",
                   }}
@@ -198,7 +202,7 @@ const Header = (props: PropsI) => {
               </li>
               <li className={classes["main-nav__item"]}>
                 <NavLink
-                  activeClassName="nav-item-active"
+                  activeClassName={classes["nav-item-active"]}
                   to={{
                     pathname: "/consoles",
                   }}
@@ -209,7 +213,7 @@ const Header = (props: PropsI) => {
               </li>
               <li className={classes["main-nav__item"]}>
                 <NavLink
-                  activeClassName="nav-item-active"
+                  activeClassName={classes["nav-item-active"]}
                   to={{
                     pathname: "/manageGames",
                   }}
