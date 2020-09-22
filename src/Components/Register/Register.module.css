@@ -36,9 +36,10 @@
 }
 
 .register form .column {
+  vertical-align: top;
   display: inline-block;
   width: 50%;
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .form-group {
@@ -97,4 +98,16 @@
 .register .submit button:hover {
   background: white;
   color: black;
+}
+
+.register .submit button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.register .submit button:hover:disabled {
+  background: rgb(172, 24, 24);
+  color: black;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
