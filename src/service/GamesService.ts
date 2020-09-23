@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import GameM from "../models/GameM";
 
@@ -45,6 +45,9 @@ function getGames(): Promise<GameM[]> {
         game.releaseDate = parseDate(game.releaseDate);
       }
       return games;
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
     });
 }
 
@@ -56,6 +59,9 @@ function getGameById(id: number) {
     })
     .then((game) => {
       return game;
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
     });
 }
 
@@ -70,25 +76,43 @@ function getGameByPgRatings(pgRatings: String[]) {
     })
     .then((game) => {
       return game;
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
     });
 }
 
 function createGame(game: any) {
-  return axios.post("http://localhost:8080/games", game).then((response) => {
-    console.log(response);
-  });
+  return axios
+    .post("http://localhost:8080/games", game)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
+    });
 }
 
 function update(game: any) {
-  return axios.put("http://localhost:8080/games", game).then((response) => {
-    console.log(response);
-  });
+  return axios
+    .put("http://localhost:8080/games", game)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
+    });
 }
 
 function deleteById(id: number) {
-  return axios.delete("http://localhost:8080/games/" + id).then((response) => {
-    console.log(response);
-  });
+  return axios
+    .delete("http://localhost:8080/games/" + id)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
+    });
 }
 
 export {
