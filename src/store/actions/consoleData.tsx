@@ -1,9 +1,16 @@
+import * as actionTypes from "./ActionTypes/consoleDataActionTypes";
+
 import ConsoleM from "../../models/ConsoleM";
 
-export const SET_CONSOLES = "SET_CONSOLES";
+export const set_consoles = (consoles: ConsoleM[]) => {
+  return {
+    type: actionTypes.SET_CONSOLES,
+    payload: { consoles: consoles },
+  };
+};
 
 interface SetConsolesAction {
-  type: typeof SET_CONSOLES;
+  type: typeof actionTypes.SET_CONSOLES;
   payload: { consoles: ConsoleM[] };
 }
 
