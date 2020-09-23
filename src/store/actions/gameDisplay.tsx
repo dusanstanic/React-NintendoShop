@@ -24,7 +24,8 @@ const saveSelectedGames = (selectedGames: GameM[]) => {
 };
 
 export const set_selected_games = (selectedGames: GameM[]) => {
-  return (dispatch: any) => {
+  return (dispatch: any, getState: any) => {
+    // console.log(getState().gameDisplay);
     setTimeout(() => {
       dispatch(saveSelectedGames(selectedGames));
     }, 500);
