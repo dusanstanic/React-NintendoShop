@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/consoleDisplay";
+import * as actionTypes from "../actions/ActionTypes/consoleDisplayActionTypes";
 import { ConsoleDisplayActions } from "../actions/consoleDisplay";
 
 import Console from "./../../models/ConsoleM";

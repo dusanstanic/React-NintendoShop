@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/gameData";
+import * as actionTypes from "../actions/ActionTypes/gameDataActionTypes";
 import { ActionTypes } from "../actions/gameData";
 
 import Game from "../../models/GameM";

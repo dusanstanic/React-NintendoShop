@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/consoleData";
+import * as actionTypes from "../actions/ActionTypes/consoleDataActionTypes";
 import { ActionTypes } from "../actions/consoleData";
 
 import Console from "../../models/ConsoleM";
