@@ -19,4 +19,16 @@ function login(email: string, password: string) {
     });
 }
 
-export { login };
+function register(customer: Customer) {
+  return axios
+    .post<Customer>(`http://localhost:8080/customers/register`, customer)
+    .then((response) => {
+      return response;
+    })
+    .catch((error: AxiosError) => {
+      const errorMessage = error.response?.data;
+      throw new Error(errorMessage);
+    });
+}
+
+export { login, register };

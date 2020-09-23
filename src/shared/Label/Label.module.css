@@ -1,0 +1,10 @@
+.hideLabel {
+  visibility: hidden;
+  height: 12px;
+}
+
+.showLabel {
+  text-align: right;
+  visibility: visible;
+  color: red !important;
+}

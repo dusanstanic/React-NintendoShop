@@ -6,6 +6,8 @@
   /* background-color: #fdc90e; */
   background-color: #fdc90e;
   width: 100%;
+  max-width: 400px;
+  margin: auto;
   border: 0px black solid;
 }
 
