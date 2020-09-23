@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import classes from "./ConsoleSearchOptions.module.css";
 
 import ConsoleM from "../../models/ConsoleM";
-import * as consoleDisplayActionCreators from "../../store/actions/index";
+import * as consoleDisplayActions from "../../store/actions/index";
 
 import { InputCheckBox } from "../../shared/Input/Input";
 import Aux from "../../hoc/Auxiliary";
@@ -234,28 +234,22 @@ const mapStateToProp = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     setSelectedConsoles: (consoles: (ConsoleM | undefined)[]) =>
-      dispatch(consoleDisplayActionCreators.set_selected_consoles(consoles)),
+      dispatch(consoleDisplayActions.set_selected_consoles(consoles)),
     setSelectedTypes: (types: string[]) =>
-      dispatch(consoleDisplayActionCreators.set_selected_types(types)),
+      dispatch(consoleDisplayActions.set_selected_types(types)),
     setSelectedCondition: (condition: string) =>
-      dispatch(consoleDisplayActionCreators.set_selected_condition(condition)),
+      dispatch(consoleDisplayActions.set_selected_condition(condition)),
     setSelectedPriceRanges: (priceRanges: string[]) =>
-      dispatch(
-        consoleDisplayActionCreators.set_selected_price_ranges(priceRanges)
-      ),
+      dispatch(consoleDisplayActions.set_selected_price_ranges(priceRanges)),
     setSelectedConsolesByType: (consoles: ConsoleM[]) =>
-      consoleDisplayActionCreators.set_selected_consoles_by_type(consoles),
+      consoleDisplayActions.set_selected_consoles_by_type(consoles),
     setSelectedConsolesByCondition: (consoles: ConsoleM[]) =>
       dispatch(
-        consoleDisplayActionCreators.set_selected_consoles_by_condition(
-          consoles
-        )
+        consoleDisplayActions.set_selected_consoles_by_condition(consoles)
       ),
     setSelectedConsolesByPriceRange: (consoles: ConsoleM[]) =>
       dispatch(
-        consoleDisplayActionCreators.set_selected_consoles_by_price_ranges(
-          consoles
-        )
+        consoleDisplayActions.set_selected_consoles_by_price_ranges(consoles)
       ),
   };
 };

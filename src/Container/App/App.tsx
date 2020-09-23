@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import "./App.css";
 
-import * as gameDataActionCreators from "../../store/actions/index";
-import * as gameDisplayActionCreators from "../../store/actions/index";
+import * as gameDataActions from "../../store/actions/index";
+import * as gameDisplayActions from "../../store/actions/index";
 
 import GameM from "../../models/GameM";
 
@@ -52,18 +52,16 @@ const mapStateToProp = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setGames: (games: GameM[]) =>
-      dispatch(gameDataActionCreators.set_games(games)),
-    setSelectedPgRatings: (pgRatings: string[]) =>
-      dispatch(gameDisplayActionCreators.set_selected_pgRatings(pgRatings)),
-    setSelectedGenres: (genres: string[]) =>
-      dispatch(gameDisplayActionCreators.set_selected_genres(genres)),
     setSelectedGames: (games: GameM[]) =>
-      dispatch(gameDisplayActionCreators.set_selected_games(games)),
+      dispatch(gameDisplayActions.set_selected_games(games)),
+    setSelectedPgRatings: (pgRatings: string[]) =>
+      dispatch(gameDisplayActions.set_selected_pgRatings(pgRatings)),
+    setSelectedGenres: (genres: string[]) =>
+      dispatch(gameDisplayActions.set_selected_genres(genres)),
     setSelectedGamesByPgRating: (games: GameM[]) =>
-      dispatch(gameDisplayActionCreators.set_selected_games_by_pgRating(games)),
+      dispatch(gameDisplayActions.set_selected_games_by_pgRating(games)),
     setSelectedGamesByGenre: (games: GameM[]) =>
-      dispatch(gameDisplayActionCreators.set_selected_games_by_genre(games)),
+      dispatch(gameDisplayActions.set_selected_games_by_genre(games)),
   };
 };
 
