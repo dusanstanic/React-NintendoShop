@@ -15,7 +15,6 @@ interface PropsI
   extends RouteComponentProps<{}>,
     GameDisplayState,
     GameDataState {
-  setGames: Function;
   setSelectedPgRatings: Function;
   setSelectedGenres: Function;
   setSelectedGames: Function;
