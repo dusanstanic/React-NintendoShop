@@ -5,6 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -45,7 +46,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(logger))
+  composeEnhancers(applyMiddleware(logger, thunk))
 );
 
 ReactDOM.render(
