@@ -1,10 +1,22 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Label from "../../shared/Label/Label";
+import React, {
+  ChangeEvent,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
+
+import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
 
 import classes from "./Register.module.css";
 
 import { Customer } from ".././../models/CustomerM";
 import * as CustomerService from "../../service/CustomerService";
+
+import Label from "../../shared/Label/Label";
+
+interface PropsI extends RouteComponentProps {
+  closeModal: Function;
+}
 
 enum InputName {
   FIRST_NAME = "firstName",
@@ -20,7 +32,12 @@ enum InputName {
   GENDER = "gender",
 }
 
-const Register = () => {
+const Register: FunctionComponent<PropsI> = (props) => {
+  const [isRegistrationsuccessFull, setIsRegistrationsuccessFull] = useState(
+    false
+  );
+  const [serverSideErrorMessage, setServerSideErrorMessage] = useState("");
+
   const [firstNameInputErrorMessage, setFirstNameInputErrorMessage] = useState(
     ""
   );
@@ -134,10 +151,12 @@ const Register = () => {
     };
     CustomerService.register(customer)
       .then((response) => {
-        console.log(response);
+        props.closeModal();
+        props.history.replace({ pathname: "/CustomerPanel" });
+        // setIsRegistrationsuccessFull(true);
       })
       .catch((error: Error) => {
-        console.log("Error: " + error.message);
+        setServerSideErrorMessage(error.message);
       });
   };
 
@@ -288,12 +307,16 @@ const Register = () => {
       }
     }
   };
-  console.log(emailInputErrorMessage);
+
+  // if (isRegistrationsuccessFull) {
+  //   return <Redirect to="/CustomerPanel" />;
+  // }
+
   return (
     <div className={classes["register"]}>
       <div className={classes["header"]}>
         <h4>Registration</h4>
-        {/* <button>X</button> */}
+        <button onClick={() => props.closeModal()}> X</button>
       </div>
       <form>
         <div className={classes["column"]}>
@@ -450,9 +473,10 @@ const Register = () => {
             Register
           </button>
         </div>
+        <div className={classes["error-message"]}>{serverSideErrorMessage}</div>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default withRouter(Register);

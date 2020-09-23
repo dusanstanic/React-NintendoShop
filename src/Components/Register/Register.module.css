@@ -111,3 +111,10 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.register .error-message {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
