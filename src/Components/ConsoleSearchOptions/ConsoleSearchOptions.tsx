@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import classes from "./ConsoleSearchOptions.module.css";
 
 import ConsoleM from "../../models/ConsoleM";
-import * as consoleDisplayActionTypes from "../../store/actions/consoleDisplay";
+import * as consoleDisplayActions from "../../store/actions/index";
 
 import { InputCheckBox } from "../../shared/Input/Input";
 import Aux from "../../hoc/Auxiliary";
@@ -234,40 +234,23 @@ const mapStateToProp = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     setSelectedConsoles: (consoles: (ConsoleM | undefined)[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES,
-        payload: { consoles: consoles },
-      }),
+      dispatch(consoleDisplayActions.set_selected_consoles(consoles)),
     setSelectedTypes: (types: string[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_TYPES,
-        payload: { types: types },
-      }),
+      dispatch(consoleDisplayActions.set_selected_types(types)),
     setSelectedCondition: (condition: string) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONDITION,
-        payload: { condition: condition },
-      }),
+      dispatch(consoleDisplayActions.set_selected_condition(condition)),
     setSelectedPriceRanges: (priceRanges: string[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_PRICE_RANGES,
-        payload: { priceRanges: priceRanges },
-      }),
+      dispatch(consoleDisplayActions.set_selected_price_ranges(priceRanges)),
     setSelectedConsolesByType: (consoles: ConsoleM[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_TYPE,
-        payload: { consoles: consoles },
-      }),
+      consoleDisplayActions.set_selected_consoles_by_type(consoles),
     setSelectedConsolesByCondition: (consoles: ConsoleM[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_CONDITION,
-        payload: { consoles: consoles },
-      }),
+      dispatch(
+        consoleDisplayActions.set_selected_consoles_by_condition(consoles)
+      ),
     setSelectedConsolesByPriceRange: (consoles: ConsoleM[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES,
-        payload: { consoles: consoles },
-      }),
+      dispatch(
+        consoleDisplayActions.set_selected_consoles_by_price_ranges(consoles)
+      ),
   };
 };
 

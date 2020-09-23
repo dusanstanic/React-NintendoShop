@@ -1,5 +1,6 @@
-import * as actionTypes from "../actions/consoleDisplay";
+import * as actionTypes from "../actions/ActionTypes/consoleDisplayActionTypes";
 import { ConsoleDisplayActions } from "../actions/consoleDisplay";
+import { updateObject } from "./utility";
 
 import Console from "./../../models/ConsoleM";
 
@@ -26,25 +27,29 @@ const initialState: ConsoleDisplayState = {
 const reducer = (state = initialState, action: ConsoleDisplayActions) => {
   switch (action.type) {
     case actionTypes.SET_SELECTED_CONSOLES:
-      return { ...state, selectedConsoles: action.payload.consoles };
+      return updateObject(state, { selectedConsoles: action.payload.consoles });
     case actionTypes.SET_SELECTED_TYPES:
-      return { ...state, selectedTypes: action.payload.types };
+      return updateObject(state, { selectedTypes: action.payload.types });
     case actionTypes.SET_SELECTED_CONDITION:
-      return { ...state, selectedCondition: action.payload.condition };
+      return updateObject(state, {
+        selectedCondition: action.payload.condition,
+      });
     case actionTypes.SET_SELECTED_PRICE_RANGES:
-      return {
-        ...state,
+      return updateObject(state, {
         selectedPriceRanges: action.payload.priceRanges,
-      };
+      });
     case actionTypes.SET_SELECTED_CONSOLES_BY_TYPE:
-      return { ...state, selectedConsolesByType: action.payload.consoles };
+      return updateObject(state, {
+        selectedConsolesByType: action.payload.consoles,
+      });
     case actionTypes.SET_SELECTED_CONSOLES_BY_CONDITION:
-      return { ...state, selectedConsolesByCondition: action.payload.consoles };
+      return updateObject(state, {
+        selectedConsolesByCondition: action.payload.consoles,
+      });
     case actionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES:
-      return {
-        ...state,
+      return updateObject(state, {
         selectedConsolesByPriceRange: action.payload.consoles,
-      };
+      });
     default:
       return state;
   }

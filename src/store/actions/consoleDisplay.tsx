@@ -1,47 +1,88 @@
+import * as actionTypes from "./ActionTypes/consoleDisplayActionTypes";
+
 import Console from "../../models/ConsoleM";
 
-export const SET_SELECTED_CONSOLES = "SET_SELECTED_CONSOLES";
-export const SET_SELECTED_TYPES = "SET_SELECTED_TYPES";
-export const SET_SELECTED_CONDITION = "SET_SELECTED_CONDITION";
-export const SET_SELECTED_PRICE_RANGES = "SET_SELECTED_PRICE_RANGES";
-export const SET_SELECTED_CONSOLES_BY_TYPE = "SET_SELECTED_CONSOLES_BY_TYPE";
-export const SET_SELECTED_CONSOLES_BY_CONDITION =
-  "SET_SELECTED_CONSOLES_BY_CONDITION";
-export const SET_SELECTED_CONSOLES_BY_PRICE_RANGES =
-  "SET_SELECTED_CONSOLES_BY_PRICE_RANGES";
+export const set_selected_consoles = (consoles: (Console | undefined)[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_CONSOLES,
+    payload: { consoles: consoles },
+  };
+};
+
+export const set_selected_types = (types: string[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_TYPES,
+    payload: { types: types },
+  };
+};
+
+export const set_selected_condition = (condition: string) => {
+  return {
+    type: actionTypes.SET_SELECTED_CONDITION,
+    payload: { condition: condition },
+  };
+};
+
+export const set_selected_price_ranges = (priceRanges: string[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_PRICE_RANGES,
+    payload: { priceRanges: priceRanges },
+  };
+};
+
+export const set_selected_consoles_by_type = (consoles: Console[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_CONSOLES_BY_TYPE,
+    payload: { consoles: consoles },
+  };
+};
+
+export const set_selected_consoles_by_condition = (consoles: Console[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_CONSOLES_BY_CONDITION,
+    payload: { consoles: consoles },
+  };
+};
+
+export const set_selected_consoles_by_price_ranges = (consoles: Console[]) => {
+  return {
+    type: actionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES,
+    payload: { consoles: consoles },
+  };
+};
 
 interface SetSelectedConsolesAction {
-  type: typeof SET_SELECTED_CONSOLES;
+  type: typeof actionTypes.SET_SELECTED_CONSOLES;
   payload: { consoles: Console[] };
 }
 
 interface SetSelectedTypesAction {
-  type: typeof SET_SELECTED_TYPES;
+  type: typeof actionTypes.SET_SELECTED_TYPES;
   payload: { types: string[] };
 }
 
 interface SetSelectedCondtionAction {
-  type: typeof SET_SELECTED_CONDITION;
+  type: typeof actionTypes.SET_SELECTED_CONDITION;
   payload: { condition: string };
 }
 
 interface SetSelectedPriceRangesAction {
-  type: typeof SET_SELECTED_PRICE_RANGES;
+  type: typeof actionTypes.SET_SELECTED_PRICE_RANGES;
   payload: { priceRanges: string[] };
 }
 
 interface SetSelectedConsolesByTypeAction {
-  type: typeof SET_SELECTED_CONSOLES_BY_TYPE;
+  type: typeof actionTypes.SET_SELECTED_CONSOLES_BY_TYPE;
   payload: { consoles: Console[] };
 }
 
 interface SetSelectedConsolesByConditionAction {
-  type: typeof SET_SELECTED_CONSOLES_BY_CONDITION;
+  type: typeof actionTypes.SET_SELECTED_CONSOLES_BY_CONDITION;
   payload: { consoles: Console[] };
 }
 
 interface SetSelectedConsolesByPriceRangeAction {
-  type: typeof SET_SELECTED_CONSOLES_BY_PRICE_RANGES;
+  type: typeof actionTypes.SET_SELECTED_CONSOLES_BY_PRICE_RANGES;
   payload: { consoles: Console[] };
 }
 
