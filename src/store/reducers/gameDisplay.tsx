@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/ActionTypes/gameDisplayActionTypes";
 import { GameDisplayActionTypes } from "../actions/gameDisplay";
 
 import Game from "../../models/GameM";
+import { updateObject } from "./utility";
 
 export interface GameDisplayState {
   selectedGames: Game[];
@@ -22,21 +23,21 @@ const initialState: GameDisplayState = {
 const reducer = (state = initialState, action: GameDisplayActionTypes) => {
   switch (action.type) {
     case actionTypes.SET_SELECTED_GAMES:
-      return { ...state, selectedGames: action.payload.games };
+      return updateObject(state, { selectedGames: action.payload.games });
     case actionTypes.SET_SELECTED_PGRATINGS:
-      return { ...state, selectedPgRatings: action.payload.pgRatings };
+      return updateObject(state, {
+        selectedPgRatings: action.payload.pgRatings,
+      });
     case actionTypes.SET_SELECTED_GENRES:
-      return { ...state, selectedGenres: action.payload.genres };
+      return updateObject(state, { selectedGenres: action.payload.genres });
     case actionTypes.SET_SELECTED_GAMES_BY_PGRATING:
-      return {
-        ...state,
+      return updateObject(state, {
         selectedGamesByPgRating: action.payload.games,
-      };
+      });
     case actionTypes.SET_SELECTED_GAMES_BY_GENRE:
-      return {
-        ...state,
+      return updateObject(state, {
         selectedGamesByGenre: action.payload.games,
-      };
+      });
     default:
       return state;
   }

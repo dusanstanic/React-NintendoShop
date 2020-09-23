@@ -1,5 +1,6 @@
 import * as actionTypes from "../actions/ActionTypes/gameDataActionTypes";
 import { ActionTypes } from "../actions/gameData";
+import { updateObject } from "./utility";
 
 import Game from "../../models/GameM";
 import { GenreM } from "../../models/GenreM";
@@ -19,11 +20,11 @@ const initialState: GameDataState = {
 const reducer = (state = initialState, action: ActionTypes) => {
   switch (action.type) {
     case actionTypes.SET_GAMES:
-      return { ...state, games: action.payload.games };
+      return updateObject(state, { games: action.payload.games });
     case actionTypes.SET_GENRES:
-      return { ...state, genres: action.payload.genres };
+      return updateObject(state, { genres: action.payload.genres });
     case actionTypes.SET_PEGIRATINGS:
-      return { ...state, pgRatings: action.payload.pgRatings };
+      return updateObject(state, { pgRatings: action.payload.pgRatings });
     default:
       return state;
   }
