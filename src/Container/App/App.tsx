@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import "./App.css";
 
-import * as actionTypes from "../../store/actions/gameDisplay";
+import * as gameDataActionCreators from "../../store/actions/index";
+import * as gameDisplayActionCreators from "../../store/actions/index";
 
 import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";
-import { GameDisplayActionTypes } from "../../store/actions/gameDisplay";
+
 import { GameDisplayState } from "../../store/reducers/gameDisplay";
 import { GameDataState } from "../../store/reducers/gameData";
 
@@ -49,35 +50,20 @@ const mapStateToProp = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: (a: GameDisplayActionTypes) => void) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     setGames: (games: GameM[]) =>
-      dispatch({ type: actionTypes.SET_GAMES, payload: { games: games } }),
-    setSelectedPgRatings: (selectedPgRatings: string[]) =>
-      dispatch({
-        type: actionTypes.SET_SELECTED_PGRATINGS,
-        payload: { pgRatings: selectedPgRatings },
-      }),
-    setSelectedGenres: (selectedGenres: string[]) =>
-      dispatch({
-        type: actionTypes.SET_SELECTED_GENRES,
-        payload: { genres: selectedGenres },
-      }),
-    setSelectedGames: (selectedGames: GameM[]) =>
-      dispatch({
-        type: actionTypes.SET_SELECTED_GAMES,
-        payload: { games: selectedGames },
-      }),
-    setSelectedGamesByPgRating: (selectedGamesByPgRating: GameM[]) =>
-      dispatch({
-        type: actionTypes.SET_SELECTED_GAMES_BY_PGRATING,
-        payload: { games: selectedGamesByPgRating },
-      }),
-    setSelectedGamesByGenre: (selectedGamesByGenre: GameM[]) =>
-      dispatch({
-        type: actionTypes.SET_SELECTED_GAMES_BY_GENRE,
-        payload: { games: selectedGamesByGenre },
-      }),
+      dispatch(gameDataActionCreators.set_games(games)),
+    setSelectedPgRatings: (pgRatings: string[]) =>
+      dispatch(gameDisplayActionCreators.set_selected_pgRatings(pgRatings)),
+    setSelectedGenres: (genres: string[]) =>
+      dispatch(gameDisplayActionCreators.set_selected_genres(genres)),
+    setSelectedGames: (games: GameM[]) =>
+      dispatch(gameDisplayActionCreators.set_selected_games(games)),
+    setSelectedGamesByPgRating: (games: GameM[]) =>
+      dispatch(gameDisplayActionCreators.set_selected_games_by_pgRating(games)),
+    setSelectedGamesByGenre: (games: GameM[]) =>
+      dispatch(gameDisplayActionCreators.set_selected_games_by_genre(games)),
   };
 };
 
