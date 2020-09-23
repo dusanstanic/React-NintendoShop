@@ -23,10 +23,11 @@ function register(customer: Customer) {
   return axios
     .post<Customer>(`http://localhost:8080/customers/register`, customer)
     .then((response) => {
-      console.log(response);
+      return response;
     })
     .catch((error: AxiosError) => {
-      throw new Error(error.response?.data);
+      const errorMessage = error.response?.data;
+      throw new Error(errorMessage);
     });
 }
 
