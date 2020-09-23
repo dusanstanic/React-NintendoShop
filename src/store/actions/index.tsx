@@ -1,4 +1,4 @@
-export { set_games, set_genres, set_pgRatings } from "./gameData";
+export { set_games, set_genres, set_pgRatings, initGames } from "./gameData";
 export {
   set_selected_games,
   set_selected_games_by_genre,
