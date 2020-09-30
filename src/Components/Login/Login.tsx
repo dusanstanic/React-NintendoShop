@@ -1,15 +1,26 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { Component, ChangeEvent, FormEvent } from "react";
+import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import classes from "./Login.module.css";
 
-import * as CustomerService from "../../service/CustomerService";
 import { Customer } from "../../models/CustomerM";
+import * as CustomerService from "../../service/CustomerService";
+import * as AuthActions from "../../store/actions/index";
 
 import Spinner from "../../shared/Spinner/Spinner";
 import Error from "../../shared/Error/Error";
 import Modal from "../../shared/Modal/Modal";
+import thunk from "redux-thunk";
 
-interface PropsI {}
+interface PropsI extends RouteComponentProps<{}> {
+  closeModal: Function;
+  showRegisterForm: Function;
+  onAuth: Function;
+  error: any;
+  loading: boolean;
+  isAuthenticated: boolean;
+}
 
 interface StateI {
   email: string;
@@ -17,8 +28,6 @@ interface StateI {
   isValid: boolean;
   isEmailValid: boolean;
   isPasswordValid: boolean;
-  showSpinner: boolean;
-  showModal: boolean;
 }
 
 enum InputName {
@@ -33,11 +42,19 @@ class Login extends Component<PropsI, StateI> {
     isValid: false,
     isEmailValid: false,
     isPasswordValid: false,
-    showSpinner: false,
-    showModal: false,
   };
 
-  login = () => {
+  componentDidUpdate() {
+    if (this.props.isAuthenticated) {
+      this.props.closeModal();
+    }
+  }
+
+  login = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    this.props.onAuth(this.state.email, this.state.password);
+
+    /*
     this.setState({ showSpinner: true });
     const login = setTimeout(() => {
       const { email, password } = this.state;
@@ -45,7 +62,8 @@ class Login extends Component<PropsI, StateI> {
         (customer: Customer | void) => {
           if (customer) {
             localStorage.setItem("customer", JSON.stringify(customer));
-            // this.props.history.push({ pathname: "/games" });
+            // this.props.history.push({ pathname: "/CustomerPanel" });
+            // props.history.replace({ pathname: "/CustomerPanel" });
           } else {
             console.log("Customer not found");
             this.setState({ showModal: true });
@@ -54,6 +72,7 @@ class Login extends Component<PropsI, StateI> {
         }
       );
     }, 1000);
+    */
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +89,7 @@ class Login extends Component<PropsI, StateI> {
       });
     }
     if (inputName === InputName.PASSWORD) {
-      const passwordRegex = /(?=.*?[A-Z])(?=.*?[a-z]).{8,}/;
+      const passwordRegex = /(?=.*?[a-z]).{8,}/;
       if (inputValue.match(passwordRegex)) {
         this.setState({ isPasswordValid: true });
       } else {
@@ -90,11 +109,11 @@ class Login extends Component<PropsI, StateI> {
     }
   };
 
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
-
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/home" />;
+    }
+
     let emailValid = "";
     let passwordValid = "";
     if (this.state.isEmailValid) {
@@ -105,14 +124,11 @@ class Login extends Component<PropsI, StateI> {
     }
     return (
       <div className={classes["login"]}>
-        <Modal show={this.state.showModal} closeModal={this.closeModal}>
-          <Error errorMessage={"Email or password is incorrect"} />
-        </Modal>
         <div className={classes["login-title"]}>
           <h1>Login</h1>
         </div>
-        <Spinner showSpinner={this.state.showSpinner} />
-        <form>
+        <Spinner showSpinner={this.props.loading} />
+        <form onSubmit={this.login}>
           <div className={classes["login-form-group"]}>
             <label htmlFor="username">Email</label>
             <input
@@ -137,16 +153,21 @@ class Login extends Component<PropsI, StateI> {
           </div>
           <label htmlFor="forgotPassword">Forgot Password ?</label>
           <button
-            type="button"
+            type="submit"
             disabled={!this.state.isValid}
             className={classes["login-submit-btn"]}
-            onClick={this.login}
           >
             Login
           </button>
+          <Error errorMessage={this.props.error} />
           <div style={{ marginBottom: "0px", paddingBottom: "1rem" }}>
             <label htmlFor="newUser">New User ?</label>
-            <button className={classes["login-register-btn"]}>Register</button>
+            <button
+              className={classes["login-register-btn"]}
+              onClick={() => this.props.showRegisterForm()}
+            >
+              Register
+            </button>
           </div>
         </form>
       </div>
@@ -154,4 +175,19 @@ class Login extends Component<PropsI, StateI> {
   }
 }
 
-export default Login;
+const mapStateToProp = (state: any) => {
+  return {
+    loading: state.authentication.loading,
+    error: state.authentication.error,
+    isAuthenticated: state.authentication.token !== "",
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onAuth: (email: string, password: string) =>
+      dispatch(AuthActions.auth(email, password)),
+  };
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Login));
