@@ -24,7 +24,9 @@ export const initGames = () => {
       .then((games) => {
         dispatch(set_games(games));
       })
-      .catch((error) => dispatch(fetch_games_failed()));
+      .catch((error) => {
+        dispatch(fetch_games_failed());
+      });
   };
 };
 
