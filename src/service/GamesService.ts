@@ -52,8 +52,11 @@ function getGames(): Promise<GameM[]> {
 }
 
 function getGameById(id: number) {
+  const tokenStr = "Bearer " + localStorage.getItem("token");
   return axios
-    .get<GameM>("http://localhost:8080/games/" + id)
+    .get<GameM>("http://localhost:8080/games/" + id, {
+      headers: { Authorization: tokenStr },
+    })
     .then((response) => {
       return response.data;
     })
@@ -61,7 +64,7 @@ function getGameById(id: number) {
       return game;
     })
     .catch((error: AxiosError) => {
-      throw new Error();
+      throw new Error("Error game doesn't exist with this id");
     });
 }
 
