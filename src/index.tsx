@@ -13,6 +13,7 @@ import gameDataReducer from "./store/reducers/gameData";
 import consoleDataReducer from "./store/reducers/consoleData";
 import gameDisplayReducer from "./store/reducers/gameDisplay";
 import consoleDisplayReducer from "./store/reducers/consoleDisplay";
+import authenticationReducer from "./store/reducers/authentication";
 import manageGameReducer from "./store/reducers/manageGames";
 
 import Header from "./Components/Header/Header";
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   gameDisplay: gameDisplayReducer,
   consoleDisplay: consoleDisplayReducer,
   manageGames: manageGameReducer,
+  authentication: authenticationReducer,
 });
 
 const store = createStore(
