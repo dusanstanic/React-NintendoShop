@@ -7,6 +7,7 @@ import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 import Backdrop from "../../shared/Backdrop/Backdrop";
+import { AxiosError } from "axios";
 
 const GameDetails = (props: any) => {
   const [game, setGameData] = useState<GameM>();
@@ -19,9 +20,13 @@ const GameDetails = (props: any) => {
 
   useEffect(() => {
     const gameId: number = props.match.params.id;
-    GameService.getGameById(gameId).then((game) => {
-      setGameData(game);
-    });
+    GameService.getGameById(gameId)
+      .then((game) => {
+        setGameData(game);
+      })
+      .catch((error: AxiosError) => {
+        console.log(error.message);
+      });
   }, [props.match.params.id]);
 
   if (game) {
