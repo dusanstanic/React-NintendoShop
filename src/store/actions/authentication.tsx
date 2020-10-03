@@ -2,7 +2,39 @@ import * as actionTypes from "./ActionTypes/authentication";
 import * as CustomerService from "../../service/CustomerService";
 import { AxiosError } from "axios";
 
+export const authCheckState = () => {
+  return (dispatch: any) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const userId = localStorage.getItem("userId");
+      const date = localStorage.getItem("expirationDate");
+      if (date && userId) {
+        const expirationDate = new Date(date);
+        console.log(expirationDate > new Date());
+        if (expirationDate < new Date()) {
+          dispatch(logout());
+        } else {
+          console.log(new Date().getSeconds());
+          console.log(new Date().getTime());
+
+          dispatch(authSuccess(token, parseInt(userId)));
+          dispatch(
+            checkAuthTimeout(
+              (expirationDate.getTime() - new Date().getTime()) / 1000
+            )
+          );
+        }
+      }
+    }
+  };
+};
+
 export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expirationDate");
+  localStorage.removeItem("userId");
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -22,7 +54,12 @@ export const auth = (email: string, password: string) => {
     setTimeout(() => {
       CustomerService.login(email, password)
         .then((response) => {
+          const expirationDate = new Date(
+            new Date().getTime() + response.expiresIn * 1000
+          );
           localStorage.setItem("token", response.token);
+          localStorage.setItem("expirationDate", expirationDate.toString());
+          localStorage.setItem("userId", response.userId.toString());
           dispatch(authSuccess(response.token, response.userId));
           dispatch(checkAuthTimeout(response.expiresIn));
         })
