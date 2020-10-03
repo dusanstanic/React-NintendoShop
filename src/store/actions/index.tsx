@@ -16,3 +16,4 @@ export {
   set_selected_price_ranges,
   set_selected_types,
 } from "./consoleDisplay";
+export { auth, logout, authCheckState } from "./authentication";
