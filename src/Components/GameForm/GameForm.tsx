@@ -272,47 +272,57 @@ const GameForm = (props: any) => {
     <Aux>
       {showModal}
       <form className="add-game-form">
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          placeholder="Title"
-          name={InputName.TITLE}
-          value={enteredTitle}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-        <label htmlFor="description">Description</label>
-        <textarea
-          placeholder="Description"
-          name={InputName.DESCRIPTION}
-          value={enteredDescription}
-          onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-            addGameHandler(event)
-          }
-        ></textarea>
-        <label htmlFor="releaseDate">Release Date</label>
-        <input
-          type="date"
-          name={InputName.RELEASEDATE}
-          value={enteredReleaseDate}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-        <label htmlFor="price">Price/RSD</label>
-        <input
-          type="text"
-          placeholder="Price"
-          name={InputName.PRICE}
-          value={enteredPrice}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        ></input>
-        <label htmlFor="pegiRating">Pegi Rating</label>
-        <div className="form-group-pegiRating">{pgRatingOptions}</div>
-        <div className="form-group-image">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            placeholder="Title"
+            name={InputName.TITLE}
+            value={enteredTitle}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              addGameHandler(event)
+            }
+          ></input>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            placeholder="Description"
+            name={InputName.DESCRIPTION}
+            value={enteredDescription}
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+              addGameHandler(event)
+            }
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="releaseDate">Release Date</label>
+          <input
+            type="date"
+            name={InputName.RELEASEDATE}
+            value={enteredReleaseDate}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              addGameHandler(event)
+            }
+          ></input>
+        </div>
+        <div className="form-group">
+          <label htmlFor="price">Price</label>
+          <input
+            type="text"
+            placeholder="Price"
+            name={InputName.PRICE}
+            value={enteredPrice}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              addGameHandler(event)
+            }
+          ></input>
+        </div>
+        <div className="form-group">
+          <label htmlFor="pegiRating">PEGI Rating</label>
+          <div className="form-group-pegiRating">{pgRatingOptions}</div>
+        </div>
+        <div className="form-group">
           <label htmlFor="image">Image</label>
           <input
             type="file"
@@ -323,27 +333,32 @@ const GameForm = (props: any) => {
             }
           ></input>
         </div>
-        <label htmlFor="genre">Genre</label>
-        <select
-          name={InputName.GENRE}
-          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-            addGameHandler(event)
-          }
-        >
-          {genreOptions}
-        </select>
-        <label htmlFor="pegiRating">Console</label>
-        <div className="form-group-console">{consoleOptions}</div>
-        <label htmlFor="files">Select files:</label>
-        <input
-          type="file"
-          name={InputName.IMAGES}
-          multiple
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            addGameHandler(event)
-          }
-        />
-
+        <div className="form-group">
+          <label htmlFor="genre">Genre</label>
+          <select
+            name={InputName.GENRE}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+              addGameHandler(event)
+            }
+          >
+            {genreOptions}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="console">Console</label>
+          <div className="form-group-console">{consoleOptions}</div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="files">Select files:</label>
+          <input
+            type="file"
+            name={InputName.IMAGES}
+            multiple
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              addGameHandler(event)
+            }
+          />
+        </div>
         <button
           disabled={!isValid}
           type="button"
@@ -355,18 +370,6 @@ const GameForm = (props: any) => {
       </form>
     </Aux>
   );
-};
-
-const mapStateToProp = (state: any) => {
-  return {
-    ctr: state.manageGames.counter,
-    games: state.gameDisplay.games,
-    selectedGames: state.gameDisplay.selectedGames,
-    selectedPgRatings: state.gameDisplay.selectedPgRatings,
-    selectedGenres: state.gameDisplay.selectedGenres,
-    selectedGamesByPgRating: state.gameDisplay.selectedGamesByPgRating,
-    selectedGamesByGenre: state.gameDisplay.selectedGamesByGenre,
-  };
 };
 
 export default GameForm;

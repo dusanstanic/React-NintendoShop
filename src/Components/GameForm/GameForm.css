@@ -1,68 +1,27 @@
 .add-game-form {
-  font-family: Calibri;
-  font-size: large;
   width: 80%;
-  max-width: 55rem;
+  max-width: 40rem;
   margin: auto;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-  padding: 1rem;
+  margin-bottom: 1rem;
   border: 1px black solid;
-  background: rgb(221, 66, 105);
-  border-radius: 2rem;
-  text-align: center;
+  padding: 1rem;
+  background: rgb(214, 208, 210);
+  font-size: 15px;
 }
 
-.add-game-form label {
-  font-weight: bold;
+.add-game-form .form-group {
+  margin: auto;
+  width: 100%;
 }
 
-.add-game-form label,
-.add-game-form input,
-.add-game-form textarea,
-.add-game-form select {
-  font-family: Calibri;
-  width: 60%;
-  font-weight: bold;
+.add-game-form .form-group label,
+.add-game-form .form-group input,
+.add-game-form .form-group textarea,
+.add-game-form .form-group select {
+  width: 100%;
   display: block;
-  height: 2rem;
   margin: auto;
   margin-top: 0.5rem;
-}
-
-.add-game-form .form-group-console {
-  margin: auto;
-  width: 60%;
-}
-
-.add-game-form .form-group-console input {
-  width: 5%;
-  display: inline-block;
-}
-
-.add-game-form .form-group-console label {
-  vertical-align: bottom;
-  margin-left: 4px;
-  /*text-align: left;*/
-  width: 40%;
-  display: inline-block;
-}
-
-.add-game-form textarea {
-  height: 5rem;
-}
-
-.add-game-form .form-group-pegiRating label[for="rating"] {
-  vertical-align: bottom;
-  margin-top: 0;
-  display: inline-block;
-  width: 1.5rem;
-}
-
-.add-game-form input[type="radio"] {
-  margin-top: 0;
-  display: inline-block;
-  width: 1rem;
 }
 
 .add-game-form label:focus,
@@ -70,6 +29,40 @@
 .add-game-form textarea:focus,
 .add-game-form select:focus {
   outline: none;
+}
+
+.add-game-form .form-group label {
+  height: auto;
+  width: auto;
+  text-align: left;
+}
+
+.add-game-form .form-group textarea {
+  height: 5rem;
+}
+
+.add-game-form .form-group-pegiRating label[for="rating"] {
+  margin-top: 0px;
+  display: inline-block;
+}
+
+.add-game-form input[type="radio"] {
+  margin-right: 5px;
+  margin-top: 0px;
+  display: inline-block;
+  width: 1rem;
+}
+
+.add-game-form .form-group-console label {
+  vertical-align: bottom;
+  margin-left: 4px;
+  width: 40%;
+  display: inline-block;
+}
+
+.add-game-form .form-group-console input {
+  width: 5%;
+  display: inline-block;
 }
 
 .add-game-submit-btn {
@@ -82,6 +75,7 @@
   margin: auto;
   margin-top: 1rem;
   border-radius: 15px;
+  cursor: pointer;
 }
 
 .add-game-submit-btn:hover,
@@ -89,7 +83,6 @@
   background: green;
   border: 2px solid white;
   color: white;
-  cursor: pointer;
 }
 
 .add-game-submit-btn:focus {
