@@ -1,4 +1,11 @@
 import React, { Component } from "react";
+import {
+  Route,
+  NavLink,
+  Switch,
+  withRouter,
+  RouteComponentProps,
+} from "react-router-dom";
 
 import classes from "./ManageGames.module.css";
 
@@ -10,24 +17,20 @@ import * as GameService from "../../service/GamesService";
 import Aux from "../../hoc/Auxiliary";
 import GameForm from "../../Components/GameForm/GameForm";
 
-class ManageGames extends Component<
-  RouterProps,
-  {
-    games: GameM[];
-    showAddForm: boolean;
-    showUpdateForm: boolean;
-    gameToUpdate?: GameM;
-  }
-> {
+interface StateI {
+  games: GameM[];
+  gameToUpdate?: GameM;
+  isUserPanelOpened: boolean;
+}
+
+class ManageGames extends Component<RouterProps, StateI> {
   state: {
     games: GameM[];
-    showAddForm: boolean;
-    showUpdateForm: boolean;
     gameToUpdate?: GameM;
+    isUserPanelOpened: boolean;
   } = {
     games: [],
-    showAddForm: false,
-    showUpdateForm: false,
+    isUserPanelOpened: true,
   };
 
   componentDidMount() {
@@ -36,17 +39,12 @@ class ManageGames extends Component<
     });
   }
 
-  toggleAddForm = () => {
-    this.setState({ showAddForm: !this.state.showAddForm });
-  };
-
   toggleUpdateForm = (id: number | undefined) => {
     if (id) {
       GameService.getGameById(id).then((game) => {
         this.setState({ gameToUpdate: game });
       });
     }
-    this.setState({ showUpdateForm: !this.state.showUpdateForm });
   };
 
   addGame = (newGame: GameM, consoleIds: number[]) => {
@@ -81,31 +79,41 @@ class ManageGames extends Component<
     }
   };
 
+  toggleUserPanel = () => {
+    const isUserPanelOpened = this.state.isUserPanelOpened;
+    this.setState({ isUserPanelOpened: !isUserPanelOpened });
+  };
+
   render() {
-    console.log(this.props);
     let gamesList = null;
     if (this.state) {
       gamesList = this.state.games.map((game) => {
         return (
           <tr key={game.id}>
             <td>{game.title}</td>
-            <td>{game.price}din</td>
+            <td>{game.price}</td>
             <td>{game.releaseDate.toLocaleDateString()}</td>
             <td>
               <img
+                alt="Game"
                 src={game.image}
-                alt="game"
                 className={classes["game-list__image"]}
               ></img>
             </td>
             <td>{game.genre.type}</td>
             <td>
-              <button
-                className={classes["game-update-btn"]}
-                onClick={() => this.toggleUpdateForm(game.id)}
+              <NavLink
+                to={{
+                  pathname: this.props.match.url + "/updateGameForm",
+                }}
               >
-                Update
-              </button>
+                <button
+                  className={classes["game-update-btn"]}
+                  onClick={() => this.toggleUpdateForm(game.id)}
+                >
+                  Update
+                </button>
+              </NavLink>
             </td>
             <td>
               <button
@@ -120,40 +128,83 @@ class ManageGames extends Component<
       });
     }
 
+    let isUserPanelOpened = this.state.isUserPanelOpened;
+    let closeClass = "";
+    let resize = "";
+    if (!isUserPanelOpened) {
+      closeClass = classes["close"];
+      resize = classes["resize"];
+    }
+
     return (
       <Aux>
-        <div className={classes["add-game"]}>
-          <button
-            onClick={this.toggleAddForm}
-            className={classes["add-game-button"]}
+        <div className={classes["background"]}></div>
+        <div className={classes["manage-games-panel-main"]}>
+          <div
+            className={classes["manage-games-panel-user"] + " " + closeClass}
           >
-            Add
-          </button>
+            <button
+              className={classes["toggle-panel-user-btn"]}
+              onClick={this.toggleUserPanel}
+            >
+              {isUserPanelOpened ? "<" : ">"}
+            </button>
+            <div className={classes["manage-games-panel-user-row"]}>
+              <div className={classes["manage-games-panel-user-name"]}>
+                Dusan
+              </div>
+              <div className={classes["manage-games-panel-user-image-wrapper"]}>
+                <img alt="User" src={"http://127.0.0.1:8887/user.png"} />
+              </div>
+            </div>
+          </div>
+          <div className={classes["manage-games-panel"] + " " + resize}>
+            <div>
+              <h1 className={classes["manage-games-title"]}>Games</h1>
+            </div>
+            <div className={classes["add-game"]}>
+              <NavLink
+                to={{
+                  pathname: this.props.match.url + "/addGameForm",
+                }}
+              >
+                <button className={classes["add-game-btn"]}>+ Add</button>
+              </NavLink>
+            </div>
+            <table className={classes["game-list"]}>
+              <thead className={classes["game-list__thead"]}>
+                <tr className={classes["game-list__tr"]}>
+                  <th>Title</th>
+                  <th>Price/RSD</th>
+                  <th>Release Date</th>
+                  <th>Image</th>
+                  <th>Genre</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody className={classes["game-list__tbody"]}>{gamesList}</tbody>
+            </table>
+          </div>
         </div>
-
-        <table className={classes["game-list"]}>
-          <thead className={classes["game-list__thead"]}>
-            <tr className={classes["game-list__tr"]}>
-              <th>Title</th>
-              <th>Price/RSD</th>
-              <th>Release Date</th>
-              <th>Image</th>
-              <th>Genre</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody className={classes["game-list__tbody"]}>{gamesList}</tbody>
-        </table>
-        <div>
-          {this.state.showAddForm ? <GameForm submit={this.addGame} /> : null}
-          {this.state.showUpdateForm ? (
-            <GameForm submit={this.updateGame} game={this.state.gameToUpdate} />
-          ) : null}
+        <div className={classes["game-form"]}>
+          <Route
+            path={this.props.match.url + "/addGameForm"}
+            render={() => <GameForm submit={this.addGame} />}
+          />
+          <Route
+            path={this.props.match.url + "/updateGameForm"}
+            render={() => (
+              <GameForm
+                submit={this.updateGame}
+                game={this.state.gameToUpdate}
+              />
+            )}
+          />
         </div>
       </Aux>
     );
   }
 }
 
-export default ManageGames;
+export default withRouter(ManageGames);
