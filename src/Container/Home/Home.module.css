@@ -15,12 +15,12 @@
   position: relative;
   width: 50%;
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 2px 2px 10px 10px rgba(230, 14, 14, 0.8);
+  box-shadow: 2px 2px 10px 10px rgba(247, 148, 0, 0.8);
 }
 
 .slideshow-image-wrapper {
   height: 30rem;
-  width: 60%;
+  width: 100%;
   margin: auto;
   transform: skewX(0deg) scale(1);
 }
@@ -28,7 +28,7 @@
 .slideshow-image-wrapper img {
   height: 100%;
   width: 100%;
-  transform: skewX(10deg) scale(1);
+  transform: skewX(0deg) scale(1);
 }
 
 .slideshow-left-btn,
@@ -36,7 +36,7 @@
   position: absolute;
   top: 45%;
   height: 3rem;
-  width: 3rem;
+  width: 2.5rem;
   background-color: #fdc90e;
   opacity: 0.8;
   border: none;

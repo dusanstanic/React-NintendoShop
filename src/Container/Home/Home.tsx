@@ -1,16 +1,18 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
+import { RouteComponentProps, withRouter } from "react-router";
 import Aux from "../../hoc/Auxiliary";
 
 import classes from "./Home.module.css";
 
+interface PropsI extends RouteComponentProps {}
+
 const images = [
-  "http://127.0.0.1:8887/Switch%20Ben%2010%20-%20Power%20trip!.jpeg",
-  "http://127.0.0.1:8887/Switch%20Super%20Mario%20Odyssey.webp",
-  "http://127.0.0.1:8887/Switch%20The%20Legend%20of%20Zelda%20-%20Link's%20Awakening.jpg",
-  "http://127.0.0.1:8887/SwitchLuigi'sMansion3.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Luigi%20Mansion%203.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Lego%20City.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Super%20Mario%20Odyssey.jpg",
 ];
 
-const Home = () => {
+const Home = (props: PropsI) => {
   const [slideShowOptions, setSlideShowOptions] = useState(images);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -79,7 +81,10 @@ const Home = () => {
         </div>
         <div className={classes["home-column"]}>
           <div className={classes["console-main"]}>
-            <div className={classes["console-image-wrapper"]}>
+            <div
+              className={classes["console-image-wrapper"]}
+              onClick={() => props.history.replace({ pathname: "/consoles" })}
+            >
               <img
                 src={
                   "http://127.0.0.1:8887/Nintendo%20Switch%20-%20Gray%20Joy-Con%20-%20Home.jpg"
@@ -100,4 +105,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withRouter(Home);
