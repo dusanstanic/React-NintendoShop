@@ -1,30 +1,30 @@
 import * as actionTypes from "./ActionTypes/authentication";
 import * as CustomerService from "../../service/CustomerService";
-import { AxiosError } from "axios";
+import { UserInfo } from "../../models/UserInfo";
 
 export const authCheckState = () => {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       dispatch(logout());
     } else {
       const userId = localStorage.getItem("userId");
       const date = localStorage.getItem("expirationDate");
+
       if (date && userId) {
         const expirationDate = new Date(date);
         console.log(expirationDate > new Date());
         if (expirationDate < new Date()) {
           dispatch(logout());
         } else {
-          console.log(new Date().getSeconds());
-          console.log(new Date().getTime());
+          const role = await CustomerService.findRoleByUserId(parseInt(userId));
+          const userInfo = await CustomerService.findUserById(parseInt(userId));
+          const updatedExpirationDate =
+            (expirationDate.getTime() - new Date().getTime()) / 1000;
 
-          dispatch(authSuccess(token, parseInt(userId)));
-          dispatch(
-            checkAuthTimeout(
-              (expirationDate.getTime() - new Date().getTime()) / 1000
-            )
-          );
+          dispatch(authSuccess(token, parseInt(userId), role, userInfo));
+          dispatch(checkAuthTimeout(updatedExpirationDate));
         }
       }
     }
@@ -35,6 +35,7 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationDate");
   localStorage.removeItem("userId");
+
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -49,24 +50,29 @@ export const checkAuthTimeout = (expirationTime: number) => {
 };
 
 export const auth = (email: string, password: string) => {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(authStart());
-    setTimeout(() => {
-      CustomerService.login(email, password)
-        .then((response) => {
-          const expirationDate = new Date(
-            new Date().getTime() + response.expiresIn * 1000
-          );
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("expirationDate", expirationDate.toString());
-          localStorage.setItem("userId", response.userId.toString());
-          dispatch(authSuccess(response.token, response.userId));
-          dispatch(checkAuthTimeout(response.expiresIn));
-        })
-        .catch((error: AxiosError) => {
-          dispatch(authFail(error.message));
-        });
-    }, 2000);
+
+    try {
+      const userData = await CustomerService.login(email, password);
+      const expirationDate = new Date(
+        new Date().getTime() + userData.expiresIn * 1000
+      );
+
+      localStorage.setItem("token", userData.token);
+      localStorage.setItem("expirationDate", expirationDate.toString());
+      localStorage.setItem("userId", userData.userId.toString());
+
+      const role = await CustomerService.findRoleByUserId(userData.userId);
+
+      const userInfo = await CustomerService.findUserById(userData.userId);
+      console.log(userInfo);
+
+      dispatch(authSuccess(userData.token, userData.userId, role, userInfo));
+      dispatch(checkAuthTimeout(userData.expiresIn));
+    } catch (error) {
+      dispatch(authFail(error.message));
+    }
   };
 };
 
@@ -76,11 +82,18 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token: string, userId: number) => {
+export const authSuccess = (
+  token: string,
+  userId: number,
+  userRole: string,
+  userInfo: UserInfo
+) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     idToken: token,
     userId: userId,
+    userRole: userRole,
+    userInfo: userInfo,
   };
 };
 
@@ -99,6 +112,8 @@ interface AuthSucceeded {
   type: typeof actionTypes.AUTH_SUCCESS;
   idToken: string;
   userId: number;
+  userRole: string;
+  userInfo: UserInfo;
 }
 
 interface AuthFailed {
