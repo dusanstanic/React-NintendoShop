@@ -13,4 +13,16 @@ function getConsoles() {
     });
 }
 
-export { getConsoles };
+function findAllConsoleTypes() {
+  return axios
+    .get<string[]>("http://localhost:8080/consoles/consoleTypes")
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .then((consoles) => {
+      return consoles;
+    });
+}
+
+export { getConsoles, findAllConsoleTypes };

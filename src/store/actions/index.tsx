@@ -6,7 +6,7 @@ export {
   set_selected_genres,
   set_selected_pgRatings,
 } from "./gameDisplay";
-export { set_consoles } from "./consoleData";
+export { set_consoles, set_console_types } from "./consoleData";
 export {
   set_selected_condition,
   set_selected_consoles,
