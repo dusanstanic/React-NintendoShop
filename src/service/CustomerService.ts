@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 import { Customer } from "../models/CustomerM";
+import { UserInfo } from "../models/UserInfo";
 
 interface authData {
   email: string;
@@ -18,12 +19,13 @@ function login(email: string, password: string) {
   return axios
     .post<authResponse>(`http://localhost:8080/customers/login`, authData)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error: AxiosError) => {
+      console.log("error");
       const errorMessage = error.response?.data;
-      throw new Error(errorMessage);
+      throw new Error("Error");
+      // throw new Error(errorMessage);
     });
 }
 
@@ -41,4 +43,34 @@ function register(customer: Customer) {
     });
 }
 
-export { login, register };
+function findRoleByUserId(id: number) {
+  const tokenStr = "Bearer " + localStorage.getItem("token");
+  return axios
+    .get<{ role: string }>("http://localhost:8080/customers/role/" + id, {
+      headers: { Authorization: tokenStr },
+    })
+    .then((response) => {
+      console.log(response);
+      return response.data.role;
+    })
+    .catch((error: AxiosError) => {
+      throw new Error(error.response?.data);
+    });
+}
+
+function findUserById(id: number) {
+  const tokenStr = "Bearer " + localStorage.getItem("token");
+  return axios
+    .get<UserInfo>("http://localhost:8080/customers/" + id, {
+      headers: { Authorization: tokenStr },
+    })
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      throw new Error(error.response?.data);
+    });
+}
+
+export { login, register, findRoleByUserId, findUserById };

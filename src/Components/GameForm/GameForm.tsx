@@ -167,9 +167,11 @@ const GameForm = (props: any) => {
     if (inputName === InputName.TITLE) {
       setEnteredTitle(inputValue);
     }
+
     if (inputName === InputName.DESCRIPTION) {
       setEnteredDescription(inputValue);
     }
+
     if (inputName === InputName.RELEASEDATE) setEnteredReleaseDate(inputValue);
 
     if (inputName === InputName.PRICE) {
@@ -179,10 +181,14 @@ const GameForm = (props: any) => {
         setEnteredPrice(inputValue);
       }
     }
+
     if (inputName === InputName.RATING) setPegeRating(inputValue);
+
     if (inputName === InputName.IMAGE)
       setEnteredImage(GameService.parseImagePath(inputValue));
+
     if (inputName === InputName.GENRE) setEntereGenre(+inputValue);
+
     if (inputName === InputName.CONSOLE) {
       const selectedConsoleId = +inputValue;
       let consoleAlreadyExists = enteredConsoles.find((id) => {

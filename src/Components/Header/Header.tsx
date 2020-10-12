@@ -1,5 +1,11 @@
-import React, { useEffect, useState, MouseEvent } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  Route,
+  NavLink,
+  Switch,
+  withRouter,
+  RouteComponentProps,
+} from "react-router-dom";
 import { connect } from "react-redux";
 
 import classes from "./Header.module.css";
@@ -14,10 +20,7 @@ import * as ConsoleService from "../../service/ConsoleService";
 
 import Aux from "../../hoc/Auxiliary";
 
-import * as gameDataActionTypes from "../../store/actions/gameData";
-import * as consoleDataActionTypes from "../../store/actions/consoleData";
-import * as gameDisplayActionTypes from "../../store/actions/gameDisplay";
-import * as consoleDisplayActionTypes from "../../store/actions/consoleDisplay";
+import * as actionTypes from "../../store/actions/index";
 
 import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
@@ -25,14 +28,25 @@ import Login from "../Login/Login";
 import ConsoleMain from "../../Container/ConsolesMain/ConsolesMain";
 import Modal from "../../shared/Modal/Modal";
 import Register from "../Register/Register";
+import UserPanel from "../UserPanel/UserPanel";
+import Home from "../../Container/Home/Home";
+import PageNotFound from "../PageNotFound/PageNotFound";
+import Logout from "../Logout/Logout";
+import { UserInfo } from "../../models/UserInfo";
+import ManageInventory from "../../Container/ManageInventory/ManageInventory";
 
-interface PropsI {
+interface PropsI extends RouteComponentProps {
   setGames: (games: GameM[]) => void;
   setGenres: (genres: GenreM[]) => void;
   setPgRatings: (pgRatings: string[]) => void;
   setSelectedGames: (games: GameM[]) => void;
   setConsoles: (consoles: ConsoleM[]) => void;
+  setConsoleTypes: (consoleTypes: string[]) => void;
   setSelectedConsoles: (consoles: ConsoleM[]) => void;
+  isAuthenticated: boolean;
+  userRole: string;
+  userInfo: UserInfo;
+  authCheckState: Function;
 }
 
 enum FormType {
@@ -59,8 +73,19 @@ const Header = (props: PropsI) => {
       props.setConsoles(consoles);
       props.setSelectedConsoles(consoles);
     });
+    ConsoleService.findAllConsoleTypes().then((consoleTypes) => {
+      console.log("YOOOOOOOO " + consoleTypes);
+      props.setConsoleTypes(consoleTypes);
+    });
+
     console.log("props.setPgRatings");
     props.setPgRatings(["3", "7", "12", "16", "18"]);
+
+    props.authCheckState();
+
+    if (props.location.pathname === "/") {
+      props.history.push({ pathname: "/home" });
+    }
   }, []);
 
   const hideModal = () => {
@@ -68,14 +93,60 @@ const Header = (props: PropsI) => {
     setUserForm(<></>);
   };
 
-  const showLoginModal = (type: FormType) => {
+  const showUserModal = (type: FormType) => {
     if (type === FormType.LOGIN) {
-      setUserForm(<Login />);
+      setUserForm(
+        <Login
+          closeModal={hideModal}
+          showRegisterForm={() => showUserModal(FormType.REGISTER)}
+        />
+      );
     } else {
-      setUserForm(<Register />);
+      setUserForm(<Register closeModal={hideModal} />);
     }
     setShowModal(true);
   };
+
+  let userAuthNav = (
+    <Aux>
+      <li className={classes["info-link-nav__item"]}>
+        <NavLink onClick={() => showUserModal(FormType.LOGIN)} to={{}}>
+          Login
+        </NavLink>
+      </li>
+      <li className={classes["info-link-nav__item"]}>
+        <NavLink onClick={() => showUserModal(FormType.REGISTER)} to={{}}>
+          Register
+        </NavLink>
+      </li>
+    </Aux>
+  );
+
+  if (props.isAuthenticated) {
+    userAuthNav = (
+      <Aux>
+        <li className={classes["info-link-nav__item"]}>
+          <NavLink
+            to={{ pathname: "/userPanel" }}
+            className={classes["info-link-nav-item-user"]}
+          >
+            {props.userInfo.firstName}
+          </NavLink>
+        </li>
+        <li className={classes["info-link-nav__item"]}>
+          <NavLink to={{ pathname: "/logout" }}>Logout</NavLink>
+        </li>
+      </Aux>
+    );
+  }
+
+  const routers = [];
+  if (props.isAuthenticated) {
+    routers.push(<Route path="/userPanel" component={UserPanel} />);
+    if (props.userRole === "Admin") {
+      routers.push(<Route path="/manageGames" component={ManageGames} />);
+    }
+  }
 
   return (
     <Aux>
@@ -100,7 +171,7 @@ const Header = (props: PropsI) => {
                   </li>
                   <li className={classes["info-link-nav__item"]}>
                     <img
-                      alt="Contact Phone Number"
+                      alt="Contact Email"
                       src={"http://127.0.0.1:8887/message-icon.png"}
                       style={{ verticalAlign: "middle" }}
                     />
@@ -112,24 +183,7 @@ const Header = (props: PropsI) => {
             <div className={classes["column"]}>
               <nav className={classes["info-link-nav"]}>
                 <ul className={classes["info-link-nav__items"]}>
-                  <li className={classes["info-link-nav__item"]}>
-                    <NavLink
-                      onClick={() => showLoginModal(FormType.LOGIN)}
-                      to={{}}
-                      exact
-                    >
-                      Login
-                    </NavLink>
-                  </li>
-                  <li className={classes["info-link-nav__item"]}>
-                    <NavLink
-                      onClick={() => showLoginModal(FormType.REGISTER)}
-                      to={{}}
-                      exact
-                    >
-                      Register
-                    </NavLink>
-                  </li>
+                  {userAuthNav}
                   <li className={classes["info-link-nav__item"]}>
                     <div
                       style={{
@@ -137,18 +191,16 @@ const Header = (props: PropsI) => {
                         color: "black",
                         borderRadius: "5px",
                         padding: "5px",
-                        paddingLeft: "10px",
+                        paddingLeft: "5px",
                       }}
                     >
                       <img
                         alt="Shopping Cart"
-                        src={
-                          "http://127.0.0.1:8887/Shopping%20Cart%20-%20Icon%203.png"
-                        }
+                        src={"http://127.0.0.1:8887/shopping%20bag%20icon.png"}
                         style={{
-                          width: "1.5rem",
+                          width: "1rem",
                           height: "15px",
-                          verticalAlign: "middle",
+                          verticalAlign: "top",
                         }}
                       />
                       <span
@@ -170,14 +222,9 @@ const Header = (props: PropsI) => {
         </div>
         <div className={classes["main-header"]}>
           <div>
-            <NavLink
-              to="/"
-              activeClassName="nav-item-active"
-              exact
-              className={classes["main-header__brand"]}
-            >
+            <NavLink to="/home" className={classes["main-header__brand"]}>
               <img
-                src="http://127.0.0.1:8887/nintendoIcon.jpg"
+                src="http://127.0.0.1:8887/Nintendo%20Logo.png"
                 alt="Nintendo Shop"
                 className={classes["main-header__icon"]}
               />
@@ -187,9 +234,8 @@ const Header = (props: PropsI) => {
             <ul className={classes["main-nav__items"]}>
               <li className={classes["main-nav__item"]}>
                 <NavLink
-                  to="/"
+                  to="/home"
                   activeClassName={classes["nav-item-active"]}
-                  exact
                 >
                   Home
                 </NavLink>
@@ -200,7 +246,6 @@ const Header = (props: PropsI) => {
                   to={{
                     pathname: "/games",
                   }}
-                  exact
                 >
                   Games
                 </NavLink>
@@ -211,7 +256,6 @@ const Header = (props: PropsI) => {
                   to={{
                     pathname: "/consoles",
                   }}
-                  exact
                 >
                   Consoles
                 </NavLink>
@@ -222,9 +266,16 @@ const Header = (props: PropsI) => {
                   to={{
                     pathname: "/manageGames",
                   }}
-                  exact
                 >
                   Manage Games
+                </NavLink>
+                <NavLink
+                  activeClassName={classes["nav-item-active"]}
+                  to={{
+                    pathname: "/manageInventory",
+                  }}
+                >
+                  Manage Inventory
                 </NavLink>
               </li>
             </ul>
@@ -233,10 +284,14 @@ const Header = (props: PropsI) => {
       </header>
       <div className={classes["routes"]}>
         <Switch>
+          <Route path="/home" component={Home} />
           <Route path="/games" component={App} />
-          <Route path="/manageGames" component={ManageGames} />
           <Route path="/consoles" component={ConsoleMain} />
-          <Route path="/manageConsoles" component={ConsoleMain} />
+          <Route path="/manageGames" component={ManageGames} />
+          <Route path="/manageInventory" component={ManageInventory} />
+          <Route path="/logout" component={Logout} />
+          <Route component={PageNotFound} />
+          {/* <Redirect from="/" to="/home" /> */}
         </Switch>
       </div>
       <footer></footer>
@@ -246,45 +301,30 @@ const Header = (props: PropsI) => {
 
 const mapStateToProp = (state: any) => {
   return {
-    games: state.gameData.games,
-    genres: state.gameData.genres,
-    pgRatings: state.gameData.pgRatings,
+    isAuthenticated: state.authentication.token !== "",
+    userRole: state.authentication.userRole,
+    userInfo: state.authentication.userInfo,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setGames: (games: GameM[]) =>
-      dispatch({
-        type: gameDataActionTypes.SET_GAMES,
-        payload: { games: games },
-      }),
-    setGenres: (genres: GenreM[]) =>
-      dispatch({
-        type: gameDataActionTypes.SET_GENRES,
-        payload: { genres: genres },
-      }),
+    setGames: (games: GameM[]) => dispatch(actionTypes.initGames()),
+    setGenres: (genres: GenreM[]) => dispatch(actionTypes.set_genres(genres)),
     setPgRatings: (pgRatings: string[]) =>
-      dispatch({
-        type: gameDataActionTypes.SET_PEGIRATINGS,
-        payload: { pgRatings: pgRatings },
-      }),
-    setSelectedGames: (selectedGames: GameM[]) =>
-      dispatch({
-        type: gameDisplayActionTypes.SET_SELECTED_GAMES,
-        payload: { games: selectedGames },
-      }),
+      dispatch(actionTypes.set_pgRatings(pgRatings)),
+    setSelectedGames: (games: GameM[]) =>
+      dispatch(actionTypes.set_selected_games(games)),
     setConsoles: (consoles: ConsoleM[]) =>
-      dispatch({
-        type: consoleDataActionTypes.SET_CONSOLES,
-        payload: { consoles: consoles },
-      }),
+      dispatch(actionTypes.set_consoles(consoles)),
+    setConsoleTypes: (consolesTypes: string[]) =>
+      dispatch(actionTypes.set_console_types(consolesTypes)),
     setSelectedConsoles: (consoles: ConsoleM[]) =>
-      dispatch({
-        type: consoleDisplayActionTypes.SET_SELECTED_CONSOLES,
-        payload: { consoles: consoles },
-      }),
+      dispatch(actionTypes.set_selected_consoles(consoles)),
+    authCheckState: () => {
+      dispatch(actionTypes.authCheckState());
+    },
   };
 };
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProp, mapDispatchToProps)(withRouter(Header));

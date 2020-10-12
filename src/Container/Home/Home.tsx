@@ -1,5 +1,5 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
-import { RouteComponentProps, withRouter } from "react-router";
+import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { RouteComponentProps, useRouteMatch, withRouter } from "react-router";
 import Aux from "../../hoc/Auxiliary";
 
 import classes from "./Home.module.css";
@@ -8,13 +8,15 @@ interface PropsI extends RouteComponentProps {}
 
 const images = [
   "http://127.0.0.1:8887/SlideShow%20-%20Luigi%20Mansion%203.jpg",
-  "http://127.0.0.1:8887/SlideShow%20-%20Lego%20City.jpg",
-  "http://127.0.0.1:8887/SlideShow%20-%20Super%20Mario%20Odyssey.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Jurassic%20World.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Marvel%20Superheroes%202.jpg",
 ];
 
 const Home = (props: PropsI) => {
   const [slideShowOptions, setSlideShowOptions] = useState(images);
+  const slideWrapper = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
 
   const switchSlideShowImage = (option: string) => {
     let currentIndex = currentImageIndex;
@@ -30,14 +32,30 @@ const Home = (props: PropsI) => {
         currentIndex = 0;
       }
     }
+
+    slideWrapper.current?.classList.remove(classes["fadeIn"]);
+    const addClass = setTimeout(() => {
+      slideWrapper.current?.classList.add(classes["fadeIn"]);
+      clearTimeout(addClass);
+    }, 0)
     setCurrentImageIndex(currentIndex);
   };
+
+  /*useEffect(() => {
+    setInterval(() => 
+    switchSlideShowImage("right"), 5000)
+  }, []);*/
 
   return (
     <Aux>
       <div className={classes.home}>
         <div className={classes["slideshow"]}>
-          <div className={classes["slideshow-image-wrapper"]}>
+          <div
+            ref={slideWrapper}
+            className={
+              classes["slideshow-image-wrapper"] + " " + classes["fadeIn"]
+            }
+          >
             <img src={slideShowOptions[currentImageIndex]} />
           </div>
           <button
