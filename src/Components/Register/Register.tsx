@@ -1,21 +1,24 @@
 import React, {
   ChangeEvent,
+  FormEvent,
   FunctionComponent,
   useEffect,
   useState,
 } from "react";
-
-import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { connect } from "react-redux";
 
 import classes from "./Register.module.css";
 
 import { Customer } from ".././../models/CustomerM";
 import * as CustomerService from "../../service/CustomerService";
+import * as AuthActions from "../../store/actions/index";
 
 import Label from "../../shared/Label/Label";
 
 interface PropsI extends RouteComponentProps {
   closeModal: Function;
+  isAuth: Function;
 }
 
 enum InputName {
@@ -136,7 +139,8 @@ const Register: FunctionComponent<PropsI> = (props) => {
     selectedGender,
   ]);
 
-  const register = () => {
+  const register = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const customer: Customer = {
       firstName: enteredFirstName,
       lastName: enteredLastName,
@@ -151,23 +155,27 @@ const Register: FunctionComponent<PropsI> = (props) => {
     };
     CustomerService.register(customer)
       .then((response) => {
-        props.closeModal();
-        props.history.replace({ pathname: "/CustomerPanel" });
+        console.log(response);
+        // props.closeModal();
+        // props.history.replace({ pathname: "/CustomerPanel" });
         // setIsRegistrationsuccessFull(true);
       })
       .catch((error: Error) => {
+        console.log("error");
         setServerSideErrorMessage(error.message);
       });
   };
 
   const registerHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: inputName, value: inputValue } = event.target;
+
     const textOnlyRegex = /^[^0-9]{1,}$/;
     const isDigitContainedRegex = /[0-9]/;
     const isTextContainedRegex = /[A-Za-z]/;
     const digitOnlyRegex = /^\d{1,}$/;
     const passwordRegex = /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}/;
     const errorMessage = [];
+
     if (inputName === InputName.FIRST_NAME) {
       const isInputValid = !!inputValue.match(textOnlyRegex);
       setIsEnteredFirstNameValid(isInputValid);
@@ -180,6 +188,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setFirstNameInputErrorMessage(errorMessage.join(" "));
       setEnteredFirstName(inputValue);
     }
+
     if (inputName === InputName.LAST_NAME) {
       const isInputValid = !!inputValue.match(textOnlyRegex);
       setIsEnteredLastNameValid(isInputValid);
@@ -192,6 +201,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setLastNameInputErrorMessage(errorMessage.join(" "));
       setEnteredLastName(inputValue);
     }
+
     if (inputName === InputName.EMAIL) {
       const emailRegex = /\S+@\S+\.\S+/;
       const isInputValid = !!inputValue.match(emailRegex);
@@ -205,6 +215,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setEmailInputErrorMessage(errorMessage.join(" "));
       setEnteredEmail(inputValue);
     }
+
     if (inputName === InputName.PHONE_NUMBER) {
       const phoneNumberRegex = /^\d{10}$/;
       const isInputValid = !!inputValue.match(phoneNumberRegex);
@@ -221,6 +232,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setPhoneNumberInputErrorMessage(errorMessage.join(" "));
       setEnteredPhoneNumber(inputValue);
     }
+
     if (inputName === InputName.CITY) {
       const isInputValid = !!inputValue.match(textOnlyRegex);
       setIsEnteredCityValid(isInputValid);
@@ -233,6 +245,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setCityInputErrorMessage(errorMessage.join(" "));
       setEnteredCity(inputValue);
     }
+
     if (inputName === InputName.POSTAL_CODE) {
       const postalCodeRegex = /^.{5}$/;
       const isInputValid = !!inputValue.match(postalCodeRegex);
@@ -246,6 +259,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setPostalCodenputErrorMessage(errorMessage.join(" "));
       setEnteredPostalCode(inputValue);
     }
+
     if (inputName === InputName.STREET) {
       const isInputValid = !!inputValue.match(textOnlyRegex);
       setIsEnteredStreetValid(isInputValid);
@@ -258,6 +272,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setStreetInputErrorMessage(errorMessage.join(" "));
       setEnteredStreet(inputValue);
     }
+
     if (inputName === InputName.STREET_NUMBER) {
       const isInputValid = !!inputValue.match(/^[^<>%$@]{1,}$/);
       setIsEnteredStreetNumberValid(isInputValid);
@@ -270,6 +285,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setStreetNumberInputErrorMessage(errorMessage.join(" "));
       setEnteredStreetNumber(inputValue);
     }
+
     if (inputName === InputName.PASSWORD) {
       const isInputValid = !!inputValue.match(passwordRegex);
       setIsEnteredPasswordValid(isInputValid);
@@ -284,13 +300,12 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setPasswordInputErrorMessage(errorMessage.join(" "));
       setEnteredPassword(inputValue);
     }
+
     if (inputName === InputName.CONFIRM_PASSWORD) {
-      const isInputValid = !!inputValue.match(passwordRegex);
+      const isInputValid = inputValue === enteredPassword;
       setIsEnteredConfirmPasswordValid(isInputValid);
       if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push(
-          "Must contain 8 characters and at least one number, upper and lower case"
-        );
+        errorMessage.push("Does not match password");
       }
       if (inputValue.length === 0) {
         errorMessage.push("*Field is required");
@@ -298,6 +313,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setConfirmPasswordNumberInputErrorMessage(errorMessage.join(" "));
       setEnteredConfirmPassword(inputValue);
     }
+
     if (inputName === InputName.GENDER) {
       setIsGenderValid(true);
       if (inputValue === "M") {
@@ -318,7 +334,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
         <h4>Registration</h4>
         <button onClick={() => props.closeModal()}> X</button>
       </div>
-      <form>
+      <form onSubmit={register}>
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="firstName">First Name</label>
@@ -469,7 +485,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
           </div>
         </div>
         <div className={classes["submit"]}>
-          <button type="button" disabled={!isValid} onClick={register}>
+          <button type="submit" disabled={!isValid}>
             Register
           </button>
         </div>
@@ -479,4 +495,11 @@ const Register: FunctionComponent<PropsI> = (props) => {
   );
 };
 
-export default withRouter(Register);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    isAuth: (email: string, password: string) =>
+      dispatch(AuthActions.auth(email, password)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(Register));

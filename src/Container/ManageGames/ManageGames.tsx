@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Route,
-  NavLink,
-  Switch,
-  withRouter,
-  RouteComponentProps,
-} from "react-router-dom";
+import { Route, NavLink, withRouter } from "react-router-dom";
 
 import classes from "./ManageGames.module.css";
 

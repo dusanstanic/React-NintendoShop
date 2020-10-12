@@ -13,7 +13,7 @@
 .slideshow {
   display: inline-block;
   position: relative;
-  width: 50%;
+  width: 60%;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 2px 2px 10px 10px rgba(247, 148, 0, 0.8);
 }
@@ -22,7 +22,26 @@
   height: 30rem;
   width: 100%;
   margin: auto;
+  transform-origin: 50% 50%;
   transform: skewX(0deg) scale(1);
+  transition: all 1s ease-in;
+}
+
+.slideshow-image-wrapper:hover {
+  transform: skewX(-10deg) scale(1.05) rotateZ(5deg) translateX(40px);
+}
+
+.fadeIn {
+  animation: fadeIn 1s 0s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .slideshow-image-wrapper img {
@@ -68,7 +87,7 @@
 
 .main {
   display: inline-block;
-  width: 48%;
+  width: 38%;
   margin-left: 2%;
   vertical-align: top;
 }
@@ -78,7 +97,29 @@
   height: 15rem;
   background: #fdc90e;
   padding: 5px 0px;
-  box-shadow: 2px 2px 10px 4px rgb(248, 241, 17);
+  box-shadow: 2px 2px 10px 5px rgb(255, 247, 0);
+  /* transform-origin: 50% 50%;
+  transform: scale(1); */
+  opacity: 0.5;
+  transition: all 5s;
+  animation: wiggle 2s 0s 4 alternate forwards;
+}
+
+.new-games-main:hover {
+  /* transform: scale(1.2); */
+  opacity: 1;
+  animation: wiggle 2s 0s 4 alternate forwards;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: translateX(30px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-30px);
+    opacity: 0.5;
+  }
 }
 
 .new-games-image-wrapper {
