@@ -1,0 +1,91 @@
+.console-form {
+  background: black;
+  color: white;
+  width: 50%;
+  margin: auto;
+  padding: 1rem;
+}
+
+.console-form .row {
+  margin-top: 1rem;
+}
+
+.console-form label,
+.console-form input {
+  display: block;
+}
+
+.console-form label {
+  font-size: 12px;
+}
+
+.console-form textarea {
+  height: 5rem;
+}
+
+.console-form input,
+.console-form textarea {
+  width: 100%;
+}
+
+.console-form input:focus,
+.console-form textarea:focus,
+.console-form select:focus {
+  outline: none;
+}
+
+.console-form label[for="condition"],
+.console-form input[type="radio"] {
+  vertical-align: middle;
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  margin-right: 0.2rem;
+}
+
+.console-form select {
+  width: 100%;
+}
+
+.console-form input[type="file"] {
+}
+
+.console-form label[for="errorMessage"] {
+  color: lightcoral;
+}
+
+.console-form .submit-btn-wrapper {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.submit-btn-wrapper {
+  background: chocolate;
+}
+
+.console-form .submit-btn-wrapper button {
+  width: 100%;
+  height: 2rem;
+  background: rgb(211, 176, 176);
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.console-form .submit-btn-wrapper button:hover {
+  background: #8d7777;
+}
+
+.console-form .submit-btn-wrapper button:disabled {
+  background: #bb4f4f;
+  cursor: not-allowed;
+}
+
+.console-form .submit-btn-wrapper button:disabled:hover {
+  opacity: 0.5;
+}
+
+.console-form .submit-btn-wrapper button:focus {
+  outline: none;
+}
