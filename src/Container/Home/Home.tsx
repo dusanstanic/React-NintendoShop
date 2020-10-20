@@ -1,4 +1,10 @@
-import React, { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { RouteComponentProps, useRouteMatch, withRouter } from "react-router";
 import Aux from "../../hoc/Auxiliary";
 
@@ -16,7 +22,6 @@ const Home = (props: PropsI) => {
   const [slideShowOptions, setSlideShowOptions] = useState(images);
   const slideWrapper = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
 
   const switchSlideShowImage = (option: string) => {
     let currentIndex = currentImageIndex;
@@ -37,7 +42,7 @@ const Home = (props: PropsI) => {
     const addClass = setTimeout(() => {
       slideWrapper.current?.classList.add(classes["fadeIn"]);
       clearTimeout(addClass);
-    }, 0)
+    }, 0);
     setCurrentImageIndex(currentIndex);
   };
 

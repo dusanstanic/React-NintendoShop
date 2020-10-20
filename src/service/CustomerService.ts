@@ -50,7 +50,7 @@ function findRoleByUserId(id: number) {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.data.role;
     })
     .catch((error: AxiosError) => {
@@ -65,7 +65,7 @@ function findUserById(id: number) {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.data;
     })
     .catch((error: AxiosError) => {

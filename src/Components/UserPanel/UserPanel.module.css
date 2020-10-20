@@ -1,0 +1,65 @@
+.userPanel {
+  width: 75%;
+  margin: auto;
+  background: black;
+  box-shadow: 5px 5px 15px 6px rgb(223, 216, 127);
+}
+
+.userPanel-header {
+  padding: 0.5rem;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.column {
+}
+
+.column img {
+  border-radius: 25px;
+}
+
+.userPanel-body {
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+.userPanel-body-options {
+  width: 20%;
+  display: inline-block;
+}
+
+.userPanel-body-option {
+}
+
+.userPanel-body-option:hover {
+}
+
+.userPanel-body-option h2 {
+  margin: 0;
+  padding: 0.2rem;
+}
+
+.userPanel-body-option__link {
+  display: block;
+  height: 2rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: white;
+  transition: all 0.5s;
+}
+
+.userPanel-body-option__link:hover {
+  background: rgb(211, 203, 203);
+}
+
+.userPanel-body-info {
+  vertical-align: top;
+  display: inline-block;
+  width: 80%;
+  background: rgb(255, 239, 239);
+  padding: 1.5rem;
+  color: black;
+}
