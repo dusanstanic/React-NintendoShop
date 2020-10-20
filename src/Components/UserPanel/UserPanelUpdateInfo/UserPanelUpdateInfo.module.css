@@ -1,0 +1,21 @@
+.userPanelUpdateInfo {
+}
+
+.userPanelUpdateInfo .row {
+  margin: 1rem 0;
+}
+
+.userPanelUpdateInfo .row .column {
+  display: inline-block;
+  width: 50%;
+}
+
+.userPanelUpdateInfo .row .column .form-group label {
+  display: block;
+}
+
+.userPanelUpdateInfo .row .column .form-group input {
+  width: 90%;
+  height: 2rem;
+  padding: 0.5rem;
+}
