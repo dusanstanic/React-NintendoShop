@@ -33,7 +33,7 @@ function findAllConsoleTypes() {
   return axios
     .get<string[]>("http://localhost:8080/consoles/consoleTypes")
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return response.data;
     })
     .then((consoles) => {
@@ -48,7 +48,7 @@ function save(consolee: Console) {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
     })
     .catch((error: AxiosError) => {
       throw new Error();
