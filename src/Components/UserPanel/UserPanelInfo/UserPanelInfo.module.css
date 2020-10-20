@@ -1,0 +1,15 @@
+.userPanelInfo {
+}
+
+.userPanelInfo-row {
+  margin: 1rem 0;
+}
+
+.userPanelInfo-row h1 {
+  margin: 0;
+}
+
+.userPanelInfo-column {
+  display: inline-block;
+  width: 30%;
+}
