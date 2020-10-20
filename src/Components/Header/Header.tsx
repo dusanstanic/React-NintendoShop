@@ -60,25 +60,20 @@ const Header = (props: PropsI) => {
 
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
-      console.log("props.setGames(games);");
       props.setGames(games);
       props.setSelectedGames(games);
     });
     GenreService.getGenres().then((genres: GenreM[]) => {
-      console.log("props.setGenres(genres);");
       props.setGenres(genres);
     });
     ConsoleService.getConsoles().then((consoles: ConsoleM[]) => {
-      console.log("props.setConsoles(consoles);");
       props.setConsoles(consoles);
       props.setSelectedConsoles(consoles);
     });
     ConsoleService.findAllConsoleTypes().then((consoleTypes) => {
-      console.log("YOOOOOOOO " + consoleTypes);
       props.setConsoleTypes(consoleTypes);
     });
 
-    console.log("props.setPgRatings");
     props.setPgRatings(["3", "7", "12", "16", "18"]);
 
     props.authCheckState();
@@ -288,6 +283,7 @@ const Header = (props: PropsI) => {
           <Route path="/games" component={App} />
           <Route path="/consoles" component={ConsoleMain} />
           <Route path="/manageGames" component={ManageGames} />
+          <Route path="/userPanel" component={UserPanel} />
           <Route path="/manageInventory" component={ManageInventory} />
           <Route path="/logout" component={Logout} />
           <Route component={PageNotFound} />
