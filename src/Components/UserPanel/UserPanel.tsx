@@ -28,7 +28,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
             src={"http://127.0.0.1:8887/user.png"}
             style={{ verticalAlign: "middle" }}
           />
-          <div style={{ display: "inline-block" }}>
+          <div style={{ display: "inline-block", verticalAlign: "middle" }}>
             {props.userInfo?.firstName + " " + props.userInfo?.lastName}
           </div>
         </div>
