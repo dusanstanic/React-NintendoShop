@@ -2,7 +2,6 @@ import React, {
   ChangeEvent,
   FunctionComponent,
   useEffect,
-  useRef,
   useState,
 } from "react";
 
@@ -75,14 +74,14 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
             value="M"
             onChange={updateInfoHandler}
           />
-          <label>M</label>
+          <label htmlFor="gender">M</label>
           <input
             type="radio"
             name={InputName.GENDER}
             value="F"
             onChange={updateInfoHandler}
           />
-          <label>F</label>
+          <label htmlFor="gender">F</label>
         </div>
         <div className={classes["row"]}>
           <div className={classes["column"]}>
@@ -112,13 +111,23 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>Email</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.EMAIL}
+                value={enteredEmail}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>Phone Number</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.PHONE_NUMBER}
+                value={enteredPhoneNumber}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
         </div>
@@ -126,13 +135,23 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>City</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.CITY}
+                value={enteredCity}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>Postal Code</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.POSTAL_CODE}
+                value={enteredPostalCode}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
         </div>
@@ -140,15 +159,28 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>Street</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.STREET}
+                value={enteredStreet}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
           <div className={classes["column"]}>
             <div className={classes["form-group"]}>
               <label>Street Number</label>
-              <input type="text" />
+              <input
+                type="text"
+                name={InputName.STREET_NUMBER}
+                value={enteredStreetNumber}
+                onChange={updateInfoHandler}
+              />
             </div>
           </div>
+        </div>
+        <div className={classes["row"]}>
+          <button type="button">Update</button>
         </div>
       </form>
     </Aux>
