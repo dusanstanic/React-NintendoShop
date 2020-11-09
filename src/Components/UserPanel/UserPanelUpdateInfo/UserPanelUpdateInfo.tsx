@@ -185,7 +185,7 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           </div>
         </div>
         <div className={classes["row"]}>
-          <button type="button">Update</button>
+          <button>Update</button>
         </div>
       </form>
     </Aux>
