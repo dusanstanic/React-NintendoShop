@@ -1,8 +1,26 @@
 .userPanelUpdateInfo {
 }
 
+.userPanelUpdateInfo .row input[type="radio"] {
+  margin: 0;
+  margin-right: 2px;
+  vertical-align: middle;
+  /* vertical-align: middle; */
+  /* vertical-align: bottom; */
+}
+
+.userPanelUpdateInfo .row label[for="gender"] {
+  display: inline-block;
+  margin-right: 2px;
+  vertical-align: middle;
+  font-size: 15px;
+  /* vertical-align: middle; */
+  /* vertical-align: bottom; */
+}
+
 .userPanelUpdateInfo .row {
   margin: 1rem 0;
+  font-size: 13px;
 }
 
 .userPanelUpdateInfo .row .column {
@@ -12,10 +30,34 @@
 
 .userPanelUpdateInfo .row .column .form-group label {
   display: block;
+  font-size: 12px;
 }
 
 .userPanelUpdateInfo .row .column .form-group input {
   width: 90%;
-  height: 2rem;
+  height: 1.5rem;
   padding: 0.5rem;
+}
+
+.row button {
+  width: 8rem;
+  margin-top: 2rem;
+  background-color: #0070bbc0;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 11px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.row button:hover {
+  background-color: rgb(0, 126, 209);
+  color: rgb(138, 134, 11);
+}
+
+.row button:focus {
+  outline: none;
 }

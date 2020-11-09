@@ -2,7 +2,7 @@
   width: 75%;
   margin: auto;
   background: black;
-  box-shadow: 5px 5px 15px 6px rgb(223, 216, 127);
+  box-shadow: 5px 5px 15px 6px rgb(255, 238, 0);
 }
 
 .userPanel-header {
@@ -14,6 +14,7 @@
 }
 
 .column {
+  font-size: 15px;
 }
 
 .column img {
@@ -39,15 +40,15 @@
 
 .userPanel-body-option h2 {
   margin: 0;
-  padding: 0.2rem;
+  padding: 0.5rem;
 }
 
 .userPanel-body-option__link {
   display: block;
   height: 2rem;
   padding: 0.5rem;
-  text-decoration: none;
   color: white;
+  text-decoration: none;
   transition: all 0.5s;
 }
 
