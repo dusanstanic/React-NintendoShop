@@ -70,8 +70,22 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
               Update information
             </NavLink>
           </div>
-          <div>WishList</div>
-          <div>Package Status</div>
+          <div>
+            <NavLink
+              to={{ pathname: "/userPanel/wishList" }}
+              className={classes["userPanel-body-option__link"]}
+            >
+              WishList
+            </NavLink>
+          </div>
+          <div>
+            <NavLink
+              to={{ pathname: "/userPanel/wishList" }}
+              className={classes["userPanel-body-option__link"]}
+            >
+              Package Status
+            </NavLink>
+          </div>
         </div>
         <div className={classes["userPanel-body-info"]}>
           <Route

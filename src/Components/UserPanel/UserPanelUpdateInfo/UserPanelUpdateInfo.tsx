@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  FormEvent,
   FunctionComponent,
   useEffect,
   useState,
@@ -54,6 +55,10 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
       setEnteredStreetNumber(userInfo.streetNumber);
     }
   }, [userInfo]);
+
+  const updateInfo = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
   const updateInfoHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: inputName, value: inputValue } = event.target;
