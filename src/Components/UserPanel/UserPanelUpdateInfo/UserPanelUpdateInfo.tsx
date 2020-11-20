@@ -43,6 +43,24 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
   const [enteredStreetNumber, setEnteredStreetNumber] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
 
+  const [isValid, setIsVaild] = useState(false);
+
+  const [isEnteredFirstNameValid, setIsEnteredFirstNameValid] = useState(true);
+  const [isEnteredLastNameValid, setIsEnteredLastNameValid] = useState(true);
+  const [isEnteredEmailValid, setIsEnteredEmailValid] = useState(true);
+  const [isEnteredPhoneNumberValid, setIsEnteredPhoneNumberValid] = useState(
+    true
+  );
+  const [isEnteredCityValid, setIsEnteredCityValid] = useState(true);
+  const [isEnteredPostalCodeValid, setIsEnteredPostalCodeValid] = useState(
+    true
+  );
+  const [isEnteredStreetValid, setIsEnteredStreetValid] = useState(true);
+  const [isEnteredStreetNumberValid, setIsEnteredStreetNumberValid] = useState(
+    true
+  );
+  const [isGenderValid, setIsGenderValid] = useState(false);
+
   useEffect(() => {
     if (userInfo) {
       setEnteredFirstName(userInfo.firstName);
@@ -56,12 +74,115 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
     }
   }, [userInfo]);
 
+  const isUpdateInfoValid = () => {
+    if (
+      isEnteredFirstNameValid &&
+      isEnteredLastNameValid &&
+      isEnteredEmailValid &&
+      isEnteredPhoneNumberValid &&
+      isEnteredCityValid &&
+      isEnteredPostalCodeValid &&
+      isEnteredStreetValid &&
+      isEnteredStreetNumberValid &&
+      isGenderValid
+    ) {
+      setIsVaild(true);
+    } else {
+      setIsVaild(false);
+    }
+  };
+
+  useEffect(() => {
+    isUpdateInfoValid();
+  }, [
+    enteredFirstName,
+    enteredLastName,
+    enteredEmail,
+    enteredPhoneNumber,
+    enteredCity,
+    enteredPostalCode,
+    enteredStreet,
+    enteredStreetNumber,
+    selectedGender,
+  ]);
+
   const updateInfo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Update");
   };
 
   const updateInfoHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: inputName, value: inputValue } = event.target;
+    let isInputValid = false;
+    const textOnlyRegex = /^[^0-9]{1,}$/;
+    const emailRegex = /^(?![.,])(?!.*[.,]@)([A-Za-z0-9!#$%&*+=?^_`{|}.,~-])+@([a-zA-Z0-9][a-zA-Z0-9-]{1,61})\.([A-Za-z0-9]{2,50})$/;
+    const numberOnlyRegex = /^[0-9]{1,}$/;
+    const postalCodeRegex = /^.{5}$/;
+    const streetNumberRegex = /^[A-Za-z0-9]{1,}$/;
+
+    switch (inputName) {
+      case InputName.FIRST_NAME:
+        console.log("First Name");
+        isInputValid = !!inputValue.match(textOnlyRegex);
+
+        setEnteredFirstName(inputValue);
+        setIsEnteredFirstNameValid(isInputValid);
+        break;
+      case InputName.LAST_NAME:
+        console.log("Last Name");
+        isInputValid = !!inputValue.match(textOnlyRegex);
+
+        setIsEnteredLastNameValid(isInputValid);
+        setEnteredLastName(inputValue);
+        break;
+      case InputName.EMAIL:
+        console.log("Email");
+        isInputValid = !!inputValue.match(emailRegex);
+
+        setEnteredEmail(inputValue);
+        setIsEnteredEmailValid(isInputValid);
+        break;
+      case InputName.PHONE_NUMBER:
+        console.log("PHONE_NUMBER");
+        isInputValid = !!inputValue.match(numberOnlyRegex);
+
+        setEnteredPhoneNumber(inputValue);
+        setIsEnteredPhoneNumberValid(isInputValid);
+        break;
+      case InputName.CITY:
+        console.log("CITY");
+        isInputValid = !!inputValue.match(textOnlyRegex);
+
+        setIsEnteredCityValid(isInputValid);
+        setEnteredCity(inputValue);
+        break;
+      case InputName.POSTAL_CODE:
+        console.log("POSTAL_CODE");
+        isInputValid = !!inputValue.match(postalCodeRegex);
+
+        setIsEnteredPostalCodeValid(isInputValid);
+        setEnteredPostalCode(inputValue);
+        break;
+      case InputName.STREET:
+        console.log("STREET");
+        isInputValid = !!inputValue.match(textOnlyRegex);
+
+        setIsEnteredStreetValid(isInputValid);
+        setEnteredStreet(inputValue);
+        break;
+      case InputName.STREET_NUMBER:
+        console.log("STREET_NUMBER");
+        isInputValid = !!inputValue.match(streetNumberRegex);
+
+        setIsEnteredStreetNumberValid(isInputValid);
+        setEnteredStreetNumber(inputValue);
+        break;
+      case InputName.GENDER:
+        console.log("GENDER");
+        setSelectedGender(inputValue);
+        setIsGenderValid(true);
+        break;
+    }
   };
 
   return (
@@ -71,7 +192,7 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           Update Information
         </h2>
       </div>
-      <form className={classes["userPanelUpdateInfo"]}>
+      <form onSubmit={updateInfo} className={classes["userPanelUpdateInfo"]}>
         <div className={classes["row"]}>
           <input
             type="radio"
@@ -185,7 +306,7 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           </div>
         </div>
         <div className={classes["row"]}>
-          <button>Update</button>
+          <button disabled={!isValid}>Update</button>
         </div>
       </form>
     </Aux>
