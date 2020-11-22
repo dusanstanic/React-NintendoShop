@@ -129,56 +129,48 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
         setIsEnteredFirstNameValid(isInputValid);
         break;
       case InputName.LAST_NAME:
-        console.log("Last Name");
         isInputValid = !!inputValue.match(textOnlyRegex);
 
         setIsEnteredLastNameValid(isInputValid);
         setEnteredLastName(inputValue);
         break;
       case InputName.EMAIL:
-        console.log("Email");
         isInputValid = !!inputValue.match(emailRegex);
 
         setEnteredEmail(inputValue);
         setIsEnteredEmailValid(isInputValid);
         break;
       case InputName.PHONE_NUMBER:
-        console.log("PHONE_NUMBER");
         isInputValid = !!inputValue.match(numberOnlyRegex);
 
         setEnteredPhoneNumber(inputValue);
         setIsEnteredPhoneNumberValid(isInputValid);
         break;
       case InputName.CITY:
-        console.log("CITY");
         isInputValid = !!inputValue.match(textOnlyRegex);
 
         setIsEnteredCityValid(isInputValid);
         setEnteredCity(inputValue);
         break;
       case InputName.POSTAL_CODE:
-        console.log("POSTAL_CODE");
         isInputValid = !!inputValue.match(postalCodeRegex);
 
         setIsEnteredPostalCodeValid(isInputValid);
         setEnteredPostalCode(inputValue);
         break;
       case InputName.STREET:
-        console.log("STREET");
         isInputValid = !!inputValue.match(textOnlyRegex);
 
         setIsEnteredStreetValid(isInputValid);
         setEnteredStreet(inputValue);
         break;
       case InputName.STREET_NUMBER:
-        console.log("STREET_NUMBER");
         isInputValid = !!inputValue.match(streetNumberRegex);
 
         setIsEnteredStreetNumberValid(isInputValid);
         setEnteredStreetNumber(inputValue);
         break;
       case InputName.GENDER:
-        console.log("GENDER");
         setSelectedGender(inputValue);
         setIsGenderValid(true);
         break;
@@ -197,14 +189,14 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
           <input
             type="radio"
             name={InputName.GENDER}
-            value="M"
+            value="Male"
             onChange={updateInfoHandler}
           />
           <label htmlFor="gender">M</label>
           <input
             type="radio"
             name={InputName.GENDER}
-            value="F"
+            value="Female"
             onChange={updateInfoHandler}
           />
           <label htmlFor="gender">F</label>
