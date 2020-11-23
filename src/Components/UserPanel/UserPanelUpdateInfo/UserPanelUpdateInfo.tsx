@@ -8,8 +8,11 @@ import React, {
 
 import classes from "./UserPanelUpdateInfo.module.css";
 
+import * as CustomerService from "../../../service/CustomerService";
+
 import Aux from "../../../hoc/Auxiliary";
 import { UserInfo } from "../../../models/UserInfo";
+import { User } from "../../../models/User";
 
 enum InputName {
   FIRST_NAME = "firstName",
@@ -23,11 +26,13 @@ enum InputName {
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirmPassword",
   GENDER = "gender",
+  IMAGE = "image",
 }
 
 interface PropsI {
   userRole: string;
   userInfo: UserInfo;
+  userId: number;
 }
 
 const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
@@ -42,6 +47,7 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
   const [enteredStreet, setEnteredStreet] = useState("");
   const [enteredStreetNumber, setEnteredStreetNumber] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
 
   const [isValid, setIsVaild] = useState(false);
 
@@ -108,7 +114,26 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
 
   const updateInfo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Update");
+
+    if (!isValid) {
+      return;
+    }
+
+    const user: User = {
+      id: props.userId,
+      firstName: enteredFirstName,
+      lastName: enteredLastName,
+      email: enteredEmail,
+      phone: enteredPhoneNumber,
+      city: enteredCity,
+      postalCode: +enteredPostalCode,
+      street: enteredStreet,
+      streetNumber: enteredStreetNumber,
+      image: selectedImage,
+      gender: selectedGender,
+    };
+
+    CustomerService.update(user);
   };
 
   const updateInfoHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -173,6 +198,9 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
       case InputName.GENDER:
         setSelectedGender(inputValue);
         setIsGenderValid(true);
+        break;
+      case InputName.IMAGE:
+        setSelectedImage(CustomerService.parseImagePath(inputValue));
         break;
     }
   };
@@ -292,6 +320,18 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
                 type="text"
                 name={InputName.STREET_NUMBER}
                 value={enteredStreetNumber}
+                onChange={updateInfoHandler}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={classes["row"]}>
+          <div className={classes["column"]}>
+            <div className={classes["form-group"]}>
+              <label>Image</label>
+              <input
+                type="file"
+                name={InputName.IMAGE}
                 onChange={updateInfoHandler}
               />
             </div>

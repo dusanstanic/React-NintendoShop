@@ -11,6 +11,7 @@ interface PropsI {
   isAuthenticated: boolean;
   userRole: string;
   userInfo: UserInfo;
+  userId: number;
 }
 
 const UserPanel: FunctionComponent<PropsI> = (props) => {
@@ -103,6 +104,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
               <UserPanelUpdateInfo
                 userRole={props.userRole}
                 userInfo={props.userInfo}
+                userId={props.userId}
               />
             )}
           />
@@ -117,6 +119,7 @@ const mapStateToProp = (state: any) => {
     isAuthenticated: state.authentication.token !== "",
     userRole: state.authentication.userRole,
     userInfo: state.authentication.userInfo,
+    userId: state.authentication.userId,
   };
 };
 
