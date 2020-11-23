@@ -3,13 +3,13 @@ import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./GameSearchOptions.module.css";
 
-import GameM from "../../models/GameM";
+import GameM from "../../../models/GameM";
 
-import Aux from "../../hoc/Auxiliary";
-import { InputCheckBox } from "../../shared/Input/Input";
+import Aux from "../../../hoc/Auxiliary";
+import { InputCheckBox } from "../../../shared/Input/Input";
 
-import { GameDisplayState } from "../../store/reducers/gameDisplay";
-import { GameDataState } from "../../store/reducers/gameData";
+import { GameDisplayState } from "../../../store/reducers/gameDisplay";
+import { GameDataState } from "../../../store/reducers/gameData";
 
 interface PropsI
   extends RouteComponentProps<{}>,
