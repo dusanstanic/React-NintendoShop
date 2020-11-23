@@ -45,6 +45,7 @@ function register(customer: Customer) {
 
 function findRoleByUserId(id: number) {
   const tokenStr = "Bearer " + localStorage.getItem("token");
+  console.log(tokenStr);
   return axios
     .get<{ role: string }>("http://localhost:8080/customers/role/" + id, {
       headers: { Authorization: tokenStr },
@@ -73,4 +74,42 @@ function findUserById(id: number) {
     });
 }
 
-export { login, register, findRoleByUserId, findUserById };
+function update(game: any) {
+  const tokenStr = "Bearer " + localStorage.getItem("token");
+  return axios
+    .put("http://localhost:8080/customers", game, {
+      headers: { Authorization: tokenStr },
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error: AxiosError) => {
+      throw new Error();
+    });
+}
+
+function parseImagePath(path: string) {
+  console.log(path.split("\\"));
+  return (
+    "http://127.0.0.1:8887/" +
+    path
+      .split("\\")[2]
+      .split("")
+      .map((letter) => {
+        if (letter === " ") {
+          letter = "%20";
+        }
+        return letter;
+      })
+      .join("")
+  );
+}
+
+export {
+  login,
+  register,
+  findRoleByUserId,
+  findUserById,
+  update,
+  parseImagePath,
+};
