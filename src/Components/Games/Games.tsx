@@ -10,7 +10,7 @@ import Aux from "../../hoc/Auxiliary";
 import { GameDisplayState } from "../../store/reducers/gameDisplay";
 import { GameDataState } from "../../store/reducers/gameData";
 
-import GameSearchOptions from "../GameSearchOptions/GameSearchOptions";
+import GameSearchOptions from "./GameSearchOptions/GameSearchOptions";
 import Game from "./Game/Game";
 import GameDetails from "../GameDetails/GameDetails";
 

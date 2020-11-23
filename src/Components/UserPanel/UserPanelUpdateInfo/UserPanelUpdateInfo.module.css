@@ -36,8 +36,12 @@
 
 .userPanelUpdateInfo .row .column .form-group input {
   width: 90%;
-  height: 1.5rem;
+  height: 2rem;
   padding: 0.5rem;
+}
+
+.userPanelUpdateInfo .row .column .form-group input[type="file"] {
+  padding: 0.5rem 0rem;
 }
 
 .userPanelUpdateInfo .row .column .form-group input:focus {
