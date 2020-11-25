@@ -26,7 +26,7 @@ import App from "../../Container/App/App";
 import ManageGames from "../../Container/ManageGames/ManageGames";
 import Login from "../Login/Login";
 import ConsoleMain from "../../Container/ConsolesMain/ConsolesMain";
-import Modal from "../../shared/Modal/Modal";
+import Modal from "../../shared/UI/Modal/Modal";
 import Register from "../Register/Register";
 import UserPanel from "../UserPanel/UserPanel";
 import Home from "../../Container/Home/Home";

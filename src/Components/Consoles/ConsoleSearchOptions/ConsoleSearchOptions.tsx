@@ -6,7 +6,7 @@ import classes from "./ConsoleSearchOptions.module.css";
 import ConsoleM from "../../../models/ConsoleM";
 import * as consoleDisplayActions from "../../../store/actions/index";
 
-import { InputCheckBox } from "../../../shared/Input/Input";
+import { InputCheckBox } from "../../../shared/UI/Input/Input";
 import Aux from "../../../hoc/Auxiliary";
 
 interface PropsI {

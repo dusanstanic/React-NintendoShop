@@ -4,7 +4,7 @@ import classes from "./Console.module.css";
 
 import ConsoleM from "../../../models/ConsoleM";
 import Aux from "../../../hoc/Auxiliary";
-import Modal from "../../../shared/Modal/ModalConsole/Modal";
+import Modal from "../../../shared/UI/Modal/ModalConsole/Modal";
 
 import ConsoleQucikView from "../../ConsoleQuickView/ConsoleQuickView";
 

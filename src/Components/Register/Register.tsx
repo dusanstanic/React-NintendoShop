@@ -14,7 +14,7 @@ import { Customer } from ".././../models/CustomerM";
 import * as CustomerService from "../../service/CustomerService";
 import * as AuthActions from "../../store/actions/index";
 
-import Label from "../../shared/Label/Label";
+import Label from "../../shared/UI/Label/Label";
 
 interface PropsI extends RouteComponentProps {
   closeModal: Function;

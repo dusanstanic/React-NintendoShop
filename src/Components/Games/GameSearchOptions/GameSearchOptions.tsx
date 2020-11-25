@@ -6,7 +6,7 @@ import classes from "./GameSearchOptions.module.css";
 import GameM from "../../../models/GameM";
 
 import Aux from "../../../hoc/Auxiliary";
-import { InputCheckBox } from "../../../shared/Input/Input";
+import { InputCheckBox } from "../../../shared/UI/Input/Input";
 
 import { GameDisplayState } from "../../../store/reducers/gameDisplay";
 import { GameDataState } from "../../../store/reducers/gameData";

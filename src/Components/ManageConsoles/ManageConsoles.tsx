@@ -4,7 +4,7 @@ import classes from "./ManageConsoles.module.css";
 import Aux from "../../hoc/Auxiliary";
 import Console from "../../models/ConsoleM";
 import * as ConsoleService from "../../service/ConsoleService";
-import ConsoleForm from "../ConsoleForm/ConsoleForm";
+import ConsoleForm from "./ConsoleForm/ConsoleForm";
 
 interface IProps extends RouteComponentProps {
   match: {
