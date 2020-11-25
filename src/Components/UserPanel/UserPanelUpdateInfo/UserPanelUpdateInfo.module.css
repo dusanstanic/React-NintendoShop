@@ -75,7 +75,7 @@
 }
 
 .row button:disabled {
-  background: rgb(238, 36, 36, 0.5);
+  background: rgba(255, 0, 0, 0.5);
   cursor: not-allowed;
 }
 

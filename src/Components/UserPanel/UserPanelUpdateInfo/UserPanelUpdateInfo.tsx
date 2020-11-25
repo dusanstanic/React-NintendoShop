@@ -33,6 +33,7 @@ interface PropsI {
   userRole: string;
   userInfo: UserInfo;
   userId: number;
+  onAuthUpdate: Function;
 }
 
 const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
@@ -112,7 +113,7 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
     selectedGender,
   ]);
 
-  const updateInfo = (event: FormEvent<HTMLFormElement>) => {
+  const updateInfo = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!isValid) {
@@ -133,12 +134,15 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
       gender: selectedGender,
     };
 
-    CustomerService.update(user);
+    await CustomerService.update(user);
+
+    props.onAuthUpdate();
   };
 
   const updateInfoHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name: inputName, value: inputValue } = event.target;
     let isInputValid = false;
+
     const textOnlyRegex = /^[^0-9]{1,}$/;
     const emailRegex = /^(?![.,])(?!.*[.,]@)([A-Za-z0-9!#$%&*+=?^_`{|}.,~-])+@([a-zA-Z0-9][a-zA-Z0-9-]{1,61})\.([A-Za-z0-9]{2,50})$/;
     const numberOnlyRegex = /^[0-9]{1,}$/;
@@ -147,7 +151,6 @@ const UserPanelUpdateInfo: FunctionComponent<PropsI> = (props) => {
 
     switch (inputName) {
       case InputName.FIRST_NAME:
-        console.log("First Name");
         isInputValid = !!inputValue.match(textOnlyRegex);
 
         setEnteredFirstName(inputValue);
