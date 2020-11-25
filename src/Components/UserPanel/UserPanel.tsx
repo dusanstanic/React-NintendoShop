@@ -1,24 +1,30 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
-import { Route, NavLink, withRouter, useRouteMatch } from "react-router-dom";
+import { Route, NavLink, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 
 import classes from "./UserPanel.module.css";
+
+import * as actionTypes from "../../store/actions/index";
+
 import UserPanelInfo from "./UserPanelInfo/UserPanelInfo";
 import { UserInfo } from "../../models/UserInfo";
 import UserPanelUpdateInfo from "./UserPanelUpdateInfo/UserPanelUpdateInfo";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import { customerAxios } from "../../service/axios-main";
 
-interface PropsI {
+interface PropsI extends RouteComponentProps {
   isAuthenticated: boolean;
   userRole: string;
   userInfo: UserInfo;
   userId: number;
+  onAuthUpdate: Function;
 }
 
 const UserPanel: FunctionComponent<PropsI> = (props) => {
   const userInfoBtn = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    //userInfoBtn.current?.click();
+    // userInfoBtn.current?.click();
   }, []);
 
   return (
@@ -28,6 +34,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           <img
             src={"http://127.0.0.1:8887/user.png"}
             style={{ verticalAlign: "middle" }}
+            alt="user"
           />
           <div style={{ display: "inline-block", verticalAlign: "middle" }}>
             {props.userInfo?.firstName + " " + props.userInfo?.lastName}
@@ -56,7 +63,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           </div>
           <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: "/userPanel/userPanelInfo" }}
+              to={{ pathname: props.match.url + "/userPanelInfo" }}
               className={classes["userPanel-body-option__link"]}
               ref={userInfoBtn}
             >
@@ -65,21 +72,21 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           </div>
           <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: "/userPanel/userPanelUpdateInfo" }}
+              to={{ pathname: props.match.url + "/userPanelUpdateInfo" }}
               className={classes["userPanel-body-option__link"]}
             >
               Update information
             </NavLink>
           </div>
-          <div>
+          <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: "/userPanel/wishList" }}
+              to={{ pathname: props.match.url + "/wishList" }}
               className={classes["userPanel-body-option__link"]}
             >
               WishList
             </NavLink>
           </div>
-          <div>
+          <div className={classes["userPanel-body-option"]}>
             <NavLink
               to={{ pathname: "/userPanel/wishList" }}
               className={classes["userPanel-body-option__link"]}
@@ -90,7 +97,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
         </div>
         <div className={classes["userPanel-body-info"]}>
           <Route
-            path={"/userPanel/userPanelInfo"}
+            path={props.match.url + "/userPanelInfo"}
             render={() => (
               <UserPanelInfo
                 userRole={props.userRole}
@@ -99,12 +106,13 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
             )}
           />
           <Route
-            path={"/userPanel/userPanelUpdateInfo"}
+            path={props.match.url + "/userPanelUpdateInfo"}
             render={() => (
               <UserPanelUpdateInfo
                 userRole={props.userRole}
                 userInfo={props.userInfo}
                 userId={props.userId}
+                onAuthUpdate={props.onAuthUpdate}
               />
             )}
           />
@@ -112,6 +120,12 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
       </div>
     </div>
   );
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onAuthUpdate: (userInfo: UserInfo) => dispatch(actionTypes.authUpdate()),
+  };
 };
 
 const mapStateToProp = (state: any) => {
@@ -123,4 +137,7 @@ const mapStateToProp = (state: any) => {
   };
 };
 
-export default connect(mapStateToProp, {})(UserPanel);
+export default connect(
+  mapStateToProp,
+  mapDispatchToProps
+)(withErrorHandler(UserPanel, customerAxios));

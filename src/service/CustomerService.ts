@@ -1,7 +1,8 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 import { Customer } from "../models/CustomerM";
 import { UserInfo } from "../models/UserInfo";
+import { customerAxios } from "./axios-main";
 
 interface authData {
   email: string;
@@ -16,42 +17,40 @@ interface authResponse {
 
 function login(email: string, password: string) {
   const authData: authData = { email: email, password: password };
-  return axios
-    .post<authResponse>(`http://localhost:8080/customers/login`, authData)
+
+  return customerAxios
+    .post<authResponse>("login", authData)
     .then((response) => {
       return response.data;
     })
     .catch((error: AxiosError) => {
-      console.log("error");
-      const errorMessage = error.response?.data;
+      // const errorMessage = error.response?.data;
       throw new Error("Error");
-      // throw new Error(errorMessage);
     });
 }
 
 function register(customer: Customer) {
-  return axios
-    .post<Customer>(`http://localhost:8080/customers/register`, customer)
+  return customerAxios
+    .post<Customer>(`register`, customer)
     .then((response) => {
-      console.log(response);
       return response;
     })
-    .catch((error: AxiosError) => {
-      console.log(error.response);
-      const errorMessage = error.response?.data.errorMessage;
-      throw new Error(errorMessage);
+    .catch((error: any) => {
+      // console.dir(error);
+      // const errorMessage = error.response?.data.errorMessage;
+      // throw new Error(errorMessage);
+      throw new Error(error);
     });
 }
 
 function findRoleByUserId(id: number) {
   const tokenStr = "Bearer " + localStorage.getItem("token");
-  console.log(tokenStr);
-  return axios
-    .get<{ role: string }>("http://localhost:8080/customers/role/" + id, {
+
+  return customerAxios
+    .get<{ role: string }>("role/" + id, {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      // console.log(response);
       return response.data.role;
     })
     .catch((error: AxiosError) => {
@@ -61,12 +60,12 @@ function findRoleByUserId(id: number) {
 
 function findUserById(id: number) {
   const tokenStr = "Bearer " + localStorage.getItem("token");
-  return axios
-    .get<UserInfo>("http://localhost:8080/customers/" + id, {
+
+  return customerAxios
+    .get<UserInfo>("" + id, {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      // console.log(response);
       return response.data;
     })
     .catch((error: AxiosError) => {
@@ -76,20 +75,24 @@ function findUserById(id: number) {
 
 function update(game: any) {
   const tokenStr = "Bearer " + localStorage.getItem("token");
-  return axios
-    .put("http://localhost:8080/customers", game, {
+
+  return customerAxios
+    .put("/afafs", game, {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
-      console.log(response);
+      // console.dir(response);
+      // console.log(response);
+      console.log("Non error");
+      return response;
     })
     .catch((error: AxiosError) => {
-      throw new Error();
+      console.log("Error " + error);
+      // throw new Error();
     });
 }
 
 function parseImagePath(path: string) {
-  console.log(path.split("\\"));
   return (
     "http://127.0.0.1:8887/" +
     path

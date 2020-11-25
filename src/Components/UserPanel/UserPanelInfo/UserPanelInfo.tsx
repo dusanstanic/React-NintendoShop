@@ -17,8 +17,8 @@ const UserPanelInfo: FunctionComponent<PropsI> = (props) => {
     userInfo = props.userInfo;
   }
 
-  console.log("userinfo " + userInfo);
-  console.log("userinfo " + props.userInfo);
+  // console.log("userinfo " + userInfo);
+  // console.log("userinfo " + props.userInfo);
 
   return (
     <Aux>
