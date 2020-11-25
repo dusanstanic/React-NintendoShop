@@ -14,6 +14,7 @@ interface PropsI {
 
 const Console = (props: PropsI) => {
   const [showModal, setShowModal] = useState(false);
+  const [quickView, setQuickView] = useState<JSX.Element>();
 
   const gameConsole = props.console;
   let newBanner: JSX.Element = <Aux>{null}</Aux>;
@@ -27,13 +28,18 @@ const Console = (props: PropsI) => {
 
   const closeConsoleQuickView = () => {
     setShowModal(false);
+    setQuickView(<></>);
   };
 
-  console.log("Render Console");
+  const setModalQuickView = () => {
+    showConsoleQuickView();
+    setQuickView(<ConsoleQucikView console={props.console} />);
+  };
+
   return (
     <Aux>
       <Modal show={showModal} closeModal={closeConsoleQuickView}>
-        <ConsoleQucikView console={props.console} />
+        {quickView}
       </Modal>
       <div className={classes["console-tile"]}>
         <div className={classes["console-image-wrapper"]}>
@@ -45,7 +51,8 @@ const Console = (props: PropsI) => {
           <div className={classes["console-caption-icons"]}>
             <div
               className={classes["console-caption-icon-show"]}
-              onClick={showConsoleQuickView}
+              // onClick={showConsoleQuickView}
+              onClick={setModalQuickView}
             ></div>
             <div className={classes["console-caption-icon-compare"]}></div>
             <div className={classes["console-caption-icon-favorite"]}></div>

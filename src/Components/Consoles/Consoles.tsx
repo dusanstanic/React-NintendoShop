@@ -8,8 +8,8 @@ import ConsoleM from "../../models/ConsoleM";
 
 import Aux from "../../hoc/Auxiliary";
 import Console from "./Console/Console";
-import ConsoleSearchOptions from "../ConsoleSearchOptions/ConsoleSearchOptions";
-import ConsoleSearchFilter from "../ConsoleSearchFilter/ConsoleSearchFilter";
+import ConsoleSearchOptions from "./ConsoleSearchOptions/ConsoleSearchOptions";
+import ConsoleSearchFilter from "./ConsoleSearchFilter/ConsoleSearchFilter";
 
 interface PropsI extends RouteComponentProps<{}> {
   consoles: ConsoleM[];
@@ -18,8 +18,6 @@ interface PropsI extends RouteComponentProps<{}> {
 
 class Consoles extends Component<PropsI, {}> {
   render() {
-    console.log("Render Consoles");
-
     const consoles = this.props.selectedConsoles.map((console: ConsoleM) => {
       return <Console key={console.id} console={console} />;
     });

@@ -1,11 +1,5 @@
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { RouteComponentProps, useRouteMatch, withRouter } from "react-router";
+import React, { useRef, useState } from "react";
+import { RouteComponentProps, withRouter } from "react-router";
 import Aux from "../../hoc/Auxiliary";
 
 import classes from "./Home.module.css";
@@ -61,7 +55,7 @@ const Home = (props: PropsI) => {
               classes["slideshow-image-wrapper"] + " " + classes["fadeIn"]
             }
           >
-            <img src={slideShowOptions[currentImageIndex]} />
+            <img src={slideShowOptions[currentImageIndex]} alt="slideshow" />
           </div>
           <button
             onClick={() => switchSlideShowImage("left")}
@@ -83,13 +77,18 @@ const Home = (props: PropsI) => {
                 src={
                   "http://127.0.0.1:8887/Switch%20Lego%20Marvel%20Super%20Heroes%202.jpg"
                 }
+                alt="new-game"
               />
               <img
                 src={
                   "http://127.0.0.1:8887/Switch%20Lego%20Jurassic%20World.jpg"
                 }
+                alt="new-game"
               />
-              <img src={"http://127.0.0.1:8887/Switch%20Lego%20City.jpg"} />
+              <img
+                src={"http://127.0.0.1:8887/Switch%20Lego%20City.jpg"}
+                alt="new-game"
+              />
             </div>
           </div>
           <div className={classes["merchandise-main"]}>
@@ -98,6 +97,7 @@ const Home = (props: PropsI) => {
                 src={
                   "http://127.0.0.1:8887/Nintendo%20Switch%20Equipment%20-%20Mario%20Kart%20Live%20Home%20Circuit.jpg"
                 }
+                alt="merchandise"
               />
             </div>
           </div>
@@ -112,6 +112,7 @@ const Home = (props: PropsI) => {
                 src={
                   "http://127.0.0.1:8887/Nintendo%20Switch%20-%20Gray%20Joy-Con%20-%20Home.jpg"
                 }
+                alt="console"
               />
             </div>
           </div>
@@ -119,6 +120,7 @@ const Home = (props: PropsI) => {
             <div className={classes["equipment-image-wrapper"]}>
               <img
                 src={"http://127.0.0.1:8887/Nintendo%20Switch%20Equipment.webp"}
+                alt="equipment"
               />
             </div>
           </div>

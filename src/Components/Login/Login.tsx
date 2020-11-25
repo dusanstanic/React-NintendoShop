@@ -4,14 +4,10 @@ import { connect } from "react-redux";
 
 import classes from "./Login.module.css";
 
-import { Customer } from "../../models/CustomerM";
-import * as CustomerService from "../../service/CustomerService";
 import * as AuthActions from "../../store/actions/index";
 
 import Spinner from "../../shared/Spinner/Spinner";
 import Error from "../../shared/Error/Error";
-import Modal from "../../shared/Modal/Modal";
-import thunk from "redux-thunk";
 
 interface PropsI extends RouteComponentProps<{}> {
   closeModal: Function;

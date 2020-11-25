@@ -141,6 +141,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
 
   const register = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const customer: Customer = {
       firstName: enteredFirstName,
       lastName: enteredLastName,
@@ -153,6 +154,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       streetNumber: enteredStreetNumber,
       password: enteredPassword,
     };
+
     CustomerService.register(customer)
       .then((response) => {
         console.log(response);
@@ -161,7 +163,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
         // setIsRegistrationsuccessFull(true);
       })
       .catch((error: Error) => {
-        console.log("error");
+        console.dir(error);
         setServerSideErrorMessage(error.message);
       });
   };
@@ -172,7 +174,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
     const textOnlyRegex = /^[^0-9]{1,}$/;
     const isDigitContainedRegex = /[0-9]/;
     const isTextContainedRegex = /[A-Za-z]/;
-    const digitOnlyRegex = /^\d{1,}$/;
+    // const digitOnlyRegex = /^\d{1,}$/;
     const passwordRegex = /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}/;
     const errorMessage = [];
 

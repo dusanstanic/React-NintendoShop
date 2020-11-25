@@ -1,13 +1,13 @@
-import React, { ChangeEvent, MouseEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { connect } from "react-redux";
 
 import classes from "./ConsoleSearchOptions.module.css";
 
-import ConsoleM from "../../models/ConsoleM";
-import * as consoleDisplayActions from "../../store/actions/index";
+import ConsoleM from "../../../models/ConsoleM";
+import * as consoleDisplayActions from "../../../store/actions/index";
 
-import { InputCheckBox } from "../../shared/Input/Input";
-import Aux from "../../hoc/Auxiliary";
+import { InputCheckBox } from "../../../shared/Input/Input";
+import Aux from "../../../hoc/Auxiliary";
 
 interface PropsI {
   setSelectedConsoles: (consoles: (ConsoleM | undefined)[]) => void;
@@ -195,8 +195,6 @@ const ConsoleSearchOptions = (props: PropsI) => {
       </Aux>
     );
   });
-
-  console.log("Render ConsoleSearchOptions");
 
   return (
     <div className={classes["console-search-options"]}>

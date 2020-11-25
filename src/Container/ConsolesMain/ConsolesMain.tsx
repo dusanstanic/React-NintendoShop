@@ -32,7 +32,6 @@ class ConsoleMain extends Component<PropsI, { bannerImage: string }> {
   };
 
   render() {
-    console.log("Render ConsolesMain");
     return (
       <Aux>
         <Consoles {...this.props} />
