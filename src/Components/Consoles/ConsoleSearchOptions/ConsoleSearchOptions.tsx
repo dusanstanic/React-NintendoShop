@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { connect } from "react-redux";
 
 import classes from "./ConsoleSearchOptions.module.css";
@@ -195,8 +195,6 @@ const ConsoleSearchOptions = (props: PropsI) => {
       </Aux>
     );
   });
-
-  console.log("Render ConsoleSearchOptions");
 
   return (
     <div className={classes["console-search-options"]}>

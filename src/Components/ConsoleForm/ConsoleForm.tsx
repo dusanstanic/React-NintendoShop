@@ -22,10 +22,10 @@ enum InputName {
   LOGO = "logo",
 }
 
-enum Option {
-  ADD = "add",
-  UPDATE = "update",
-}
+// enum Option {
+//   ADD = "add",
+//   UPDATE = "update",
+// }
 
 interface IProps extends RouteComponentProps {
   match: {
@@ -72,9 +72,10 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
   const [isLogoImageValid, setIsLogoImageValid] = useState(false);
 
   const [titleInputErrorMessages, setTitleErrorMessages] = useState<string>("");
-  const [descriptionInputErrorMessages, setDescriptionErrorMessages] = useState<
-    string
-  >("");
+  const [
+    descriptionInputErrorMessages,
+    setDescriptionErrorMessages,
+  ] = useState<string>("");
   const [priceInputErrorMessages, setPriceErrorMessages] = useState<string>("");
 
   useEffect(() => {

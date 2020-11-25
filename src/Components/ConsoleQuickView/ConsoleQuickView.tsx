@@ -8,10 +8,11 @@ const ConsoleQuickView = (props: { console: ConsoleM }) => {
   return (
     <div className={classes["console-modal"]}>
       <div className={classes["console-modal-image-wrapper"]}>
-        <img src={props.console.image} />
+        <img src={props.console.image} alt="console" />
         <img
           src={props.console.logo}
           className={classes["console-modal-image-wrapper-logo"]}
+          alt="console-logo"
         />
       </div>
       <div className={classes["console-modal-type"]}>{props.console.type}</div>

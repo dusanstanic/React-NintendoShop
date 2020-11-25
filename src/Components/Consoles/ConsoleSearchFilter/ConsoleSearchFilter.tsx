@@ -3,7 +3,6 @@ import React from "react";
 import classes from "./ConsoleSearchFilter.module.css";
 
 const ConsoleSearchFilter = (props: any) => {
-  console.log("Render ConsoleSearchFilter");
   return (
     <div className={classes["console-search-filter"]}>
       <h2 className={classes["console-search-filter-title"]}>
