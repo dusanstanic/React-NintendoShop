@@ -10,7 +10,7 @@ import UserPanelInfo from "./UserPanelInfo/UserPanelInfo";
 import { UserInfo } from "../../models/UserInfo";
 import UserPanelUpdateInfo from "./UserPanelUpdateInfo/UserPanelUpdateInfo";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import { customerAxios } from "../../service/axios-customer";
+import { customerAxios } from "../../service/axios-main";
 
 interface PropsI extends RouteComponentProps {
   isAuthenticated: boolean;

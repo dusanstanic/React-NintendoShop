@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 
 import { Customer } from "../models/CustomerM";
 import { UserInfo } from "../models/UserInfo";
-import { customerAxios } from "./axios-customer";
+import { customerAxios } from "./axios-main";
 
 interface authData {
   email: string;
