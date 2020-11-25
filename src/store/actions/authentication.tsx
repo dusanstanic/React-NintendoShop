@@ -14,7 +14,7 @@ export const authCheckState = () => {
 
       if (date && userId) {
         const expirationDate = new Date(date);
-        console.log(expirationDate > new Date());
+        // console.log(expirationDate > new Date());
         if (expirationDate < new Date()) {
           dispatch(logout());
         } else {
@@ -66,7 +66,6 @@ export const auth = (email: string, password: string) => {
       const role = await CustomerService.findRoleByUserId(userData.userId);
 
       const userInfo = await CustomerService.findUserById(userData.userId);
-      console.log(userInfo);
 
       dispatch(authSuccess(userData.token, userData.userId, role, userInfo));
       dispatch(checkAuthTimeout(userData.expiresIn));
@@ -104,6 +103,18 @@ export const authFail = (error: any) => {
   };
 };
 
+export const authUpdate = () => {
+  return async (dispatch: any, getState: any) => {
+    // const userId = getState().authentication.userId;
+    // const userInfo = await CustomerService.findUserById(userId);
+
+    dispatch({
+      type: actionTypes.AUTH_UPDATE,
+      userInfo: getState().authentication.userInfo,
+    });
+  };
+};
+
 interface AuthStarted {
   type: typeof actionTypes.AUTH_START;
 }
@@ -121,12 +132,18 @@ interface AuthFailed {
   error: any;
 }
 
-interface AuthLogut {
+interface AuthLogout {
   type: typeof actionTypes.AUTH_LOGOUT;
+}
+
+interface AuthUpdate {
+  type: typeof actionTypes.AUTH_UPDATE;
+  userInfo: UserInfo;
 }
 
 export type ActionTypes =
   | AuthStarted
   | AuthSucceeded
   | AuthFailed
-  | { type: "AUTH_LOGOUT" };
+  | AuthLogout
+  | AuthUpdate;
