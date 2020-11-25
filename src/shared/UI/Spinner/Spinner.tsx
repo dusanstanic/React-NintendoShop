@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./Spinner.module.css";
-import Aux from "../../hoc/Auxiliary";
 
 const spinner = (props: { showSpinner: boolean }) => {
   if (props.showSpinner) {

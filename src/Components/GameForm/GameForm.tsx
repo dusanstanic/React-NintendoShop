@@ -12,7 +12,7 @@ import * as GenreService from "../../service/GenreService";
 import * as GameService from "../../service/GamesService";
 import * as ConsoleService from "../../service/ConsoleService";
 
-import Modal from "../../shared/Modal/Modal";
+import Modal from "../../shared/UI/Modal/Modal";
 import PostGameSummary from "../PostGameSummary/PostGameSummary";
 
 const GameForm = (props: any) => {

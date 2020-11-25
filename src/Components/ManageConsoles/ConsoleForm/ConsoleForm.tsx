@@ -7,9 +7,9 @@ import React, {
 } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import classes from "./ConsoleForm.module.css";
-import Aux from "../../hoc/Auxiliary";
-import Console from "../../models/ConsoleM";
-import * as ConsoleService from "../../service/ConsoleService";
+import Aux from "../../../hoc/Auxiliary";
+import Console from "../../../models/ConsoleM";
+import * as ConsoleService from "../../../service/ConsoleService";
 
 enum InputName {
   TITLE = "title",

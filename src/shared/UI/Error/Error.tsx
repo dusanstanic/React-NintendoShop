@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./Error.module.css";
-import Aux from "../../hoc/Auxiliary";
+import Aux from "../../../hoc/Auxiliary";
 
 const Error = (props: { errorMessage: string }) => {
   if (props.errorMessage) {

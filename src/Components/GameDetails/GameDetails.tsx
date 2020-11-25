@@ -6,7 +6,7 @@ import * as GameService from "../../service/GamesService";
 import GameM from "../../models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
-import Backdrop from "../../shared/Backdrop/Backdrop";
+import Backdrop from "../../shared/UI/Backdrop/Backdrop";
 import { AxiosError } from "axios";
 
 const GameDetails = (props: any) => {

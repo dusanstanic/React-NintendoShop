@@ -1,5 +1,7 @@
 .modal {
   /* border: 2px solid red; */
+  top: 0;
+  left: 0;
   width: 80%;
   max-width: 500px;
   /* max-width: 420px;
@@ -18,6 +20,6 @@
 }
 
 .showModal {
-  transform: translateX(-50%) translateY(0vh);
+  transform: translateX(-50%) translateY(20vh);
   opacity: 1;
 }

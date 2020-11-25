@@ -6,8 +6,8 @@ import classes from "./Login.module.css";
 
 import * as AuthActions from "../../store/actions/index";
 
-import Spinner from "../../shared/Spinner/Spinner";
-import Error from "../../shared/Error/Error";
+import Spinner from "../../shared/UI/Spinner/Spinner";
+import Error from "../../shared/UI/Error/Error";
 
 interface PropsI extends RouteComponentProps<{}> {
   closeModal: Function;
