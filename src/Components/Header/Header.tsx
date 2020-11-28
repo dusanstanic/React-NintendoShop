@@ -97,7 +97,12 @@ const Header = (props: PropsI) => {
         />
       );
     } else {
-      setUserForm(<Register closeModal={hideModal} />);
+      setUserForm(
+        <Register
+          closeModal={hideModal}
+          showLoginForm={() => showUserModal(FormType.LOGIN)}
+        />
+      );
     }
     setShowModal(true);
   };
