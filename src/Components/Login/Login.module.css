@@ -124,7 +124,7 @@ label[for="newUser"] {
   margin-top: 10px;
   padding: 0.5rem 1rem;
   border: 1px solid black;
-  background: lightskyblue;
+  background-color: #fdc90e;
   font-weight: bold;
   cursor: pointer;
   transition-property: width, border-radius;
@@ -132,7 +132,7 @@ label[for="newUser"] {
 }
 
 .login-register-btn:hover {
-  background: rgb(26, 133, 204);
+  background-color: #ffde67;
   color: white;
   width: 80%;
   border-radius: 10px;
