@@ -15,44 +15,12 @@ interface PropsI extends RouteComponentProps {}
 const images = [
   "http://127.0.0.1:8887/SlideShow%20-%20Luigi%20Mansion%203.jpg",
   "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Jurassic%20World.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Ben%2010%20Power%20Trip.jpg",
   "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Marvel%20Superheroes%202.jpg",
 ];
 
 const Home = (props: PropsI) => {
   const [slideShowOptions, setSlideShowOptions] = useState(images);
-  const slideWrapper = useRef<HTMLDivElement>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const switchSlideShowImage = (option: string) => {
-    let currentIndex = currentImageIndex;
-
-    if (option === "left") {
-      currentIndex -= 1;
-      if (currentIndex === -1) {
-        currentIndex = images.length - 1;
-      }
-    } else {
-      currentIndex += 1;
-      if (currentIndex === images.length) {
-        currentIndex = 0;
-      }
-    }
-
-    slideWrapper.current?.classList.remove(classes["fadeIn"]);
-    const addClass = setTimeout(() => {
-      slideWrapper.current?.classList.add(classes["fadeIn"]);
-      clearTimeout(addClass);
-    }, 0);
-    setCurrentImageIndex(currentIndex);
-  };
-
-  // useEffect(() => {
-  //   setInterval(() => switchSlideShowImage("right"), 5000);
-  // }, []);
-
-  // const sliderItems: NodeListOf<HTMLImageElement> = document.querySelectorAll(
-  //   ".slide"
-  // );
 
   const wrapper = useRef<HTMLDivElement>(null);
   const items = useRef<HTMLDivElement>(null);
@@ -68,7 +36,7 @@ const Home = (props: PropsI) => {
   let index = 0;
 
   useEffect(() => {
-    handleResize("");
+    handleResize();
 
     const slides:
       | NodeListOf<HTMLImageElement>
@@ -86,18 +54,14 @@ const Home = (props: PropsI) => {
       cloneLast.addEventListener("mousedown", dragStart);
 
       if (items.current) {
+        // items.current.addEventListener("transitionend", checkIndex);
         items.current.appendChild(cloneFirst);
         items.current.insertBefore(cloneLast, firstSlide);
       }
     }
   }, []);
 
-  useEffect(() => {
-    console.log("slidesize");
-    console.log(slideSize);
-  }, [slideSize]);
-
-  const handleResize = (e: any) => {
+  const handleResize = () => {
     let wrapperSubSize = 0;
 
     if (wrapperSub.current) {
@@ -109,7 +73,7 @@ const Home = (props: PropsI) => {
       | undefined = items.current?.querySelectorAll(".slide");
 
     if (slides) {
-      slides.forEach((slide, index) => {
+      slides.forEach((slide) => {
         slide.width = wrapperSubSize;
       });
 
@@ -122,7 +86,7 @@ const Home = (props: PropsI) => {
   };
 
   window.addEventListener("resize", handleResize);
-  //console.log(slideSize);
+
   const dragStart = (e: any) => {
     console.log("dragStart");
     console.log(slideSize);
@@ -143,7 +107,7 @@ const Home = (props: PropsI) => {
     posX1 = e.clientX;
 
     if (items.current) {
-      items.current?.addEventListener("transitionend", checkIndex);
+      // items.current.addEventListener("transitionend", checkIndex);
       items.current.style.left = items.current.offsetLeft - posX2 + "px";
     }
   };
@@ -169,49 +133,49 @@ const Home = (props: PropsI) => {
     [slideSize]
   );
 
-  const shiftSlide = useCallback(
-    (dir: number, action: string) => {
-      console.log("shiftSlide");
-      if (items.current) {
-        items.current.classList.add(classes["shifting"]);
-        if (allowShift) {
-          if (!action) {
-            posInitial = items.current.offsetLeft;
-          }
+  const shiftSlide = (dir: number, action: string) => {
+    console.log("shiftSlide " + index);
+    if (items.current) {
+      items.current.classList.add(classes["shifting"]);
+      if (allowShift) {
+        if (!action) {
+          console.log("shift");
+          posInitial = items.current.offsetLeft;
+        }
 
-          if (dir === 1) {
-            items.current.style.left = posInitial - slideSize + "px";
-            index++;
-          } else if (dir === -1) {
-            items.current.style.left = posInitial + slideSize + "px";
-            index--;
-          }
+        if (dir === 1) {
+          items.current.style.left = posInitial - slideSize + "px";
+          index++;
+        } else if (dir === -1) {
+          items.current.style.left = posInitial + slideSize + "px";
+          index--;
+
+          console.log("shiftSlide " + index);
         }
       }
+    }
 
-      allowShift = false;
-    },
-    [slideSize]
-  );
+    allowShift = false;
+  };
 
   const checkIndex = () => {
-    console.log("checkIndex " + index);
+    if (items.current) {
+      items.current.classList.remove(classes["shifting"]);
+    }
+
+    console.log("checkIndex Before " + index);
     if (index === -1 && items.current) {
-      console.log("Slide size " + slideSize);
+      // console.log("Slide size " + slideSize);
       items.current.style.left = -(slidesLength * slideSize) + "px";
       index = slidesLength - 1;
-      console.dir(items.current);
+      // console.dir(items.current);
     }
 
     if (index === slidesLength && items.current) {
       items.current.style.left = -slideSize + "px";
       index = 0;
     }
-
-    if (items.current) {
-      items.current.classList.remove(classes["shifting"]);
-    }
-
+    console.log("checkIndex After " + index);
     allowShift = true;
   };
 
@@ -225,6 +189,7 @@ const Home = (props: PropsI) => {
             className="slide"
             alt="slideshow"
             onMouseDown={dragStart}
+            onTouchStart={dragStart}
           />
         );
       }),
@@ -232,12 +197,17 @@ const Home = (props: PropsI) => {
   );
 
   console.log("Render");
+
   return (
     <Aux>
       <div className={classes.home}>
         <div className={classes["slider"]} ref={wrapper}>
           <div className={classes["wrapper"]} ref={wrapperSub}>
-            <div className={classes["slides"]} ref={items}>
+            <div
+              className={classes["slides"]}
+              ref={items}
+              onTransitionEnd={checkIndex}
+            >
               {photos}
             </div>
           </div>
@@ -248,7 +218,7 @@ const Home = (props: PropsI) => {
             {"<"}
           </button>
           <button
-            onClick={() => switchSlideShowImage("right")}
+            onClick={() => shiftSlide(1, "")}
             className={classes["slideshow-right-btn"]}
           >
             {">"}
