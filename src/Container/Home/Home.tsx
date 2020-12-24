@@ -20,7 +20,7 @@ const images = [
 ];
 
 const Home = (props: PropsI) => {
-  const [slideShowOptions, setSlideShowOptions] = useState(images);
+  const [slideShowImgOptions, setSlideShowOptions] = useState(images);
 
   const wrapper = useRef<HTMLDivElement>(null);
   const items = useRef<HTMLDivElement>(null);
@@ -38,93 +38,82 @@ const Home = (props: PropsI) => {
   useEffect(() => {
     handleResize();
 
-    const slides:
-      | NodeListOf<HTMLImageElement>
-      | undefined = items.current?.querySelectorAll(".slide");
+    if (!items.current) return;
+    const slides: NodeListOf<HTMLImageElement> = items.current.querySelectorAll(
+      ".slide"
+    );
+    const slidesLength = slides.length;
 
-    if (slides) {
-      const slidesLength = slides.length;
-      setSlidesLength(slidesLength);
+    const firstSlide = slides[0];
+    const lastSlide = slides[slidesLength - 1];
+    const cloneFirst = firstSlide.cloneNode();
+    const cloneLast = lastSlide.cloneNode();
 
-      const firstSlide = slides[0];
-      const lastSlide = slides[slidesLength - 1];
-      const cloneFirst = firstSlide.cloneNode();
-      const cloneLast = lastSlide.cloneNode();
-      cloneFirst.addEventListener("mousedown", dragStart);
-      cloneLast.addEventListener("mousedown", dragStart);
+    cloneFirst.addEventListener("mousedown", dragStart);
+    cloneLast.addEventListener("mousedown", dragStart);
 
-      if (items.current) {
-        // items.current.addEventListener("transitionend", checkIndex);
-        items.current.appendChild(cloneFirst);
-        items.current.insertBefore(cloneLast, firstSlide);
-      }
-    }
+    items.current.appendChild(cloneFirst);
+    items.current.insertBefore(cloneLast, firstSlide);
+
+    setSlidesLength(slidesLength);
   }, []);
 
   const handleResize = () => {
-    let wrapperSubSize = 0;
+    if (!items.current || !wrapperSub.current) return;
 
-    if (wrapperSub.current) {
-      wrapperSubSize = wrapperSub.current.offsetWidth;
-    }
+    const wrapperSubSize = wrapperSub.current.offsetWidth;
+    const slides: NodeListOf<HTMLImageElement> = items.current.querySelectorAll(
+      ".slide"
+    );
 
-    const slides:
-      | NodeListOf<HTMLImageElement>
-      | undefined = items.current?.querySelectorAll(".slide");
+    slides.forEach((slide) => (slide.width = wrapperSubSize));
+    items.current.style.left = "-" + wrapperSubSize + "px";
 
-    if (slides) {
-      slides.forEach((slide) => {
-        slide.width = wrapperSubSize;
-      });
-
-      if (items.current) {
-        items.current.style.left = "-" + wrapperSubSize + "px";
-      }
-
-      setSlideSize(slides[0].offsetWidth);
-    }
+    setSlideSize(slides[0].offsetWidth);
   };
 
   window.addEventListener("resize", handleResize);
 
-  const dragStart = (e: any) => {
-    console.log("dragStart");
-    console.log(slideSize);
-    e.preventDefault();
+  const dragStart = useCallback(
+    (e: any) => {
+      if (!items.current) return;
+      console.log("***********dragStart**************");
+      e.preventDefault();
 
-    if (items.current) {
       posInitial = items.current.offsetLeft;
-    }
-    posX1 = e.clientX;
+      posX1 = e.clientX;
+      console.log("posInitial = " + posInitial);
+      console.log("posX1 = " + posX1);
 
-    document.onmouseup = dragEnd;
-    document.onmousemove = dragAction;
-  };
+      document.onmouseup = dragEnd;
+      document.onmousemove = dragAction;
+    },
+    [slideSize]
+  );
 
   const dragAction = (e: MouseEvent) => {
-    console.log("dragAction");
-    posX2 = posX1 - e.clientX;
+    if (!items.current) return;
+    console.log("***********dragAction**************");
+    posX2 = posX1 - e.clientX; // when moving right e.client gets bigger than posX1 so posX2 wil be "-" value
     posX1 = e.clientX;
 
-    if (items.current) {
-      // items.current.addEventListener("transitionend", checkIndex);
-      items.current.style.left = items.current.offsetLeft - posX2 + "px";
-    }
+    console.log("posX1 = " + posX1);
+    console.log("posX2 = " + posX2); // "-" when moving right
+
+    items.current.style.left = items.current.offsetLeft - posX2 + "px"; // "+" moves left border to right "-" moves to left direction
   };
 
   const dragEnd = useCallback(
     (e: MouseEvent) => {
-      console.log("dragEnd");
-      let posFinal = items.current?.offsetLeft ? items.current?.offsetLeft : 0;
+      if (!items.current) return;
+      let posFinal = items.current.offsetLeft;
 
       if (posFinal - posInitial < -100) {
         shiftSlide(1, "drag");
       } else if (posFinal - posInitial > 100) {
         shiftSlide(-1, "drag");
       } else {
-        if (items.current) {
-          items.current.style.left = posInitial + "px";
-        }
+        items.current.style.left = posInitial + "px";
       }
 
       document.onmouseup = null;
@@ -133,61 +122,52 @@ const Home = (props: PropsI) => {
     [slideSize]
   );
 
-  const shiftSlide = (dir: number, action: string) => {
-    console.log("shiftSlide " + index);
-    if (items.current) {
-      items.current.classList.add(classes["shifting"]);
-      if (allowShift) {
-        if (!action) {
-          console.log("shift");
-          posInitial = items.current.offsetLeft;
-        }
+  const shiftSlide = (dir: number, action: string = "") => {
+    if (!items.current) return;
+    items.current.classList.add(classes["shifting"]);
 
-        if (dir === 1) {
-          items.current.style.left = posInitial - slideSize + "px";
-          index++;
-        } else if (dir === -1) {
-          items.current.style.left = posInitial + slideSize + "px";
-          index--;
+    if (!allowShift) return;
+    if (!action) {
+      posInitial = items.current.offsetLeft;
+    }
 
-          console.log("shiftSlide " + index);
-        }
-      }
+    if (dir === 1) {
+      items.current.style.left = posInitial - slideSize + "px";
+      index++;
+    } else if (dir === -1) {
+      items.current.style.left = posInitial + slideSize + "px";
+      index--;
     }
 
     allowShift = false;
   };
 
   const checkIndex = () => {
-    if (items.current) {
-      items.current.classList.remove(classes["shifting"]);
-    }
+    if (!items.current) return;
+    items.current.classList.remove(classes["shifting"]);
 
-    console.log("checkIndex Before " + index);
-    if (index === -1 && items.current) {
-      // console.log("Slide size " + slideSize);
+    if (index === -1) {
       items.current.style.left = -(slidesLength * slideSize) + "px";
       index = slidesLength - 1;
-      // console.dir(items.current);
     }
 
-    if (index === slidesLength && items.current) {
+    if (index === slidesLength) {
       items.current.style.left = -slideSize + "px";
       index = 0;
     }
-    console.log("checkIndex After " + index);
+
     allowShift = true;
   };
 
-  const photos = useMemo(
+  const slideShowImgs = useMemo(
     () =>
       images.map((image, index) => {
         return (
           <img
             key={index}
-            src={slideShowOptions[index]}
+            src={slideShowImgOptions[index]}
             className="slide"
-            alt="slideshow"
+            alt="slideshowImg"
             onMouseDown={dragStart}
             onTouchStart={dragStart}
           />
@@ -195,8 +175,6 @@ const Home = (props: PropsI) => {
       }),
     [dragStart]
   );
-
-  console.log("Render");
 
   return (
     <Aux>
@@ -208,17 +186,17 @@ const Home = (props: PropsI) => {
               ref={items}
               onTransitionEnd={checkIndex}
             >
-              {photos}
+              {slideShowImgs}
             </div>
           </div>
           <button
-            onClick={() => shiftSlide(-1, "")}
+            onClick={() => shiftSlide(-1)}
             className={classes["slideshow-left-btn"]}
           >
             {"<"}
           </button>
           <button
-            onClick={() => shiftSlide(1, "")}
+            onClick={() => shiftSlide(1)}
             className={classes["slideshow-right-btn"]}
           >
             {">"}
