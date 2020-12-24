@@ -3,15 +3,33 @@ import React, { FunctionComponent } from "react";
 import classes from "./Label.module.css";
 
 interface PropsI {
-  text: string;
+  errorMessages: string[];
 }
 
-const Label: FunctionComponent<PropsI> = (props) => {
-  let labelClasses: string[] = [classes["hideLabel"]];
-  if (props.text.length > 0) {
+const Label: FunctionComponent<PropsI> = ({ errorMessages }) => {
+  const labelClasses = [classes["hideLabel"]];
+
+  if (errorMessages.length) {
     labelClasses.push(classes["showLabel"]);
   }
-  return <label className={labelClasses.join(" ")}>{props.text}</label>;
+
+  return (
+    <div className={labelClasses.join(" ")}>
+      {renderErrorMessages(errorMessages)}
+    </div>
+  );
+};
+
+const renderErrorMessages = (errorMessages: string[]) => {
+  const errorMessagesJSX = errorMessages.map((errorMessage, index) => {
+    return (
+      <div key={index} className={classes["errorMessage"]}>
+        {errorMessage}
+      </div>
+    );
+  });
+
+  return errorMessagesJSX;
 };
 
 export default Label;
