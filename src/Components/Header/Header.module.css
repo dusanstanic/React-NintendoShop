@@ -79,8 +79,8 @@
 }
 
 .main-header__icon {
-  width: 10rem;
-  height: 100%;
+  width: 8rem;
+  height: 2.5rem;
 }
 
 .main-nav {
@@ -106,6 +106,12 @@
   text-decoration: none;
   text-transform: uppercase;
   color: black;
+  transition: all 0.5s;
+}
+
+.main-nav__item a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 .nav-item-active {

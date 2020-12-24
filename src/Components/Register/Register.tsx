@@ -19,6 +19,7 @@ import Label from "../../shared/UI/Label/Label";
 interface PropsI extends RouteComponentProps {
   closeModal: Function;
   isAuth: Function;
+  showLoginForm: Function;
 }
 
 enum InputName {
@@ -492,6 +493,9 @@ const Register: FunctionComponent<PropsI> = (props) => {
           </button>
         </div>
         <div className={classes["error-message"]}>{serverSideErrorMessage}</div>
+        <div className={classes["login"]}>
+          <button onClick={() => props.showLoginForm()}>Login</button>
+        </div>
       </form>
     </div>
   );
