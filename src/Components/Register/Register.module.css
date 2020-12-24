@@ -143,3 +143,9 @@
 .register .login button:focus {
   outline: none;
 }
+
+@media (min-width: 40rem) {
+  .register {
+    background-color: aqua;
+  }
+}
