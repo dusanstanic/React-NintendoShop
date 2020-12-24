@@ -11,6 +11,9 @@ import { connect } from "react-redux";
 
 import classes from "./Register.module.scss";
 
+import checkValidation, {
+  validationOptions,
+} from "../../shared/Validation/Validation";
 import { Customer } from ".././../models/CustomerM";
 import * as CustomerService from "../../service/CustomerService";
 import * as AuthActions from "../../store/actions/index";
@@ -38,40 +41,48 @@ enum InputName {
 }
 
 const Register: FunctionComponent<PropsI> = (props) => {
-  // console.log(classes);
   const [isRegistrationsuccessFull, setIsRegistrationsuccessFull] = useState(
     false
   );
   const [cityOptions, setCityOptions] = useState<JSX.Element[]>([]);
-  const [serverSideErrorMessage, setServerSideErrorMessage] = useState("");
 
-  const [firstNameInputErrorMessage, setFirstNameInputErrorMessage] = useState(
-    ""
-  );
-  const [lastNameInputErrorMessage, setLastNameInputErrorMessage] = useState(
-    ""
-  );
-  const [emailInputErrorMessage, setEmailInputErrorMessage] = useState("");
+  const [serverSideErrorMessage, setServerSideErrorMessage] = useState<
+    string[]
+  >([""]);
+
+  const [firstNameInputErrorMessage, setFirstNameInputErrorMessage] = useState<
+    string[]
+  >([""]);
+  const [lastNameInputErrorMessage, setLastNameInputErrorMessage] = useState<
+    string[]
+  >([""]);
+  const [emailInputErrorMessage, setEmailInputErrorMessage] = useState<
+    string[]
+  >([""]);
   const [
     phoneNumberInputErrorMessage,
     setPhoneNumberInputErrorMessage,
-  ] = useState("");
-  const [cityInputErrorMessage, setCityInputErrorMessage] = useState("");
-  const [postalCodeInputErrorMessage, setPostalCodenputErrorMessage] = useState(
-    ""
-  );
-  const [streetInputErrorMessage, setStreetInputErrorMessage] = useState("");
+  ] = useState<string[]>([""]);
+  const [cityInputErrorMessage, setCityInputErrorMessage] = useState<string[]>([
+    "",
+  ]);
+  const [postalCodeInputErrorMessage, setPostalCodenputErrorMessage] = useState<
+    string[]
+  >([""]);
+  const [streetInputErrorMessage, setStreetInputErrorMessage] = useState<
+    string[]
+  >([""]);
   const [
     streetNumberInputErrorMessage,
     setStreetNumberInputErrorMessage,
-  ] = useState("");
-  const [passwordInputErrorMessage, setPasswordInputErrorMessage] = useState(
-    ""
-  );
+  ] = useState<string[]>([""]);
+  const [passwordInputErrorMessage, setPasswordInputErrorMessage] = useState<
+    string[]
+  >([""]);
   const [
     confirmPasswordInputErrorMessage,
     setConfirmPasswordNumberInputErrorMessage,
-  ] = useState("");
+  ] = useState<string[]>([""]);
 
   const [enteredFirstName, setEnteredFirstName] = useState("");
   const [enteredLastName, setEnteredLastName] = useState("");
@@ -130,6 +141,8 @@ const Register: FunctionComponent<PropsI> = (props) => {
   useEffect(() => {
     CustomerService.getCities().then((names: string[]) => {
       let cities: JSX.Element[] = [];
+      names.push("Novi Sad");
+      names.push("Beograd");
 
       cities = names.map((name, index) => {
         return (
@@ -192,7 +205,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
       })
       .catch((error: Error) => {
         console.dir(error);
-        setServerSideErrorMessage(error.message);
+        // setServerSideErrorMessage(error.message);
       });
   };
 
@@ -200,165 +213,150 @@ const Register: FunctionComponent<PropsI> = (props) => {
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name: inputName, value: inputValue } = event.target;
+    let isInputValid;
+    let validation;
 
-    console.log("Name: " + inputName + " Value: " + inputValue);
-
-    const textOnlyRegex = /^[^0-9]{1,}$/;
-    const isDigitContainedRegex = /[0-9]/;
-    const isTextContainedRegex = /[A-Za-z]/;
-    // const digitOnlyRegex = /^\d{1,}$/;
-    const passwordRegex = /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}/;
-    const errorMessage = [];
-
-    if (inputName === InputName.FIRST_NAME) {
-      const isInputValid = !!inputValue.match(textOnlyRegex);
-      setIsEnteredFirstNameValid(isInputValid);
-      if (inputValue.match(isDigitContainedRegex)) {
-        errorMessage.push("Cannot contain a number");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setFirstNameInputErrorMessage(errorMessage.join(" "));
-      setEnteredFirstName(inputValue);
-    }
-
-    if (inputName === InputName.LAST_NAME) {
-      const isInputValid = !!inputValue.match(textOnlyRegex);
-      setIsEnteredLastNameValid(isInputValid);
-      if (inputValue.match(isDigitContainedRegex)) {
-        errorMessage.push("Cannot contain a number");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setLastNameInputErrorMessage(errorMessage.join(" "));
-      setEnteredLastName(inputValue);
-    }
-
-    if (inputName === InputName.EMAIL) {
-      const emailRegex = /\S+@\S+\.\S+/;
-      const isInputValid = !!inputValue.match(emailRegex);
-      setIsEnteredEmailValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Email is invalid");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setEmailInputErrorMessage(errorMessage.join(" "));
-      setEnteredEmail(inputValue);
-    }
-
-    if (inputName === InputName.PHONE_NUMBER) {
-      const phoneNumberRegex = /^\d{10}$/;
-      const isInputValid = !!inputValue.match(phoneNumberRegex);
-      setIsEnteredPhoneNumberValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Must contain 10 numbers");
-      }
-      if (inputValue.match(isTextContainedRegex)) {
-        errorMessage.push("Cannot contain text");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setPhoneNumberInputErrorMessage(errorMessage.join(" "));
-      setEnteredPhoneNumber(inputValue);
-    }
-
-    if (inputName === InputName.CITY) {
-      if (inputValue === "select city") {
-        setCityInputErrorMessage("* Select city");
-        return;
-      }
-
-      setCityInputErrorMessage("");
-      setEnteredCity(inputValue);
-    }
-
-    if (inputName === InputName.POSTAL_CODE) {
-      const postalCodeRegex = /^.{5}$/;
-      const isInputValid = !!inputValue.match(postalCodeRegex);
-      setIsEnteredPostalCodeValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Must contain 5 characters");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setPostalCodenputErrorMessage(errorMessage.join(" "));
-      setEnteredPostalCode(inputValue);
-    }
-
-    if (inputName === InputName.STREET) {
-      const isInputValid = !!inputValue.match(textOnlyRegex);
-      setIsEnteredStreetValid(isInputValid);
-      if (inputValue.match(isDigitContainedRegex)) {
-        errorMessage.push("Cannot contain a number");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setStreetInputErrorMessage(errorMessage.join(" "));
-      setEnteredStreet(inputValue);
-    }
-
-    if (inputName === InputName.STREET_NUMBER) {
-      const isInputValid = !!inputValue.match(/^[^<>%$@]{1,}$/);
-      setIsEnteredStreetNumberValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Invalid character");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setStreetNumberInputErrorMessage(errorMessage.join(" "));
-      setEnteredStreetNumber(inputValue);
-    }
-
-    if (inputName === InputName.PASSWORD) {
-      const isInputValid = !!inputValue.match(passwordRegex);
-      setIsEnteredPasswordValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push(
-          "Must contain 8 characters and at least one number, upper and lower case"
+    switch (inputName) {
+      case InputName.FIRST_NAME:
+        validation = checkValidation(
+          [
+            validationOptions.REQUIRED,
+            validationOptions.TEXT,
+            validationOptions.NO_NUMBER,
+          ],
+          inputValue
         );
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setPasswordInputErrorMessage(errorMessage.join(" "));
-      setEnteredPassword(inputValue);
-    }
 
-    if (inputName === InputName.CONFIRM_PASSWORD) {
-      const isInputValid = inputValue === enteredPassword;
-      setIsEnteredConfirmPasswordValid(isInputValid);
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Does not match password");
-      }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setConfirmPasswordNumberInputErrorMessage(errorMessage.join(" "));
-      setEnteredConfirmPassword(inputValue);
-    }
+        setFirstNameInputErrorMessage(validation.errorMessage);
+        setIsEnteredFirstNameValid(validation.isInputValid);
+        setEnteredFirstName(inputValue);
+        break;
+      case InputName.LAST_NAME:
+        validation = checkValidation(
+          [
+            validationOptions.REQUIRED,
+            validationOptions.TEXT,
+            validationOptions.NO_NUMBER,
+          ],
+          inputValue
+        );
 
-    if (inputName === InputName.GENDER) {
-      setIsGenderValid(true);
-      if (inputValue === "M") {
-        setSelectedGender("Male");
-      } else {
-        setSelectedGender("Female");
-      }
+        setLastNameInputErrorMessage(validation.errorMessage);
+        setIsEnteredLastNameValid(validation.isInputValid);
+        setEnteredLastName(inputValue);
+        break;
+      case InputName.EMAIL:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.EMAIL],
+          inputValue
+        );
+
+        setIsEnteredEmailValid(validation.isInputValid);
+        setEmailInputErrorMessage(validation.errorMessage);
+        setEnteredEmail(inputValue);
+        break;
+      case InputName.PHONE_NUMBER:
+        validation = checkValidation(
+          [
+            validationOptions.REQUIRED,
+            validationOptions.NO_TEXT,
+            validationOptions.NO_SPECIAL_CHARACTER,
+            validationOptions.PHONE_NUMBER,
+          ],
+          inputValue
+        );
+
+        console.log(validation);
+
+        const phoneNumberRegex = /^\d{10}$/;
+        isInputValid = !!inputValue.match(phoneNumberRegex);
+
+        setPhoneNumberInputErrorMessage(validation.errorMessage);
+        setIsEnteredPhoneNumberValid(validation.isInputValid);
+        setEnteredPhoneNumber(inputValue);
+        break;
+      case InputName.CITY:
+        if (inputValue === "select city") {
+          setCityInputErrorMessage(["* Select city"]);
+          return;
+        }
+
+        setCityInputErrorMessage([""]);
+        setEnteredCity(inputValue);
+        break;
+      case InputName.POSTAL_CODE:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.POSTAL_CODE],
+          inputValue
+        );
+
+        setPostalCodenputErrorMessage(validation.errorMessage);
+        setIsEnteredPostalCodeValid(validation.isInputValid);
+        setEnteredPostalCode(inputValue);
+        break;
+      case InputName.STREET:
+        validation = checkValidation(
+          [
+            validationOptions.REQUIRED,
+            validationOptions.TEXT,
+            validationOptions.NO_NUMBER,
+          ],
+          inputValue
+        );
+
+        setStreetInputErrorMessage(validation.errorMessage);
+        setIsEnteredStreetValid(validation.isInputValid);
+        setEnteredStreet(inputValue);
+        break;
+      case InputName.STREET_NUMBER:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.NO_SPECIAL_CHARACTER],
+          inputValue
+        );
+
+        setStreetNumberInputErrorMessage(validation.errorMessage);
+        setIsEnteredStreetNumberValid(validation.isInputValid);
+        setEnteredStreetNumber(inputValue);
+        break;
+      case InputName.PASSWORD:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.PASSWORD],
+          inputValue
+        );
+
+        setPasswordInputErrorMessage(validation.errorMessage);
+        setIsEnteredPasswordValid(validation.isInputValid);
+        setEnteredPassword(inputValue);
+        break;
+      case InputName.CONFIRM_PASSWORD:
+        validation = checkValidation([validationOptions.REQUIRED], inputValue);
+        isInputValid = inputValue === enteredPassword;
+
+        if (validation.isInputValid && !isInputValid) {
+          validation.errorMessage = validation.errorMessage.concat(
+            "Does not match password"
+          );
+        }
+
+        setConfirmPasswordNumberInputErrorMessage(validation.errorMessage);
+        setIsEnteredConfirmPasswordValid(validation.isInputValid);
+        setEnteredConfirmPassword(inputValue);
+        break;
+      case InputName.GENDER:
+        setIsGenderValid(true);
+        if (inputValue === "M") {
+          setSelectedGender("Male");
+        } else {
+          setSelectedGender("Female");
+        }
+        break;
     }
   };
 
-  const re = (event: MouseEvent<HTMLSelectElement>) => {
-    console.dir(event.target);
-    setCityInputErrorMessage("* Select a city");
-  };
+  // const re = (event: MouseEvent<HTMLSelectElement>) => {
+  //   console.dir(event.target);
+  //   setCityInputErrorMessage("* Select a city");
+  // };
 
   // if (isRegistrationsuccessFull) {
   //   return <Redirect to="/CustomerPanel" />;
@@ -382,7 +380,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
                 onChange={registerHandler}
                 value={enteredFirstName}
               />
-              <Label text={firstNameInputErrorMessage} />
+              <Label errorMessages={firstNameInputErrorMessage} />
             </div>
           </div>
           <div className={classes["column"]}>
@@ -395,11 +393,10 @@ const Register: FunctionComponent<PropsI> = (props) => {
                 onChange={registerHandler}
                 value={enteredLastName}
               />
-              <Label text={lastNameInputErrorMessage} />
+              <Label errorMessages={lastNameInputErrorMessage} />
             </div>
           </div>
         </div>
-
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="email">Email</label>
@@ -410,7 +407,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredEmail}
             />
-            <Label text={emailInputErrorMessage} />
+            <Label errorMessages={emailInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -423,7 +420,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredPhoneNumber}
             />
-            <Label text={phoneNumberInputErrorMessage} />
+            <Label errorMessages={phoneNumberInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -443,7 +440,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
             >
               {cityOptions}
             </select>
-            <Label text={cityInputErrorMessage} />
+            <Label errorMessages={cityInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -456,7 +453,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredPostalCode}
             />
-            <Label text={postalCodeInputErrorMessage} />
+            <Label errorMessages={postalCodeInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -469,7 +466,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredStreet}
             />
-            <Label text={streetInputErrorMessage} />
+            <Label errorMessages={streetInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -482,7 +479,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredStreetNumber}
             />
-            <Label text={streetNumberInputErrorMessage} />
+            <Label errorMessages={streetNumberInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -495,7 +492,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredPassword}
             />
-            <Label text={passwordInputErrorMessage} />
+            <Label errorMessages={passwordInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
@@ -508,7 +505,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
               onChange={registerHandler}
               value={enteredConfirmPassword}
             />
-            <Label text={confirmPasswordInputErrorMessage} />
+            <Label errorMessages={confirmPasswordInputErrorMessage} />
           </div>
         </div>
         <div className={classes["column"]}>
