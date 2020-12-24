@@ -4,11 +4,12 @@ import React, {
   FunctionComponent,
   useEffect,
   useState,
+  MouseEvent,
 } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 
-import classes from "./Register.module.css";
+import classes from "./Register.module.scss";
 
 import { Customer } from ".././../models/CustomerM";
 import * as CustomerService from "../../service/CustomerService";
@@ -37,9 +38,11 @@ enum InputName {
 }
 
 const Register: FunctionComponent<PropsI> = (props) => {
+  // console.log(classes);
   const [isRegistrationsuccessFull, setIsRegistrationsuccessFull] = useState(
     false
   );
+  const [cityOptions, setCityOptions] = useState<JSX.Element[]>([]);
   const [serverSideErrorMessage, setServerSideErrorMessage] = useState("");
 
   const [firstNameInputErrorMessage, setFirstNameInputErrorMessage] = useState(
@@ -125,6 +128,30 @@ const Register: FunctionComponent<PropsI> = (props) => {
   };
 
   useEffect(() => {
+    CustomerService.getCities().then((names: string[]) => {
+      let cities: JSX.Element[] = [];
+
+      cities = names.map((name, index) => {
+        return (
+          <option key={index} value={name}>
+            {name}
+          </option>
+        );
+      });
+
+      cities.unshift(
+        <option key={"select type"} hidden={true} value={"select city"}>
+          -- Select City --
+        </option>
+        // <option value={"Novi Sad"}>Novi Sad</option>,
+        // <option value={"Beograd"}>Beograd</option>
+      );
+
+      setCityOptions(cities);
+    });
+  }, []);
+
+  useEffect(() => {
     isRegistrationValid();
   }, [
     enteredFirstName,
@@ -169,8 +196,12 @@ const Register: FunctionComponent<PropsI> = (props) => {
       });
   };
 
-  const registerHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const registerHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name: inputName, value: inputValue } = event.target;
+
+    console.log("Name: " + inputName + " Value: " + inputValue);
 
     const textOnlyRegex = /^[^0-9]{1,}$/;
     const isDigitContainedRegex = /[0-9]/;
@@ -237,15 +268,12 @@ const Register: FunctionComponent<PropsI> = (props) => {
     }
 
     if (inputName === InputName.CITY) {
-      const isInputValid = !!inputValue.match(textOnlyRegex);
-      setIsEnteredCityValid(isInputValid);
-      if (inputValue.match(isDigitContainedRegex)) {
-        errorMessage.push("Cannot contain a number");
+      if (inputValue === "select city") {
+        setCityInputErrorMessage("* Select city");
+        return;
       }
-      if (inputValue.length === 0) {
-        errorMessage.push("*Field is required");
-      }
-      setCityInputErrorMessage(errorMessage.join(" "));
+
+      setCityInputErrorMessage("");
       setEnteredCity(inputValue);
     }
 
@@ -327,6 +355,11 @@ const Register: FunctionComponent<PropsI> = (props) => {
     }
   };
 
+  const re = (event: MouseEvent<HTMLSelectElement>) => {
+    console.dir(event.target);
+    setCityInputErrorMessage("* Select a city");
+  };
+
   // if (isRegistrationsuccessFull) {
   //   return <Redirect to="/CustomerPanel" />;
   // }
@@ -338,32 +371,35 @@ const Register: FunctionComponent<PropsI> = (props) => {
         <button onClick={() => props.closeModal()}> X</button>
       </div>
       <form onSubmit={register}>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              name={InputName.FIRST_NAME}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredFirstName}
-            />
-            <Label text={firstNameInputErrorMessage} />
+        <div className={classes["row"]}>
+          <div className={classes["column"]}>
+            <div className={classes["form-group"]}>
+              <label htmlFor="firstName">First Name</label>
+              <input
+                type="text"
+                name={InputName.FIRST_NAME}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredFirstName}
+              />
+              <Label text={firstNameInputErrorMessage} />
+            </div>
+          </div>
+          <div className={classes["column"]}>
+            <div className={classes["form-group"]}>
+              <label htmlFor="lastName">Last Name</label>
+              <input
+                type="text"
+                name={InputName.LAST_NAME}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredLastName}
+              />
+              <Label text={lastNameInputErrorMessage} />
+            </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              name={InputName.LAST_NAME}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredLastName}
-            />
-            <Label text={lastNameInputErrorMessage} />
-          </div>
-        </div>
+
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="email">Email</label>
@@ -393,13 +429,20 @@ const Register: FunctionComponent<PropsI> = (props) => {
         <div className={classes["column"]}>
           <div className={classes["form-group"]}>
             <label htmlFor="city">City</label>
-            <input
+            {/* <input
               type="text"
               name={InputName.CITY}
               onBlur={registerHandler}
               onChange={registerHandler}
               value={enteredCity}
-            />
+            /> */}
+            <select
+              name={InputName.CITY}
+              onChange={registerHandler}
+              onFocus={registerHandler}
+            >
+              {cityOptions}
+            </select>
             <Label text={cityInputErrorMessage} />
           </div>
         </div>
@@ -497,6 +540,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
           <button onClick={() => props.showLoginForm()}>Login</button>
         </div>
       </form>
+      <div className={classes["charmander"]}>We hope you a Merry Christmas</div>
     </div>
   );
 };

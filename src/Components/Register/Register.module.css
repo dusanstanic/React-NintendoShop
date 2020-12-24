@@ -143,3 +143,11 @@
 .register .login button:focus {
   outline: none;
 }
+
+@media (min-width: 40rem) {
+  /* min - When the window width is bigger then 640px */
+  /* max - When the window width is samller then 640px */
+  .register {
+    background-color: aqua;
+  }
+}
