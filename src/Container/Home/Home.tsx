@@ -1,4 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import Aux from "../../hoc/Auxiliary";
 
@@ -9,62 +15,188 @@ interface PropsI extends RouteComponentProps {}
 const images = [
   "http://127.0.0.1:8887/SlideShow%20-%20Luigi%20Mansion%203.jpg",
   "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Jurassic%20World.jpg",
+  "http://127.0.0.1:8887/SlideShow%20-%20Ben%2010%20Power%20Trip.jpg",
   "http://127.0.0.1:8887/SlideShow%20-%20Lego%20Marvel%20Superheroes%202.jpg",
 ];
 
 const Home = (props: PropsI) => {
-  const [slideShowOptions, setSlideShowOptions] = useState(images);
-  const slideWrapper = useRef<HTMLDivElement>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [slideShowImgOptions, setSlideShowOptions] = useState(images);
 
-  const switchSlideShowImage = (option: string) => {
-    let currentIndex = currentImageIndex;
+  const wrapper = useRef<HTMLDivElement>(null);
+  const items = useRef<HTMLDivElement>(null);
+  const wrapperSub = useRef<HTMLDivElement>(null);
 
-    if (option === "left") {
-      currentIndex -= 1;
-      if (currentIndex === -1) {
-        currentIndex = images.length - 1;
-      }
-    } else {
-      currentIndex += 1;
-      if (currentIndex === images.length) {
-        currentIndex = 0;
-      }
-    }
+  const [slideSize, setSlideSize] = useState(0);
+  const [slidesLength, setSlidesLength] = useState(0);
 
-    slideWrapper.current?.classList.remove(classes["fadeIn"]);
-    const addClass = setTimeout(() => {
-      slideWrapper.current?.classList.add(classes["fadeIn"]);
-      clearTimeout(addClass);
-    }, 0);
-    setCurrentImageIndex(currentIndex);
+  let posX1 = 0;
+  let posX2 = 0;
+  let allowShift = true;
+  let posInitial = 0;
+  let index = 0;
+
+  useEffect(() => {
+    handleResize();
+
+    if (!items.current) return;
+    const slides: NodeListOf<HTMLImageElement> = items.current.querySelectorAll(
+      ".slide"
+    );
+    const slidesLength = slides.length;
+
+    const firstSlide = slides[0];
+    const lastSlide = slides[slidesLength - 1];
+    const cloneFirst = firstSlide.cloneNode();
+    const cloneLast = lastSlide.cloneNode();
+
+    cloneFirst.addEventListener("mousedown", dragStart);
+    cloneLast.addEventListener("mousedown", dragStart);
+
+    items.current.appendChild(cloneFirst);
+    items.current.insertBefore(cloneLast, firstSlide);
+
+    setSlidesLength(slidesLength);
+  }, []);
+
+  const handleResize = () => {
+    if (!items.current || !wrapperSub.current) return;
+
+    const wrapperSubSize = wrapperSub.current.offsetWidth;
+    const slides: NodeListOf<HTMLImageElement> = items.current.querySelectorAll(
+      ".slide"
+    );
+
+    slides.forEach((slide) => (slide.width = wrapperSubSize));
+    items.current.style.left = "-" + wrapperSubSize + "px";
+
+    setSlideSize(slides[0].offsetWidth);
   };
 
-  /*useEffect(() => {
-    setInterval(() => 
-    switchSlideShowImage("right"), 5000)
-  }, []);*/
+  window.addEventListener("resize", handleResize);
+
+  const dragStart = useCallback(
+    (e: any) => {
+      if (!items.current) return;
+      console.log("***********dragStart**************");
+      e.preventDefault();
+
+      posInitial = items.current.offsetLeft;
+      posX1 = e.clientX;
+      console.log("posInitial = " + posInitial);
+      console.log("posX1 = " + posX1);
+
+      document.onmouseup = dragEnd;
+      document.onmousemove = dragAction;
+    },
+    [slideSize]
+  );
+
+  const dragAction = (e: MouseEvent) => {
+    if (!items.current) return;
+    console.log("***********dragAction**************");
+    posX2 = posX1 - e.clientX; // when moving right e.client gets bigger than posX1 so posX2 wil be "-" value
+    posX1 = e.clientX;
+
+    console.log("posX1 = " + posX1);
+    console.log("posX2 = " + posX2); // "-" when moving right
+
+    items.current.style.left = items.current.offsetLeft - posX2 + "px"; // "+" moves left border to right "-" moves to left direction
+  };
+
+  const dragEnd = useCallback(
+    (e: MouseEvent) => {
+      if (!items.current) return;
+      let posFinal = items.current.offsetLeft;
+
+      if (posFinal - posInitial < -100) {
+        shiftSlide(1, "drag");
+      } else if (posFinal - posInitial > 100) {
+        shiftSlide(-1, "drag");
+      } else {
+        items.current.style.left = posInitial + "px";
+      }
+
+      document.onmouseup = null;
+      document.onmousemove = null;
+    },
+    [slideSize]
+  );
+
+  const shiftSlide = (dir: number, action: string = "") => {
+    if (!items.current) return;
+    items.current.classList.add(classes["shifting"]);
+
+    if (!allowShift) return;
+    if (!action) {
+      posInitial = items.current.offsetLeft;
+    }
+
+    if (dir === 1) {
+      items.current.style.left = posInitial - slideSize + "px";
+      index++;
+    } else if (dir === -1) {
+      items.current.style.left = posInitial + slideSize + "px";
+      index--;
+    }
+
+    allowShift = false;
+  };
+
+  const checkIndex = () => {
+    if (!items.current) return;
+    items.current.classList.remove(classes["shifting"]);
+
+    if (index === -1) {
+      items.current.style.left = -(slidesLength * slideSize) + "px";
+      index = slidesLength - 1;
+    }
+
+    if (index === slidesLength) {
+      items.current.style.left = -slideSize + "px";
+      index = 0;
+    }
+
+    allowShift = true;
+  };
+
+  const slideShowImgs = useMemo(
+    () =>
+      images.map((image, index) => {
+        return (
+          <img
+            key={index}
+            src={slideShowImgOptions[index]}
+            className="slide"
+            alt="slideshowImg"
+            onMouseDown={dragStart}
+            onTouchStart={dragStart}
+          />
+        );
+      }),
+    [dragStart]
+  );
 
   return (
     <Aux>
       <div className={classes.home}>
-        <div className={classes["slideshow"]}>
-          <div
-            ref={slideWrapper}
-            className={
-              classes["slideshow-image-wrapper"] + " " + classes["fadeIn"]
-            }
-          >
-            <img src={slideShowOptions[currentImageIndex]} alt="slideshow" />
+        <div className={classes["slider"]} ref={wrapper}>
+          <div className={classes["wrapper"]} ref={wrapperSub}>
+            <div
+              className={classes["slides"]}
+              ref={items}
+              onTransitionEnd={checkIndex}
+            >
+              {slideShowImgs}
+            </div>
           </div>
           <button
-            onClick={() => switchSlideShowImage("left")}
+            onClick={() => shiftSlide(-1)}
             className={classes["slideshow-left-btn"]}
           >
             {"<"}
           </button>
           <button
-            onClick={() => switchSlideShowImage("right")}
+            onClick={() => shiftSlide(1)}
             className={classes["slideshow-right-btn"]}
           >
             {">"}
