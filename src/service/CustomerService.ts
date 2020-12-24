@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 import { Customer } from "../models/CustomerM";
 import { UserInfo } from "../models/UserInfo";
@@ -83,7 +83,7 @@ function update(game: any) {
     .then((response) => {
       // console.dir(response);
       // console.log(response);
-      console.log("Non error");
+      console.log(response);
       return response;
     })
     .catch((error: AxiosError) => {
@@ -108,6 +108,28 @@ function parseImagePath(path: string) {
   );
 }
 
+function getCities() {
+  return axios
+    .get("https://wft-geo-db.p.rapidapi.com/v1/geo/cities", {
+      headers: {
+        "x-rapidapi-key": "b7fb715dffmsh5ff8911f3678c9ap14956fjsnb778d18fb40f",
+        "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+      },
+      params: { countryIds: "RS", limit: "10" },
+    })
+    .then((response) => {
+      const cities = response.data.data;
+      const names = cities.map((city: any) => {
+        return city.name;
+      });
+
+      return names;
+    })
+    .catch((error) => {
+      console.dir(error);
+    });
+}
+
 export {
   login,
   register,
@@ -115,4 +137,5 @@ export {
   findUserById,
   update,
   parseImagePath,
+  getCities,
 };
