@@ -1,10 +1,15 @@
 .hideLabel {
   visibility: hidden;
-  height: 12px;
+  /* height: 12px; */
 }
 
 .showLabel {
-  text-align: right;
+  text-align: left;
   visibility: visible;
-  color: red !important;
+}
+
+.errorMessage {
+  height: 0.8rem;
+  margin-top: 0.2rem;
+  color: red;
 }
