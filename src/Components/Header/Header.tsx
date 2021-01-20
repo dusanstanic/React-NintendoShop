@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   Route,
   NavLink,
@@ -57,6 +57,11 @@ enum FormType {
 const Header = (props: PropsI) => {
   const [userForm, setUserForm] = useState<JSX.Element>();
   const [showModal, setShowModal] = useState(false);
+
+  const [searchOptions, setSearchOptions] = useState<JSX.Element[]>();
+  const [searchOptionsViews, setSearchOptionsViews] = useState<JSX.Element[]>();
+  const [isSearchClicked, setIsSearchClicked] = useState(true);
+  const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
@@ -148,6 +153,40 @@ const Header = (props: PropsI) => {
     }
   }
 
+  const search = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { value: inputValue } = event.target;
+    const games = await GameService.getAllGamesContaining(inputValue);
+
+    if (!games) {
+      setSearchOptions([]);
+      return;
+    }
+
+    const gamesJSX = games.map((game) => {
+      return (
+        <div key={game.id} className={classes["option"]}>
+          {game.title}
+        </div>
+      );
+    });
+
+    const gamesViewJSX = games.map((game) => {
+      return (
+        <div key={game.id} className={classes["optionView"]}>
+          <img src={game.image} alt="option" />
+          <div> {game.title}</div>
+        </div>
+      );
+    });
+
+    setSearchOptionsViews(gamesViewJSX);
+    setSearchOptions(gamesJSX);
+  };
+
+  useEffect(() => {
+    // searchInput.current?.focus();
+  }, [isSearchClicked]);
+
   return (
     <Aux>
       <div className={classes["background"]}></div>
@@ -231,54 +270,94 @@ const Header = (props: PropsI) => {
             </NavLink>
           </div>
           <nav className={classes["main-nav"]}>
-            <ul className={classes["main-nav__items"]}>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  to="/home"
-                  activeClassName={classes["nav-item-active"]}
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/games",
+            {isSearchClicked ? (
+              <div className={classes["search"]}>
+                <input
+                  ref={searchInput}
+                  type="text"
+                  name="search"
+                  placeholder="Search"
+                  onChange={search}
+                  onBlur={() => {
+                    // setSearchOptions([]);
+                    // setIsSearchClicked(false);
                   }}
-                >
-                  Games
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/consoles",
-                  }}
-                >
-                  Consoles
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/manageGames",
-                  }}
-                >
-                  Manage Games
-                </NavLink>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/manageInventory",
-                  }}
-                >
-                  Manage Inventory
-                </NavLink>
-              </li>
-            </ul>
+                />
+                {/* <img
+                  src="http://127.0.0.1:8887/search%20logo%20main.jpg"
+                  alt="search"
+                /> */}
+                <div className={classes["options"]}>
+                  <div className={classes["optionColumn"]}>{searchOptions}</div>
+                  <div className={classes["optionViewColumn"]}>
+                    {searchOptionsViews}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <ul className={classes["main-nav__items"]}>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    to="/home"
+                    activeClassName={classes["nav-item-active"]}
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/games",
+                    }}
+                  >
+                    Games
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/consoles",
+                    }}
+                  >
+                    Consoles
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/manageGames",
+                    }}
+                  >
+                    Manage Games
+                  </NavLink>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/manageInventory",
+                    }}
+                  >
+                    Manage Inventory
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="Search"
+                    onFocus={() => {
+                      setIsSearchClicked(true);
+                    }}
+                  />
+                  <img
+                    src="http://127.0.0.1:8887/search%20logo%20main.jpg"
+                    alt="search"
+                  />
+                </li>
+              </ul>
+            )}
           </nav>
         </div>
       </header>
