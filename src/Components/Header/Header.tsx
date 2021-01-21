@@ -34,6 +34,8 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Logout from "../Logout/Logout";
 import { UserInfo } from "../../models/UserInfo";
 import ManageInventory from "../../Container/ManageInventory/ManageInventory";
+import SearchBar from "../../shared/UI/SearchBar/SearchBar";
+import SearchResult from "../../Container/SearchResult/SearchResult";
 
 interface PropsI extends RouteComponentProps {
   setGames: (games: GameM[]) => void;
@@ -60,7 +62,7 @@ const Header = (props: PropsI) => {
 
   const [searchOptions, setSearchOptions] = useState<JSX.Element[]>();
   const [searchOptionsViews, setSearchOptionsViews] = useState<JSX.Element[]>();
-  const [isSearchClicked, setIsSearchClicked] = useState(true);
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
   const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -153,40 +155,6 @@ const Header = (props: PropsI) => {
     }
   }
 
-  const search = async (event: ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = event.target;
-    const games = await GameService.getAllGamesContaining(inputValue);
-
-    if (!games) {
-      setSearchOptions([]);
-      return;
-    }
-
-    const gamesJSX = games.map((game) => {
-      return (
-        <div key={game.id} className={classes["option"]}>
-          {game.title}
-        </div>
-      );
-    });
-
-    const gamesViewJSX = games.map((game) => {
-      return (
-        <div key={game.id} className={classes["optionView"]}>
-          <img src={game.image} alt="option" />
-          <div> {game.title}</div>
-        </div>
-      );
-    });
-
-    setSearchOptionsViews(gamesViewJSX);
-    setSearchOptions(gamesJSX);
-  };
-
-  useEffect(() => {
-    // searchInput.current?.focus();
-  }, [isSearchClicked]);
-
   return (
     <Aux>
       <div className={classes["background"]}></div>
@@ -271,29 +239,7 @@ const Header = (props: PropsI) => {
           </div>
           <nav className={classes["main-nav"]}>
             {isSearchClicked ? (
-              <div className={classes["search"]}>
-                <input
-                  ref={searchInput}
-                  type="text"
-                  name="search"
-                  placeholder="Search"
-                  onChange={search}
-                  onBlur={() => {
-                    // setSearchOptions([]);
-                    // setIsSearchClicked(false);
-                  }}
-                />
-                {/* <img
-                  src="http://127.0.0.1:8887/search%20logo%20main.jpg"
-                  alt="search"
-                /> */}
-                <div className={classes["options"]}>
-                  <div className={classes["optionColumn"]}>{searchOptions}</div>
-                  <div className={classes["optionViewColumn"]}>
-                    {searchOptionsViews}
-                  </div>
-                </div>
-              </div>
+              <SearchBar setIsSearchClicked={setIsSearchClicked} />
             ) : (
               <ul className={classes["main-nav__items"]}>
                 <li className={classes["main-nav__item"]}>
@@ -342,7 +288,11 @@ const Header = (props: PropsI) => {
                     Manage Inventory
                   </NavLink>
                 </li>
-                <li className={classes["main-nav__item"]}>
+                <li
+                  className={
+                    classes["main-nav__item"] + " " + classes["search"]
+                  }
+                >
                   <input
                     type="text"
                     name="search"
@@ -370,6 +320,7 @@ const Header = (props: PropsI) => {
           <Route path="/userPanel" component={UserPanel} />
           <Route path="/manageInventory" component={ManageInventory} />
           <Route path="/logout" component={Logout} />
+          <Route path="/searchResults" component={SearchResult} />
           <Route component={PageNotFound} />
           {/* <Redirect from="/" to="/home" /> */}
         </Switch>

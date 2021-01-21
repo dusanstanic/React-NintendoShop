@@ -90,83 +90,6 @@
   position: relative;
 }
 
-.search {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  width: 100%;
-  text-align: center;
-}
-
-.search input {
-  transition: all 0.5s;
-  height: 1.5rem;
-  width: 60%;
-  border: none;
-}
-
-.search input:focus {
-  outline: none;
-}
-
-.search img {
-  vertical-align: middle;
-  height: 1.5rem;
-}
-
-.search .options {
-  position: absolute;
-  width: 60%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-}
-
-.search .options .optionColumn {
-  width: 50%;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.search .options .optionViewColumn {
-  width: 50%;
-  display: inline-block;
-}
-
-.search .options .option {
-  line-height: 2rem;
-  transition: all 0.5s;
-  background: rgb(167, 10, 10);
-  color: white;
-}
-
-.search .options .option:hover {
-  background: #fdc90e;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.search .options .optionView {
-  padding: 5px;
-  text-align: left;
-  transition: all 0.5s;
-  background: rgb(167, 10, 10);
-  color: white;
-  cursor: pointer;
-}
-
-.search .options .optionView:hover {
-  background: #fdc90e;
-  color: black;
-}
-
-.search .options .optionViewColumn img {
-  width: 25%;
-  height: 8rem;
-}
-
 .main-nav__items {
   margin: 0;
   padding: 0;
@@ -180,6 +103,11 @@
   margin: 0 0.5rem;
 }
 
+.main-nav__item.search {
+  margin: auto;
+  margin-right: 0px;
+}
+
 .main-nav__item input {
   transition: all 0.5s;
   height: 1.5rem;
@@ -187,31 +115,9 @@
   border: none;
 }
 
-.main-nav__item input:focus {
-  outline: none;
-}
-
 .main-nav__item img {
   vertical-align: middle;
   height: 1.5rem;
-}
-
-.main-nav__item .options {
-  position: absolute;
-  width: 15rem;
-}
-
-.main-nav__item .options .option {
-  transition: all 0.5s;
-  background: rgb(167, 10, 10);
-  color: white;
-}
-
-.main-nav__item .options .option:hover {
-  background: #fdc90e;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 .main-nav__item a {
