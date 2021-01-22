@@ -1,0 +1,140 @@
+.searchResult {
+  width: 75%;
+  margin: auto;
+  background: black;
+}
+
+.searchOptions {
+  display: inline-block;
+  width: 15%;
+  color: white;
+  vertical-align: top;
+}
+
+.products {
+  display: inline-block;
+  width: 85%;
+}
+
+.product {
+  display: inline-block;
+  width: 24%;
+  height: 35rem;
+  position: relative;
+  margin-right: 1%;
+  overflow: hidden;
+  background: #fdc90e;
+  color: black;
+  font-size: 14px;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .product {
+    background: white;
+    width: 48%;
+    margin: 0 1%;
+  }
+}
+
+@media (max-width: 500px) {
+  .product {
+    background: white;
+    width: 100%;
+  }
+
+  .searchOptions {
+    display: inline-block;
+    width: 30%;
+    color: white;
+  }
+
+  .products {
+    display: inline-block;
+    width: 70%;
+  }
+}
+
+.image-wrapper img {
+  height: 20rem;
+  width: 100%;
+}
+
+.image-wrapper img:hover {
+  filter: brightness(0.9);
+}
+
+.releaseDate {
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  font-size: 12px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.price-content {
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  background: #3f93c0;
+  border-radius: 5px;
+  width: 85%;
+  padding: 5px;
+  color: white;
+}
+
+.price {
+  font-size: 17px;
+  width: 80%;
+  display: inline-block;
+}
+
+.price-content button {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 1s;
+  background-image: url("http://127.0.0.1:8887/Basket%20Logo%202.2.jpg");
+  background-size: 80% 80%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-color: #3f93c0;
+}
+
+.price-content button:hover {
+  text-align: left;
+  width: 50%;
+  background-image: url(http://127.0.0.1:8887/Basket%20Logo%201.1.jpg);
+  background-color: yellow;
+  background-size: 40% 80%;
+  background-position: 0% 50%;
+}
+
+.price-content button:hover::after {
+  content: "Buy";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5%;
+
+  display: block;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    top: 1;
+  }
+}
