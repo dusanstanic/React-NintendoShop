@@ -42,7 +42,6 @@ const SearchBar: FunctionComponent<PropsI> = ({ setIsSearchClicked }) => {
         <NavLink
           to={{
             pathname: "/searchResults",
-            search: "id=0",
             state: [...arr],
           }}
         >
@@ -58,7 +57,6 @@ const SearchBar: FunctionComponent<PropsI> = ({ setIsSearchClicked }) => {
             <NavLink
               to={{
                 pathname: "/searchResults",
-                search: "id=" + item.id,
                 state: [item],
               }}
             >
@@ -72,11 +70,11 @@ const SearchBar: FunctionComponent<PropsI> = ({ setIsSearchClicked }) => {
       );
     };
 
-    if (games) {
+    if (games && games.length) {
       check(games, "game", 1);
     }
 
-    if (consoles) {
+    if (consoles && consoles.length) {
       check(consoles, "console", 2);
     }
 
@@ -85,7 +83,7 @@ const SearchBar: FunctionComponent<PropsI> = ({ setIsSearchClicked }) => {
   };
 
   useEffect(() => {
-    // searchInput.current?.focus();
+    searchInput.current?.focus();
   }, []);
 
   return (
