@@ -84,8 +84,10 @@
 }
 
 .main-nav {
+  width: 100%;
   margin: auto;
   margin-right: 0;
+  position: relative;
 }
 
 .main-nav__items {
@@ -93,10 +95,29 @@
   padding: 0;
   list-style: none;
   display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .main-nav__item {
   margin: 0 0.5rem;
+}
+
+.main-nav__item.search {
+  margin: auto;
+  margin-right: 0px;
+}
+
+.main-nav__item input {
+  transition: all 0.5s;
+  height: 1.5rem;
+  width: 4rem;
+  border: none;
+}
+
+.main-nav__item img {
+  vertical-align: middle;
+  height: 1.5rem;
 }
 
 .main-nav__item a {
