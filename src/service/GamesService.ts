@@ -34,7 +34,7 @@ function parseImagePath(path: string) {
   );
 }
 
-function getGames(): Promise<GameM[]> {
+function getGames() {
   return axios
     .get<GameM[]>("http://localhost:8080/games")
     .then((response) => {
@@ -51,11 +51,23 @@ function getGames(): Promise<GameM[]> {
     });
 }
 
+function getAllGamesContaining(search: string) {
+  return axios
+    .post<GameM[]>("http://localhost:8080/games/contain", search)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      console.log("Cannot find any games");
+      return null;
+    });
+}
+
 function getGameById(id: number) {
   const tokenStr = "Bearer " + localStorage.getItem("token");
   return axios
     .get<GameM>("http://localhost:8080/games/" + id, {
-      headers: { Authorization: tokenStr },
+      // headers: { Authorization: tokenStr },
     })
     .then((response) => {
       return response.data;
@@ -128,4 +140,5 @@ export {
   parseStringToDate,
   deleteById,
   getGameByPgRatings,
+  getAllGamesContaining,
 };
