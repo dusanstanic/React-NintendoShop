@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Route, RouteComponentProps } from "react-router-dom";
 import classes from "./ManageConsoles.module.css";
 import Aux from "../../hoc/Auxiliary";
@@ -17,7 +18,7 @@ interface IProps extends RouteComponentProps {
 }
 
 const ManageProducts: FunctionComponent<IProps> = (props) => {
-  const [products, setProductData] = useState<Product[]>();
+  const [productData, setProductData] = useState<Product[]>();
   const [type, setType] = useState<string>("");
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
 
       if (type === "console") {
         const consoles = await ConsoleService.getConsoles();
+
         products = consoles.map((console) => {
           return {
             id: console.id ? console.id : 0,
@@ -36,6 +38,7 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
             image: console.image,
           };
         });
+
         setProductData(products);
       }
     };
@@ -49,8 +52,8 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
   const generateProductRows = () => {
     let proudctRows: JSX.Element[] = [];
 
-    if (products) {
-      proudctRows = products.map((product) => {
+    if (productData) {
+      proudctRows = productData.map((product) => {
         return (
           <tr key={product.id} className={classes["product-row"]}>
             <td>{product.title}</td>
@@ -107,6 +110,26 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
     }
   };
 
+  const updateTable = async () => {
+    let products: Product[] = [];
+
+    if (type === "console") {
+      const consoles = await ConsoleService.getConsoles();
+      products = consoles.map((console) => {
+        return {
+          id: console.id ? console.id : 0,
+          title: console.title,
+          description: console.description,
+          releaseDate: console.releaseDate,
+          price: console.price,
+          image: console.image,
+        };
+      });
+
+      setProductData(products);
+    }
+  };
+
   return (
     <Aux>
       <div className={classes["manage-product-header"]}>
@@ -131,11 +154,19 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
       <div className={classes["product-form"]}>
         <Route
           path={props.match.url + "/consoleForm/:id"}
-          render={() => <ConsoleForm {...props} />}
+          render={() => <ConsoleForm {...props} updateTable={updateTable} />}
         />
       </div>
     </Aux>
   );
 };
 
-export default ManageProducts;
+const mapStateToProp = (state: any) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(mapStateToProp, mapDispatchToProps)(ManageProducts);
