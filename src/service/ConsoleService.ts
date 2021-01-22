@@ -60,6 +60,7 @@ function save(consolee: Console) {
       headers: { Authorization: tokenStr },
     })
     .then((response) => {
+      return "Successfully saved";
       // console.log(response);
     })
     .catch((error: AxiosError) => {
