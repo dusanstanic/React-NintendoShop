@@ -1,0 +1,102 @@
+.search {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  text-align: center;
+}
+
+.search input {
+  height: 1.5rem;
+  width: 60%;
+  border: none;
+  vertical-align: middle;
+  transition: all 0.5s;
+}
+
+.search input:focus {
+  outline: none;
+  background: rgb(227, 227, 227);
+}
+
+.search span {
+  height: 1.5rem;
+  width: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  background: white;
+  /* border-left: 1px solid black; */
+  padding: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.search span:hover {
+  background: #ba0909;
+  color: white;
+}
+
+.search img {
+  height: 1.5rem;
+  vertical-align: middle;
+}
+
+.search .options {
+  position: absolute;
+  left: 50%;
+  width: 65%;
+  transform: translateX(-50%);
+  background: rgb(167, 10, 10);
+}
+
+.search .options .optionColumn {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.search .options .optionViewColumn {
+  width: 50%;
+  display: inline-block;
+  border-left: 1px solid black;
+  height: 25rem;
+  overflow: scroll;
+}
+
+.search .options .option {
+  line-height: 2rem;
+  transition: all 0.5s;
+  background: rgb(167, 10, 10);
+  padding: 5px;
+  color: white;
+  text-align: left;
+  font-size: 12px;
+}
+
+.search .options .option:hover {
+  background: #fdc90e;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+
+.search .options .optionView {
+  background: rgb(167, 10, 10);
+  padding: 5px;
+  text-align: left;
+  transition: all 0.5s;
+  color: white;
+  cursor: pointer;
+}
+
+.search .options .optionView:hover {
+  background: #fdc90e;
+  color: black;
+}
+
+.search .options .optionViewColumn img {
+  width: 25%;
+  height: 8rem;
+}

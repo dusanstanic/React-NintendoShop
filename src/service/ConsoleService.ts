@@ -29,6 +29,18 @@ function getConsoles() {
     });
 }
 
+function getAllConsolesContaining(search: string) {
+  return axios
+    .post<Console[]>("http://localhost:8080/consoles/contain", search)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error: AxiosError) => {
+      console.log("Cannot find any games");
+      return null;
+    });
+}
+
 function findAllConsoleTypes() {
   return axios
     .get<string[]>("http://localhost:8080/consoles/consoleTypes")
@@ -69,4 +81,11 @@ function deleteById(id: number) {
     });
 }
 
-export { getConsoles, findAllConsoleTypes, parseImagePath, save, deleteById };
+export {
+  getConsoles,
+  findAllConsoleTypes,
+  parseImagePath,
+  save,
+  deleteById,
+  getAllConsolesContaining,
+};

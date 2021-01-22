@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   Route,
   NavLink,
@@ -34,6 +34,8 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import Logout from "../Logout/Logout";
 import { UserInfo } from "../../models/UserInfo";
 import ManageInventory from "../../Container/ManageInventory/ManageInventory";
+import SearchBar from "../../shared/UI/SearchBar/SearchBar";
+import SearchResult from "../../Container/SearchResult/SearchResult";
 
 interface PropsI extends RouteComponentProps {
   setGames: (games: GameM[]) => void;
@@ -57,6 +59,11 @@ enum FormType {
 const Header = (props: PropsI) => {
   const [userForm, setUserForm] = useState<JSX.Element>();
   const [showModal, setShowModal] = useState(false);
+
+  const [searchOptions, setSearchOptions] = useState<JSX.Element[]>();
+  const [searchOptionsViews, setSearchOptionsViews] = useState<JSX.Element[]>();
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
+  const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
@@ -231,54 +238,76 @@ const Header = (props: PropsI) => {
             </NavLink>
           </div>
           <nav className={classes["main-nav"]}>
-            <ul className={classes["main-nav__items"]}>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  to="/home"
-                  activeClassName={classes["nav-item-active"]}
+            {isSearchClicked ? (
+              <SearchBar setIsSearchClicked={setIsSearchClicked} />
+            ) : (
+              <ul className={classes["main-nav__items"]}>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    to="/home"
+                    activeClassName={classes["nav-item-active"]}
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/games",
+                    }}
+                  >
+                    Games
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/consoles",
+                    }}
+                  >
+                    Consoles
+                  </NavLink>
+                </li>
+                <li className={classes["main-nav__item"]}>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/manageGames",
+                    }}
+                  >
+                    Manage Games
+                  </NavLink>
+                  <NavLink
+                    activeClassName={classes["nav-item-active"]}
+                    to={{
+                      pathname: "/manageInventory",
+                    }}
+                  >
+                    Manage Inventory
+                  </NavLink>
+                </li>
+                <li
+                  className={
+                    classes["main-nav__item"] + " " + classes["search"]
+                  }
                 >
-                  Home
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/games",
-                  }}
-                >
-                  Games
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/consoles",
-                  }}
-                >
-                  Consoles
-                </NavLink>
-              </li>
-              <li className={classes["main-nav__item"]}>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/manageGames",
-                  }}
-                >
-                  Manage Games
-                </NavLink>
-                <NavLink
-                  activeClassName={classes["nav-item-active"]}
-                  to={{
-                    pathname: "/manageInventory",
-                  }}
-                >
-                  Manage Inventory
-                </NavLink>
-              </li>
-            </ul>
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="Search"
+                    onFocus={() => {
+                      setIsSearchClicked(true);
+                    }}
+                  />
+                  <img
+                    src="http://127.0.0.1:8887/search%20logo%20main.jpg"
+                    alt="search"
+                  />
+                </li>
+              </ul>
+            )}
           </nav>
         </div>
       </header>
@@ -291,6 +320,7 @@ const Header = (props: PropsI) => {
           <Route path="/userPanel" component={UserPanel} />
           <Route path="/manageInventory" component={ManageInventory} />
           <Route path="/logout" component={Logout} />
+          <Route path="/searchResults" component={SearchResult} />
           <Route component={PageNotFound} />
           {/* <Redirect from="/" to="/home" /> */}
         </Switch>
