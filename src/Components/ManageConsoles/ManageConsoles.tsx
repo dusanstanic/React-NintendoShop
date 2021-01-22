@@ -5,123 +5,137 @@ import Aux from "../../hoc/Auxiliary";
 import Console from "../../models/ConsoleM";
 import * as ConsoleService from "../../service/ConsoleService";
 import ConsoleForm from "./ConsoleForm/ConsoleForm";
+import Product from "../../models/Product";
 
 interface IProps extends RouteComponentProps {
   match: {
     isExact: boolean;
-    params: { id: string };
+    params: { type: string };
     path: string;
     url: string;
   };
 }
 
-const ManageConsoles: FunctionComponent<IProps> = (props) => {
-  const [consoles, setConsoleData] = useState<Console[]>();
+const ManageProducts: FunctionComponent<IProps> = (props) => {
+  const [products, setProductData] = useState<Product[]>();
+  const [type, setType] = useState<string>("");
 
   useEffect(() => {
-    ConsoleService.getConsoles().then((consoles) => {
-      setConsoleData(consoles);
-    });
+    const getProducts = async (type: string) => {
+      let products: Product[] = [];
+
+      if (type === "console") {
+        const consoles = await ConsoleService.getConsoles();
+        products = consoles.map((console) => {
+          return {
+            id: console.id ? console.id : 0,
+            title: console.title,
+            description: console.description,
+            releaseDate: console.releaseDate,
+            price: console.price,
+            image: console.image,
+          };
+        });
+        setProductData(products);
+      }
+    };
+
+    let type = props.match.params.type;
+
+    getProducts(type);
+    setType(type);
   }, []);
 
-  const addGame = (console: Console) => {
-    ConsoleService.save(console).then((response) => {
-      ConsoleService.getConsoles().then((consoles) => {
-        setConsoleData(consoles);
+  const generateProductRows = () => {
+    let proudctRows: JSX.Element[] = [];
+
+    if (products) {
+      proudctRows = products.map((product) => {
+        return (
+          <tr key={product.id} className={classes["product-row"]}>
+            <td>{product.title}</td>
+            <td>{product.releaseDate}</td>
+            <td>{product.price}</td>
+            <td>
+              <img src={product.image} />
+            </td>
+            <td>
+              <button
+                className={classes["product-update-btn"]}
+                onClick={() => manageProduct("update", product.id)}
+              >
+                update
+              </button>
+            </td>
+            <td>
+              <button
+                className={classes["product-delete-btn"]}
+                onClick={() => manageProduct("delete", product.id)}
+              >
+                delete
+              </button>
+            </td>
+          </tr>
+        );
       });
-    });
+    }
+
+    return proudctRows;
   };
 
-  const manageConsole = (
+  const manageProduct = (
     manageConsoleOption: string,
     id: number | undefined
   ) => {
     if (manageConsoleOption === "add") {
       props.history.push({
-        pathname: props.match.url + "/consoleForm/1",
+        pathname: props.match.url + "/" + type + "Form/0",
         search: "type=add&id=0",
       });
     } else if (manageConsoleOption === "update") {
       props.history.push({
-        pathname: props.match.url + "/consoleForm/" + id,
+        pathname: props.match.url + "/" + type + "Form/" + id,
         search: "type=update&id=" + id,
       });
     } else {
-      if (id) {
+      if (!id) {
+        return;
+      }
+      if (type === "console") {
         ConsoleService.deleteById(id);
       }
     }
   };
 
-  let consoleRows: JSX.Element[] = [];
-  if (consoles) {
-    consoleRows = consoles.map((console) => {
-      return (
-        <tr key={console.id} className={classes["console-row"]}>
-          <td>{console.title}</td>
-          <td>{console.releaseDate}</td>
-          <td>{console.price}</td>
-          <td>{console.type}</td>
-          <td>{console.condition}</td>
-          <td>
-            <img src={console.image} />
-          </td>
-          <td>
-            <img src={console.logo} />
-          </td>
-          <td>
-            <button
-              className={classes["console-update-btn"]}
-              onClick={() => manageConsole("update", console.id)}
-            >
-              update
-            </button>
-          </td>
-          <td>
-            <button
-              className={classes["console-delete-btn"]}
-              onClick={() => manageConsole("delete", console.id)}
-            >
-              delete
-            </button>
-          </td>
-        </tr>
-      );
-    });
-  }
-
   return (
     <Aux>
-      <div className={classes["manage-consoles-header"]}>
+      <div className={classes["manage-product-header"]}>
         <h2>Consoles</h2>
       </div>
-      <div className={classes["manage-consoles-add-btn-wrapper"]}>
-        <button onClick={() => manageConsole("add", 0)}>Add +</button>
+      <div className={classes["manage-products-add-btn-wrapper"]}>
+        <button onClick={() => manageProduct("add", 0)}>Add +</button>
       </div>
-      <table className={classes["console-table"]}>
+      <table className={classes["product-table"]}>
         <thead>
-          <tr className={classes["console-row"]}>
+          <tr className={classes["product-row"]}>
             <th>Title</th>
             <th>Release Date</th>
             <th>Price</th>
-            <th>Type</th>
-            <th>Condition</th>
             <th>Image</th>
-            <th>Logo</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
-        <tbody>{consoleRows}</tbody>
+        <tbody>{generateProductRows()}</tbody>
       </table>
-      <div className={classes["console-form"]}>
+      <div className={classes["product-form"]}>
         <Route
           path={props.match.url + "/consoleForm/:id"}
-          render={() => <ConsoleForm {...props} submit={addGame} />}
+          render={() => <ConsoleForm {...props} />}
         />
       </div>
     </Aux>
   );
 };
 
-export default ManageConsoles;
+export default ManageProducts;
