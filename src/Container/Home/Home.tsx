@@ -22,7 +22,6 @@ const images = [
 const Home = (props: PropsI) => {
   const [slideShowImgOptions, setSlideShowOptions] = useState(images);
 
-  const wrapper = useRef<HTMLDivElement>(null);
   const items = useRef<HTMLDivElement>(null);
   const wrapperSub = useRef<HTMLDivElement>(null);
 
@@ -62,6 +61,7 @@ const Home = (props: PropsI) => {
     if (!items.current || !wrapperSub.current) return;
 
     const wrapperSubSize = wrapperSub.current.offsetWidth;
+
     const slides: NodeListOf<HTMLImageElement> = items.current.querySelectorAll(
       ".slide"
     );
@@ -179,7 +179,7 @@ const Home = (props: PropsI) => {
   return (
     <Aux>
       <div className={classes.home}>
-        <div className={classes["slider"]} ref={wrapper}>
+        <div className={classes["slider"]}>
           <div className={classes["wrapper"]} ref={wrapperSub}>
             <div
               className={classes["slides"]}
