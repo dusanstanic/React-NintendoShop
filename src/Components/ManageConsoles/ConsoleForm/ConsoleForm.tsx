@@ -3,13 +3,23 @@ import React, {
   FormEvent,
   FunctionComponent,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { RouteComponentProps } from "react-router-dom";
+
 import classes from "./ConsoleForm.module.css";
+
 import Aux from "../../../hoc/Auxiliary";
+
+import validation, {
+  validationOptions,
+} from "../../../shared/Validation/Validation";
+
 import Console from "../../../models/ConsoleM";
 import * as ConsoleService from "../../../service/ConsoleService";
+import checkValidation from "../../../shared/Validation/Validation";
+import Label from "../../../shared/UI/Label/Label";
 
 enum InputName {
   TITLE = "title",
@@ -30,11 +40,11 @@ enum InputName {
 interface IProps extends RouteComponentProps {
   match: {
     isExact: boolean;
-    params: { id: string };
+    params: { type: string };
     path: string;
     url: string;
   };
-  submit: Function;
+  updateTable: Function;
 }
 
 function parseQueryStirng(queryString: string) {
@@ -65,18 +75,22 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
   const [isTitleValid, setIsTitleValid] = useState(false);
   const [isDescriptionValid, setIsDescriptionValid] = useState(false);
   const [isReleaseDateValid, setIsReleaseDateValid] = useState(false);
-  const [isPriceValid, setIsPriceValid] = useState(false);
+  const [isPriceValid, setIsPriceValid] = useState(true);
   const [isTypeValid, setIsTypeValid] = useState(false);
   const [isConditionValid, setIsConditionValid] = useState(false);
   const [isImageValid, setIsImageValid] = useState(false);
   const [isLogoImageValid, setIsLogoImageValid] = useState(false);
 
-  const [titleInputErrorMessages, setTitleErrorMessages] = useState<string>("");
-  const [
-    descriptionInputErrorMessages,
-    setDescriptionErrorMessages,
-  ] = useState<string>("");
-  const [priceInputErrorMessages, setPriceErrorMessages] = useState<string>("");
+  const [titleInputErrorMessages, setTitleErrorMessages] = useState<string[]>(
+    []
+  );
+  const [descriptionInputErrorMessages, setDescriptionErrorMessages] = useState<
+    string[]
+  >([]);
+  const [dateErrorMessages, setDateErrorMessages] = useState<string[]>([]);
+  const [priceInputErrorMessages, setPriceErrorMessages] = useState<string[]>(
+    []
+  );
 
   useEffect(() => {
     const queryValues = parseQueryStirng(props.location.search);
@@ -108,23 +122,6 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
     enteredLogo,
   ]);
 
-  const submitForm = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const console: Console = {
-      title: enteredTitle,
-      description: enteredDescription,
-      releaseDate: enteredReleaseDate,
-      price: +enteredPrice,
-      type: enteredType,
-      condition: enteredCondition,
-      image: enteredImage,
-      logo: enteredLogo,
-    };
-
-    props.submit(console);
-  };
-
   const isFormValid = () => {
     if (
       isTitleValid &&
@@ -142,117 +139,139 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
     }
   };
 
+  const submitForm = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const console: Console = {
+      title: enteredTitle,
+      description: enteredDescription,
+      releaseDate: enteredReleaseDate,
+      price: +enteredPrice,
+      type: enteredType,
+      condition: enteredCondition,
+      image: enteredImage,
+      logo: enteredLogo,
+    };
+
+    if (option === "add") {
+      const success = await addConsole(console);
+    } else {
+    }
+
+    props.updateTable();
+  };
+
+  const addConsole = async (console: Console) => {
+    const success = await ConsoleService.save(console);
+    return success;
+  };
+
   const formHandler = (
     event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     const { name: inputName, value: inputValue } = event.target;
-    let isInputValid = false;
-    const errorMessage = [];
-    // const textOnlyRegex = /^[^0-9]{1,}$/;
-    const digitOnlyRegex = /^\d*$/;
+    let validation;
 
-    if (inputValue.length === 0) {
-      errorMessage.push("*Field is required");
-    }
+    switch (inputName) {
+      case InputName.TITLE:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.ALL_CASE],
+          inputValue
+        );
 
-    if (InputName.TITLE === inputName) {
-      const titleRegex = /(?=.*?[A-Z])(?=.*?[a-z])/;
-      isInputValid = !!inputValue.match(titleRegex);
+        setTitleErrorMessages(validation.errorMessage);
+        setIsTitleValid(validation.isInputValid);
+        setEnteredTitle(inputValue);
+        break;
+      case InputName.DESCRIPTION:
+        validation = checkValidation([validationOptions.REQUIRED], inputValue);
 
-      if (!isInputValid && inputValue.length > 0) {
-        errorMessage.push("Must contain an uppercase and lowercase letter");
-      }
+        setDescriptionErrorMessages(validation.errorMessage);
+        setIsDescriptionValid(validation.isInputValid);
+        setEnteredDescription(inputValue);
+        break;
+      case InputName.RELEASEDATE:
+        validation = checkValidation([validationOptions.REQUIRED], inputValue);
+        console.log(validation);
+        const dateValues = inputValue.split("-");
+        const year = parseInt(dateValues[0]);
+        const month = parseInt(dateValues[1]);
+        const day = parseInt(dateValues[2]);
+        const date = new Date(year, month, day);
 
-      setIsTitleValid(isInputValid);
-      setTitleErrorMessages(errorMessage.join(" "));
-      setEnteredTitle(inputValue);
-    }
+        setDateErrorMessages(validation.errorMessage);
+        setIsReleaseDateValid(validation.isInputValid);
+        setEnteredReleaseDate(date);
+        break;
+      case InputName.PRICE:
+        validation = checkValidation(
+          [validationOptions.REQUIRED, validationOptions.NUMBERS],
+          inputValue
+        );
 
-    if (InputName.DESCRIPTION === inputName) {
-      isInputValid = inputValue.length > 0;
-
-      setIsDescriptionValid(isInputValid);
-      setDescriptionErrorMessages(errorMessage.join(" "));
-      setEnteredDescription(inputValue);
-    }
-
-    if (InputName.RELEASEDATE === inputName) {
-      const dateValues = inputValue.split("-");
-      const year = parseInt(dateValues[0]);
-      const month = parseInt(dateValues[1]);
-      const day = parseInt(dateValues[2]);
-      const date = new Date(year, month, day);
-
-      setIsReleaseDateValid(true);
-      setEnteredReleaseDate(date);
-    }
-
-    if (InputName.PRICE === inputName) {
-      console.log(inputValue);
-      isInputValid =
-        !!inputValue.match(digitOnlyRegex) && inputValue.length > 0;
-
-      if (!inputValue.match(digitOnlyRegex)) {
-        errorMessage.push("Must contain only numbers");
-      }
-
-      setIsPriceValid(isInputValid);
-      setPriceErrorMessages(errorMessage.join(" "));
-      setEnteredPrice(inputValue);
-    }
-
-    if (InputName.TYPE === inputName) {
-      setIsTypeValid(true);
-      setEnteredType(inputValue);
-    }
-
-    if (InputName.CONDITION === inputName) {
-      setIsConditionValid(true);
-      setEnteredCondition(inputValue);
-    }
-
-    if (InputName.IMAGE === inputName) {
-      setIsImageValid(true);
-      setEnteredImage(ConsoleService.parseImagePath(inputValue));
-    }
-
-    if (InputName.LOGO == inputName) {
-      setIsLogoImageValid(true);
-      setEnteredLogo(ConsoleService.parseImagePath(inputValue));
+        setPriceErrorMessages(validation.errorMessage);
+        setIsPriceValid(validation.isInputValid);
+        setEnteredPrice(inputValue);
+        break;
+      case InputName.TYPE:
+        setIsTypeValid(true);
+        setEnteredType(inputValue);
+        break;
+      case InputName.CONDITION:
+        setIsConditionValid(true);
+        setEnteredCondition(inputValue);
+        break;
+      case InputName.IMAGE:
+        setIsImageValid(true);
+        setEnteredImage(ConsoleService.parseImagePath(inputValue));
+        break;
+      case InputName.LOGO:
+        setIsLogoImageValid(true);
+        setEnteredLogo(ConsoleService.parseImagePath(inputValue));
     }
   };
 
-  let consoleTypeOptions = null;
-  if (consoleTypes) {
-    consoleTypeOptions = consoleTypes.map((consoleType) => {
-      return (
-        <option key={consoleType} value={consoleType}>
-          {consoleType}
+  const consoleOptions = useMemo(() => {
+    let consoleTypeOptions: JSX.Element[] = [];
+
+    if (consoleTypes) {
+      consoleTypeOptions = consoleTypes.map((consoleType) => {
+        return (
+          <option key={consoleType} value={consoleType}>
+            {consoleType}
+          </option>
+        );
+      });
+
+      consoleTypeOptions.unshift(
+        <option key={"select type"} hidden={true}>
+          -- Select Type --
         </option>
       );
-    });
-    consoleTypeOptions.unshift(
-      <option key={"select type"} hidden={true}>
-        -- Select Type --
-      </option>
-    );
-  }
+    }
 
-  let consoleConditions = ["new", "used"].map((condition) => {
-    return (
-      <Aux>
-        <input
-          name={InputName.CONDITION}
-          type="radio"
-          value={condition}
-          onChange={formHandler}
-        />
-        <label htmlFor="condition">{condition}</label>
-      </Aux>
-    );
-  });
+    return consoleTypeOptions;
+  }, [consoleTypes]);
+
+  const consoleConditions = useMemo(() => {
+    let consoleConditions = ["new", "used"].map((condition) => {
+      return (
+        <Aux key={condition}>
+          <input
+            name={InputName.CONDITION}
+            type="radio"
+            value={condition}
+            onChange={formHandler}
+          />
+          <label htmlFor="condition">{condition}</label>
+        </Aux>
+      );
+    });
+
+    return consoleConditions;
+  }, []);
 
   return (
     <Aux>
@@ -266,9 +285,10 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
               placeholder="title"
               value={enteredTitle}
               onChange={formHandler}
+              onBlur={formHandler}
             />
           </div>
-          <label htmlFor="errorMessage">{titleInputErrorMessages}</label>
+          <Label errorMessages={titleInputErrorMessages} />
         </div>
         <div className={classes["row"]}>
           <div className={classes["form-group"]}>
@@ -277,9 +297,10 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
               name={InputName.DESCRIPTION}
               placeholder="description"
               onChange={formHandler}
+              onBlur={formHandler}
             />
           </div>
-          <label htmlFor="errorMessage">{descriptionInputErrorMessages}</label>
+          <Label errorMessages={descriptionInputErrorMessages} />
         </div>
         <div className={classes["row"]}>
           <div className={classes["form-group"]}>
@@ -289,8 +310,10 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
               type="date"
               // value={"2020-10-07"}
               onChange={formHandler}
+              onBlur={formHandler}
             />
           </div>
+          <Label errorMessages={dateErrorMessages} />
         </div>
         <div className={classes["row"]}>
           <div className={classes["form-group"]}>
@@ -303,7 +326,7 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
               onChange={formHandler}
             />
           </div>
-          <label htmlFor="errorMessage">{priceInputErrorMessages}</label>
+          <Label errorMessages={priceInputErrorMessages} />
         </div>
         <div className={classes["row"]}>
           <div className={classes["form-group"]}>
@@ -313,7 +336,7 @@ const ConsoleForm: FunctionComponent<IProps> = (props) => {
               name={InputName.TYPE}
               onChange={formHandler}
             >
-              {consoleTypeOptions}
+              {consoleOptions}
             </select>
           </div>
         </div>

@@ -14,9 +14,11 @@
 }
 
 .manage-inventory-panel-user {
-  position: absolute;
-  width: 20%;
-  height: 100%;
+  vertical-align: top;
+  position: relative;
+  display: inline-block;
+  width: 15%;
+  height: 100rem;
   background: black;
   transition: all 1s;
 }
@@ -29,16 +31,20 @@
   overflow: hidden;
 }
 
+.column a {
+  background: red;
+  display: block;
+}
+
 .manage-inventory-panel-user .toggle-panel-user-btn {
   position: absolute;
-  top: 40%;
+  top: 0%;
   left: 100%;
   background: white;
-  border-radius: 0px 10px 10px 0px;
-  width: 2rem;
-  height: 3rem;
+  width: 1.5rem;
+  height: 90rem;
   z-index: 100;
-  text-align: center;
+  text-align: left;
   transition: all 0.5s;
 }
 
@@ -50,8 +56,8 @@
   background: #cccccc;
   border: 1px solid black;
   border-left: none;
+  font-size: 11px;
   text-align: left;
-  font-size: 12px;
   cursor: pointer;
 }
 
@@ -64,14 +70,18 @@
 }
 
 .manage-inventory-panel-product {
-  width: 77%;
-  margin: auto;
-  margin-right: 0;
+  position: relative;
+  right: 0%;
+  display: inline-block;
+  width: 80%;
+  margin-left: 4%;
+  margin-right: 1%;
   margin-bottom: 5rem;
-  padding-bottom: 10rem;
   transition: all 1s;
 }
 
 .manage-inventory-panel-product.resize {
-  width: 97%;
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
 }

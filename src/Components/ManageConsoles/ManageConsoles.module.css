@@ -1,4 +1,4 @@
-.manage-consoles-header {
+.manage-product-header {
   width: 98%;
   margin: auto;
   margin-bottom: 1rem;
@@ -6,17 +6,17 @@
   text-align: left;
 }
 
-.manage-consoles-header h2 {
+.manage-product-header h2 {
   margin: 0;
 }
 
-.manage-consoles-add-btn-wrapper {
+.manage-products-add-btn-wrapper {
   width: 98%;
   margin: auto;
   margin-bottom: 1rem;
 }
 
-.manage-consoles-add-btn-wrapper button {
+.manage-products-add-btn-wrapper button {
   width: 10%;
   height: 2rem;
   background: black;
@@ -28,17 +28,17 @@
   transition-duration: 0.5s;
 }
 
-.manage-consoles-add-btn-wrapper button:hover {
+.manage-products-add-btn-wrapper button:hover {
   background: #cccccc;
   color: black;
 }
 
-.manage-consoles-add-btn-wrapper button:focus {
+.manage-products-add-btn-wrapper button:focus {
   outline: none;
 }
 
-.console-table {
-  width: 98%;
+.product-table {
+  width: 100%;
   margin: auto;
   border-collapse: collapse;
   border: 1px solid black;
@@ -75,7 +75,7 @@ tr:nth-child(even):hover {
   background: #818688d0;
 }
 
-.console-row img {
+.product-row img {
   width: 2rem;
   height: 2rem;
 }
@@ -87,31 +87,31 @@ tr:nth-child(even):hover {
   cursor: pointer;
 }
 
-.console-update-btn {
+.product-update-btn {
   background: rgb(20, 186, 204);
   border: 1px solid black;
 }
 
-.console-delete-btn {
+.product-delete-btn {
   background: rgb(211, 13, 13);
   border: 1px solid black;
 }
 
-.console-update-btn:hover {
+.product-update-btn:hover {
   background: rgb(20, 186, 204, 0.5);
   color: white;
 }
 
-.console-delete-btn:hover {
+.product-delete-btn:hover {
   background: rgb(211, 13, 13, 0.5);
   color: white;
 }
 
-.console-update-btn:focus,
-.console-delete-btn:focus {
+.product-update-btn:focus,
+.product-delete-btn:focus {
   outline: none;
 }
 
-.console-form {
+.product-form {
   margin-top: 2rem;
 }

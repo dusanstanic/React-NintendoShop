@@ -31,6 +31,7 @@ class ManageInventory extends Component<IProps, IState> {
     let isUserPanelOpened = this.state.isUserPanelOpened;
     let hide = "";
     let resize = "";
+
     if (!isUserPanelOpened) {
       hide = classes["hide"];
       resize = classes["resize"];
@@ -49,9 +50,17 @@ class ManageInventory extends Component<IProps, IState> {
             </button>
             <div className={classes["column"]}>
               <button>Users</button>
-              <button>Games</button>
               <NavLink
-                to={{ pathname: this.props.match.url + "/manageConsoles" }}
+                to={{
+                  pathname: this.props.match.url + "/manageProducts/game",
+                }}
+              >
+                <button>Games</button>
+              </NavLink>
+              <NavLink
+                to={{
+                  pathname: this.props.match.url + "/manageProducts/console",
+                }}
               >
                 <button>Consoles</button>
               </NavLink>
@@ -62,7 +71,7 @@ class ManageInventory extends Component<IProps, IState> {
             className={classes["manage-inventory-panel-product"] + " " + resize}
           >
             <Route
-              path={this.props.match.url + "/manageConsoles"}
+              path={this.props.match.url + "/manageProducts/:type"}
               component={ManageConsoles}
             />
           </div>
@@ -72,15 +81,4 @@ class ManageInventory extends Component<IProps, IState> {
   }
 }
 
-const mapStateToProp = (state: any) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
-export default connect(
-  mapStateToProp,
-  mapDispatchToProps
-)(withRouter(ManageInventory));
+export default withRouter(ManageInventory);

@@ -1,8 +1,12 @@
 const digitContained = /[0-9]/;
 const textContained = /[A-Za-z]/;
 const specialCharacterContained = /[`~,.<>;':"\/\[\]\|{}()=_+-]/;
+const upperCase = /[A-Z]/;
+const lowerCase = /[a-z]/;
+const allCaess = /(?=.*[a-z])(?=.*[A-Z])/;
 
 const textOnly = /^[A-Za-z]*$/;
+const numberOnly = /^[0-9]*$/;
 const email = /\S+@\S+\.\S+/;
 const phoneNumber = /^\d{10}$/;
 const postalCode = /^.{5}$/;
@@ -19,9 +23,21 @@ const checkValidation = (requierments: string[], inputValue: string) => {
     }
   }
 
+  if (requierments.includes(validationOptions.ALL_CASE)) {
+    if (!inputValue.match(allCaess)) {
+      errorMessage.push("Must contain an uppercase and lowercase letter");
+    }
+  }
+
   if (requierments.includes(validationOptions.TEXT)) {
     if (!inputValue.match(textOnly)) {
       errorMessage.push("Must contain only text");
+    }
+  }
+
+  if (requierments.includes(validationOptions.NUMBERS)) {
+    if (!inputValue.match(numberOnly)) {
+      errorMessage.push("Must contain only numbers");
     }
   }
 
@@ -76,6 +92,7 @@ const checkValidation = (requierments: string[], inputValue: string) => {
 
 export enum validationOptions {
   TEXT = "text",
+  NUMBERS = "numbers",
   NO_TEXT = "noText",
   NO_SPECIAL_CHARACTER = "noSpecialCharactes",
   NO_NUMBER = "noNumber",
@@ -85,6 +102,7 @@ export enum validationOptions {
   POSTAL_CODE = "postalCode",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirm_password",
+  ALL_CASE = "all_case",
 }
 
 export default checkValidation;
