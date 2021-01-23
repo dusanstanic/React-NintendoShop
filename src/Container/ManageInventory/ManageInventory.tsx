@@ -81,15 +81,4 @@ class ManageInventory extends Component<IProps, IState> {
   }
 }
 
-const mapStateToProp = (state: any) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
-export default connect(
-  mapStateToProp,
-  mapDispatchToProps
-)(withRouter(ManageInventory));
+export default withRouter(ManageInventory);
