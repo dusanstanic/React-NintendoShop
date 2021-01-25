@@ -20,6 +20,7 @@ export const authCheckState = () => {
         } else {
           const role = await CustomerService.findRoleByUserId(parseInt(userId));
           const userInfo = await CustomerService.findUserById(parseInt(userId));
+
           const updatedExpirationDate =
             (expirationDate.getTime() - new Date().getTime()) / 1000;
 

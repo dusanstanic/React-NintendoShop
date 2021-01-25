@@ -1,5 +1,10 @@
-import React, { FunctionComponent, useEffect, useRef } from "react";
-import { Route, NavLink, RouteComponentProps } from "react-router-dom";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  Route,
+  NavLink,
+  RouteComponentProps,
+  Redirect,
+} from "react-router-dom";
 import { connect } from "react-redux";
 
 import classes from "./UserPanel.module.css";
@@ -11,6 +16,7 @@ import { UserInfo } from "../../models/UserInfo";
 import UserPanelUpdateInfo from "./UserPanelUpdateInfo/UserPanelUpdateInfo";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { customerAxios } from "../../service/axios-main";
+import didMount from "../../shared/customHooks/didMount";
 
 interface PropsI extends RouteComponentProps {
   isAuthenticated: boolean;
@@ -20,15 +26,33 @@ interface PropsI extends RouteComponentProps {
   onAuthUpdate: Function;
 }
 
-const UserPanel: FunctionComponent<PropsI> = (props) => {
+const UserPanel: FunctionComponent<PropsI> = ({
+  userInfo,
+  isAuthenticated,
+  userRole,
+  userId,
+  onAuthUpdate,
+  match,
+}) => {
   const userInfoBtn = useRef<HTMLAnchorElement>(null);
+  const [redirect, setRedirect] = useState(<></>);
+  const [isMounted, setIsMounted] = didMount();
 
   useEffect(() => {
-    // userInfoBtn.current?.click();
+    userInfoBtn.current?.click();
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    if (!isAuthenticated) {
+      setRedirect(<Redirect to="/logout" />);
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className={classes.userPanel}>
+      {redirect}
       <div className={classes["userPanel-header"]}>
         <div className={classes["column"]}>
           <img
@@ -37,20 +61,20 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
             alt="user"
           />
           <div style={{ display: "inline-block", verticalAlign: "middle" }}>
-            {props.userInfo?.firstName + " " + props.userInfo?.lastName}
+            {userInfo?.firstName + " " + userInfo?.lastName}
           </div>
         </div>
         <div className={classes["column"]}>
           <div>Email</div>
-          <div>{props.userInfo?.email}</div>
+          <div>{userInfo?.email}</div>
         </div>
         <div className={classes["column"]}>
           <div>Telephone</div>
-          <div>{props.userInfo?.phone}</div>
+          <div>{userInfo?.phone}</div>
         </div>
         <div className={classes["column"]}>
           <div>Address</div>
-          <div>{props.userInfo?.city}</div>
+          <div>{userInfo?.city}</div>
         </div>
         <div className={classes["column"]}>
           <div>Deactivate</div>
@@ -63,7 +87,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           </div>
           <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: props.match.url + "/userPanelInfo" }}
+              to={{ pathname: match.url + "/userPanelInfo" }}
               className={classes["userPanel-body-option__link"]}
               ref={userInfoBtn}
             >
@@ -72,7 +96,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           </div>
           <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: props.match.url + "/userPanelUpdateInfo" }}
+              to={{ pathname: match.url + "/userPanelUpdateInfo" }}
               className={classes["userPanel-body-option__link"]}
             >
               Update information
@@ -80,7 +104,7 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
           </div>
           <div className={classes["userPanel-body-option"]}>
             <NavLink
-              to={{ pathname: props.match.url + "/wishList" }}
+              to={{ pathname: match.url + "/wishList" }}
               className={classes["userPanel-body-option__link"]}
             >
               WishList
@@ -97,22 +121,19 @@ const UserPanel: FunctionComponent<PropsI> = (props) => {
         </div>
         <div className={classes["userPanel-body-info"]}>
           <Route
-            path={props.match.url + "/userPanelInfo"}
+            path={match.url + "/userPanelInfo"}
             render={() => (
-              <UserPanelInfo
-                userRole={props.userRole}
-                userInfo={props.userInfo}
-              />
+              <UserPanelInfo userRole={userRole} userInfo={userInfo} />
             )}
           />
           <Route
-            path={props.match.url + "/userPanelUpdateInfo"}
+            path={match.url + "/userPanelUpdateInfo"}
             render={() => (
               <UserPanelUpdateInfo
-                userRole={props.userRole}
-                userInfo={props.userInfo}
-                userId={props.userId}
-                onAuthUpdate={props.onAuthUpdate}
+                userRole={userRole}
+                userInfo={userInfo}
+                userId={userId}
+                onAuthUpdate={onAuthUpdate}
               />
             )}
           />

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 
 import classes from "./UserPanelInfo.module.css";
 
@@ -10,16 +10,7 @@ interface PropsI {
   userInfo: UserInfo;
 }
 
-const UserPanelInfo: FunctionComponent<PropsI> = (props) => {
-  let userInfo = null;
-  // console.log(props.userInfo.firstName);
-  if (props.userInfo) {
-    userInfo = props.userInfo;
-  }
-
-  // console.log("userinfo " + userInfo);
-  // console.log("userinfo " + props.userInfo);
-
+const UserPanelInfo: FunctionComponent<PropsI> = ({ userRole, userInfo }) => {
   return (
     <Aux>
       <div className={classes["row"]}>
@@ -30,7 +21,9 @@ const UserPanelInfo: FunctionComponent<PropsI> = (props) => {
           Name
         </div>
         <div className={classes["column"]}>
-          <span>{userInfo?.firstName + " " + userInfo?.lastName}</span>
+          <span>
+            {userInfo ? userInfo.firstName + " " + userInfo.lastName : ""}
+          </span>
         </div>
       </div>
       <div className={classes["row"]}>
