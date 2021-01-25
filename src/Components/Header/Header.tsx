@@ -227,6 +227,49 @@ const Header = (props: PropsI) => {
             </div>
           </div>
         </div>
+        <div className={classes["mobile-main-header"]}>
+          <button className={classes["mobile-button"]}>=</button>
+          <nav className={classes["mobile-main-nav"]}>
+            <ul>
+              <li>
+                <NavLink
+                  to={{
+                    pathname: "/home",
+                  }}
+                >
+                  HOME
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={{
+                    pathname: "/games",
+                  }}
+                >
+                  GAMES
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={{
+                    pathname: "/consoles",
+                  }}
+                >
+                  CONSOLES
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={{
+                    pathname: "/manageInventory",
+                  }}
+                >
+                  MANAGE INVENTORY
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
         <div className={classes["main-header"]}>
           <div>
             <NavLink to="/home" className={classes["main-header__brand"]}>
