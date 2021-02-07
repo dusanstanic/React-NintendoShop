@@ -1,0 +1,253 @@
+@import "../../sass//main.scss";
+
+.background {
+  @include positionFixed;
+  z-index: -1;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(
+      to right bottom,
+      rgba($color-red-dark, 0.8),
+      rgba($color-red-light, 0.8)
+    ),
+    url("http://127.0.0.1:8887/nintendoShop-wallpaper.jpg");
+}
+
+.header {
+  @include positionFixed;
+  z-index: 500;
+  width: 100%;
+}
+
+.header-top {
+  background-color: black;
+}
+
+.header-top__nav {
+  height: 3rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav {
+  &__nav {
+  }
+
+  &__items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    margin: 0 0.5rem;
+    color: $color-grey-light-1;
+  }
+
+  &__item--user {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-right: 10px;
+      background-image: url("http://127.0.0.1:8887/user%20icon.png");
+      background-size: 100% 100%;
+    }
+  }
+
+  &__item--cart {
+    background: $color-yellow-dark;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 5px;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      color: $color-grey-light-2;
+      text-decoration: none;
+    }
+  }
+
+  &__image {
+    vertical-align: middle;
+    height: 1rem;
+  }
+
+  &__info {
+    vertical-align: middle;
+  }
+
+  &__info--quantity {
+    margin-left: 0.5rem;
+  }
+}
+
+.mobile-main-header {
+  display: none;
+  position: relative;
+  background: $color-yellow-dark;
+
+  &:hover {
+    background: rgb(208, 206, 206);
+
+    .mobile-nav {
+      display: block;
+    }
+  }
+
+  @include respond(phone) {
+    display: block;
+  }
+}
+
+.mobile-button {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid black;
+  padding: 0;
+  background: white;
+  color: black;
+  font-size: x-large;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: rgb(208, 206, 206);
+  }
+}
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: #fdc90e;
+  color: black;
+}
+
+.mobile-nav__items {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mobile-nav__item {
+  &:hover {
+    background: rgb(150, 8, 8);
+    cursor: pointer;
+  }
+
+  a {
+    display: block;
+    color: black;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.header-main {
+  background: linear-gradient(
+    to right bottom,
+    rgba($color-yellow-dark, 1),
+    rgba($color-yellow-light, 1)
+  );
+
+  display: flex;
+  align-items: center;
+
+  @include respond(phone) {
+    display: none;
+  }
+}
+
+.header-main__brand {
+  display: block;
+  height: 3rem;
+
+  .header-main__icon {
+    height: 100%;
+  }
+}
+
+.main-nav {
+  width: 100%;
+  margin: auto;
+  margin-right: 0;
+  position: relative;
+}
+
+.main-nav__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.main-nav__item {
+  margin: 0 0.5rem;
+
+  &.search {
+    margin: auto;
+    margin-right: 0px;
+  }
+
+  input {
+    transition: all 0.5s;
+    height: 1.5rem;
+    width: 4rem;
+    border: none;
+  }
+
+  img {
+    vertical-align: middle;
+    height: 1.5rem;
+  }
+}
+
+.main-nav__link {
+  display: inline-block;
+  padding: 0.2rem;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  transition: all 0.5s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &--active {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.routes {
+  padding: 7rem 0 0 0;
+}

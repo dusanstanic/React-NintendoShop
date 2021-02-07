@@ -78,6 +78,97 @@
   background-color: #fdc90e;
 }
 
+.main-header__brand {
+  display: block;
+  height: 3rem;
+}
+
+.main-header__brand .main-header__icon {
+  height: 100%;
+}
+
+/* .mobile-button:hover + .mobile-main-nav {
+  display: block;
+} */
+
+/* .mobile-main-nav ul li:hover a {
+  color: white;
+} */
+
+.mobile-main-header {
+  display: none;
+  position: relative;
+  background: #fdc90e;
+}
+
+.mobile-main-header:hover .mobile-main-nav {
+  display: block;
+}
+
+.mobile-main-header .mobile-button {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid black;
+  padding: 0;
+  background: white;
+  color: black;
+  font-size: x-large;
+  cursor: pointer;
+}
+
+.mobile-main-header .mobile-button:focus {
+  outline: none;
+}
+
+.mobile-main-header .mobile-button:hover {
+  background: rgb(208, 206, 206);
+}
+
+.mobile-main-nav {
+  display: none; /**/
+  position: absolute;
+  width: 100%;
+  background: #fdc90e;
+  color: black;
+}
+
+.mobile-main-nav ul {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mobile-main-nav ul li {
+  color: aqua;
+}
+
+.mobile-main-nav ul li:hover {
+  background: rgb(150, 8, 8);
+  cursor: pointer;
+}
+
+.mobile-main-nav ul li a {
+  display: block;
+  color: black;
+}
+
+.mobile-main-nav ul a:hover {
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .main-header {
+    display: none;
+  }
+
+  .mobile-main-header {
+    display: block;
+  }
+}
+
 .main-header__icon {
   width: 8rem;
   height: 2.5rem;
@@ -138,8 +229,4 @@
 .nav-item-active {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-}
-
-.routes {
-  margin-top: 7rem;
 }
