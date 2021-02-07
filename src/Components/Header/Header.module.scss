@@ -1,8 +1,4 @@
-@mixin positionFixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
+@import "../../sass//main.scss";
 
 .background {
   @include positionFixed;
@@ -22,7 +18,7 @@
   background-color: black;
 }
 
-.header-top-nav {
+.header-top__nav {
   height: 3rem;
   font-size: 14px;
   display: flex;
@@ -30,71 +26,70 @@
   align-items: center;
 }
 
-.header-top-nav__items {
-}
-
-.info-link-nav {
-}
-
-.info-link-nav__items {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-}
-
-.info-link-nav__item {
-  margin: 0 0.5rem;
-  color: white;
-
-  img {
-    vertical-align: middle;
+.nav {
+  &__nav {
   }
 
-  span {
-    vertical-align: middle;
+  &__items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    align-items: center;
   }
 
-  a {
-    color: white;
-    text-decoration: none;
+  &__item {
+    margin: 0 0.5rem;
+    color: $color-grey-light-1;
   }
 
-  &.cart {
-    background-color: #fdc90e;
+  &__item--user {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-right: 10px;
+      background-image: url("http://127.0.0.1:8887/user%20icon.png");
+      background-size: 100% 100%;
+    }
+  }
+
+  &__item--cart {
+    background: $color-yellow-dark;
     color: black;
     border-radius: 5px;
     padding: 5px;
     padding-left: 5px;
-
-    img {
-      width: 1rem;
-      height: 15px;
-    }
-
-    span {
-      margin-left: 0.5rem;
-    }
-  }
-}
-
-.info-link-nav-item-user {
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    text-decoration: underline;
   }
 
-  &::before {
-    content: "";
-    display: inline-block;
-    width: 1rem;
+  &__link {
+    &:link,
+    &:visited {
+      color: $color-grey-light-2;
+      text-decoration: none;
+    }
+  }
+
+  &__image {
+    vertical-align: middle;
     height: 1rem;
-    margin-right: 10px;
-    background-image: url("http://127.0.0.1:8887/user%20icon.png");
-    background-size: 100% 100%;
+  }
+
+  &__info {
+    vertical-align: middle;
+  }
+
+  &__info--quantity {
+    margin-left: 0.5rem;
   }
 }
 
@@ -109,6 +104,10 @@
     .mobile-main-nav {
       display: block;
     }
+  }
+
+  @include respond(phone) {
+    display: block;
   }
 }
 
@@ -164,29 +163,26 @@
   }
 }
 
-////////////////////////////////////////////////////
-.main-header {
+.header-main {
+  background: linear-gradient(
+    to right bottom,
+    rgba($color-yellow-dark, 1),
+    rgba($color-yellow-light, 1)
+  );
+
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
-  background-color: #fdc90e;
-}
 
-@media (max-width: 600px) {
-  .main-header {
+  @include respond(phone) {
     display: none;
   }
-
-  .mobile-main-header {
-    display: block;
-  }
 }
 
-.main-header__brand {
+.header-main__brand {
   display: block;
   height: 3rem;
 
-  .main-header__icon {
+  .header-main__icon {
     height: 100%;
   }
 }
@@ -226,27 +222,27 @@
     vertical-align: middle;
     height: 1.5rem;
   }
+}
 
-  a {
-    display: inline-block;
-    padding: 0.2rem;
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: black;
-    transition: all 0.5s;
+.main-nav__link {
+  display: inline-block;
+  padding: 0.2rem;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  transition: all 0.5s;
 
-    &.nav-item-active {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
+  &--active {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 
 .routes {
-  margin-top: 7rem;
+  padding: 7rem 0 0 0;
 }

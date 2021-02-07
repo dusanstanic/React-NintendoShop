@@ -114,13 +114,21 @@ const Header = (props: PropsI) => {
 
   let userAuthNav = (
     <Aux>
-      <li className={classes1["info-link-nav__item"]}>
-        <NavLink onClick={() => showUserModal(FormType.LOGIN)} to={{}}>
+      <li className={classes1["nav__item"]}>
+        <NavLink
+          onClick={() => showUserModal(FormType.LOGIN)}
+          to={{}}
+          className={classes1["nav__link"]}
+        >
           Login
         </NavLink>
       </li>
-      <li className={classes1["info-link-nav__item"]}>
-        <NavLink onClick={() => showUserModal(FormType.REGISTER)} to={{}}>
+      <li className={classes1["nav__item"]}>
+        <NavLink
+          onClick={() => showUserModal(FormType.REGISTER)}
+          to={{}}
+          className={classes1["nav__link"]}
+        >
           Register
         </NavLink>
       </li>
@@ -130,16 +138,23 @@ const Header = (props: PropsI) => {
   if (props.isAuthenticated) {
     userAuthNav = (
       <Aux>
-        <li className={classes["info-link-nav__item"]}>
+        <li
+          className={`${classes1["nav__item"]}  ${classes1["nav__item--user"]}`}
+        >
           <NavLink
             to={{ pathname: "/userPanel" }}
-            className={classes1["info-link-nav-item-user"]}
+            className={classes1["nav__link"]}
           >
             {props.userInfo.firstName}
           </NavLink>
         </li>
-        <li className={classes["info-link-nav__item"]}>
-          <NavLink to={{ pathname: "/logout" }}>Logout</NavLink>
+        <li className={classes["nav__item"]}>
+          <NavLink
+            to={{ pathname: "/logout" }}
+            className={classes1["nav__link"]}
+          >
+            Logout
+          </NavLink>
         </li>
       </Aux>
     );
@@ -162,39 +177,42 @@ const Header = (props: PropsI) => {
 
       <header className={classes1["header"]}>
         <div className={classes1["header-top"]}>
-          <div className={classes1["header-top-nav"]}>
-            <div className={classes1["header-top-nav__items"]}>
-              <nav className={classes1["info-link-nav"]}>
-                <ul className={classes1["info-link-nav__items"]}>
-                  <li className={classes1["info-link-nav__item"]}>
+          <div className={classes1["header-top__nav"]}>
+            <div className={classes1["nav"]}>
+              <nav className={classes1["nav__nav"]}>
+                <ul className={classes1["nav__items"]}>
+                  <li className={classes1["nav__item"]}>
                     <img
-                      alt="Contact Phone Number"
+                      alt="Phone"
                       src={"http://127.0.0.1:8887/telephone-icon.png"}
+                      className={classes1["nav__image"]}
                     />
-                    <span> 065 23 23 839</span>
+                    <span className={classes1["nav__info"]}>065 23 23 839</span>
                   </li>
-                  <li className={classes1["info-link-nav__item"]}>
+                  <li className={classes1["nav__item"]}>
                     <img
                       alt="Contact Email"
                       src={"http://127.0.0.1:8887/message-icon.png"}
+                      className={classes1["nav__image"]}
                     />
                     <span> dusan.stanic97@hotmail.com</span>
                   </li>
                 </ul>
               </nav>
             </div>
-            <div className={classes1["header-top-nav__items"]}>
-              <nav className={classes1["info-link-nav"]}>
-                <ul className={classes1["info-link-nav__items"]}>
+            <div className={classes1["nav__items"]}>
+              <nav className={classes1["nav__nav"]}>
+                <ul className={classes1["nav__items"]}>
                   {userAuthNav}
                   <li
-                    className={`${classes1["info-link-nav__item"]} ${classes1["cart"]}`}
+                    className={`${classes1["nav__item"]} ${classes1["nav__item--cart"]}`}
                   >
                     <img
                       alt="Shopping Cart"
                       src={"http://127.0.0.1:8887/shopping%20bag%20icon.png"}
+                      className={classes1["nav__image"]}
                     />
-                    <span>0</span>
+                    <span className={classes1["nav__info--quantity"]}>0</span>
                   </li>
                 </ul>
               </nav>
@@ -244,13 +262,13 @@ const Header = (props: PropsI) => {
             </ul>
           </nav>
         </div>
-        <div className={classes1["main-header"]}>
+        <div className={classes1["header-main"]}>
           <div>
-            <NavLink to="/home" className={classes1["main-header__brand"]}>
+            <NavLink to="/home" className={classes1["header-main__brand"]}>
               <img
                 src="http://127.0.0.1:8887/Nintendo%20Logo.png"
                 alt="Nintendo Shop"
-                className={classes1["main-header__icon"]}
+                className={classes1["header-main__icon"]}
               />
             </NavLink>
           </div>
@@ -262,14 +280,16 @@ const Header = (props: PropsI) => {
                 <li className={classes1["main-nav__item"]}>
                   <NavLink
                     to="/home"
-                    activeClassName={classes1["nav-item-active"]}
+                    activeClassName={classes1["main-nav__link--active"]}
+                    className={classes1["main-nav__link"]}
                   >
                     Home
                   </NavLink>
                 </li>
                 <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes1["nav-item-active"]}
+                    activeClassName={classes1["main-nav__link--active"]}
+                    className={classes1["main-nav__link"]}
                     to={{
                       pathname: "/games",
                     }}
@@ -279,7 +299,8 @@ const Header = (props: PropsI) => {
                 </li>
                 <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes1["nav-item-active"]}
+                    activeClassName={classes1["main-nav__link--active"]}
+                    className={classes1["main-nav__link"]}
                     to={{
                       pathname: "/consoles",
                     }}
@@ -289,7 +310,8 @@ const Header = (props: PropsI) => {
                 </li>
                 <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes1["nav-item-active"]}
+                    activeClassName={classes1["main-nav__link--active"]}
+                    className={classes1["main-nav__link"]}
                     to={{
                       pathname: "/manageInventory",
                     }}
@@ -297,7 +319,8 @@ const Header = (props: PropsI) => {
                     Manage Inventory
                   </NavLink>
                   <NavLink
-                    activeClassName={classes1["nav-item-active"]}
+                    activeClassName={classes1["main-nav__link--active"]}
+                    className={classes1["main-nav__link"]}
                     to={{
                       pathname: "/manageGames",
                     }}
