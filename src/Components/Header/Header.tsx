@@ -9,6 +9,7 @@ import {
 import { connect } from "react-redux";
 
 import classes from "./Header.module.css";
+import classes1 from "./Header.module.scss";
 
 import GameM from "../../models/GameM";
 import { GenreM } from "../../models/GenreM";
@@ -60,10 +61,7 @@ const Header = (props: PropsI) => {
   const [userForm, setUserForm] = useState<JSX.Element>();
   const [showModal, setShowModal] = useState(false);
 
-  const [searchOptions, setSearchOptions] = useState<JSX.Element[]>();
-  const [searchOptionsViews, setSearchOptionsViews] = useState<JSX.Element[]>();
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  const searchInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     GameService.getGames().then((games: GameM[]) => {
@@ -116,12 +114,12 @@ const Header = (props: PropsI) => {
 
   let userAuthNav = (
     <Aux>
-      <li className={classes["info-link-nav__item"]}>
+      <li className={classes1["info-link-nav__item"]}>
         <NavLink onClick={() => showUserModal(FormType.LOGIN)} to={{}}>
           Login
         </NavLink>
       </li>
-      <li className={classes["info-link-nav__item"]}>
+      <li className={classes1["info-link-nav__item"]}>
         <NavLink onClick={() => showUserModal(FormType.REGISTER)} to={{}}>
           Register
         </NavLink>
@@ -135,7 +133,7 @@ const Header = (props: PropsI) => {
         <li className={classes["info-link-nav__item"]}>
           <NavLink
             to={{ pathname: "/userPanel" }}
-            className={classes["info-link-nav-item-user"]}
+            className={classes1["info-link-nav-item-user"]}
           >
             {props.userInfo.firstName}
           </NavLink>
@@ -157,81 +155,57 @@ const Header = (props: PropsI) => {
 
   return (
     <Aux>
-      <div className={classes["background"]}></div>
+      <div className={classes1["background"]}></div>
       <Modal show={showModal} closeModal={hideModal}>
         {userForm}
       </Modal>
 
-      <header className={classes["header"]}>
-        <div className={classes["header-top"]}>
-          <div className={classes["row"]}>
-            <div className={classes["column"]}>
-              <nav className={classes["info-link-nav"]}>
-                <ul className={classes["info-link-nav__items"]}>
-                  <li className={classes["info-link-nav__item"]}>
+      <header className={classes1["header"]}>
+        <div className={classes1["header-top"]}>
+          <div className={classes1["header-top-nav"]}>
+            <div className={classes1["header-top-nav__items"]}>
+              <nav className={classes1["info-link-nav"]}>
+                <ul className={classes1["info-link-nav__items"]}>
+                  <li className={classes1["info-link-nav__item"]}>
                     <img
                       alt="Contact Phone Number"
                       src={"http://127.0.0.1:8887/telephone-icon.png"}
-                      style={{ verticalAlign: "middle" }}
                     />
                     <span> 065 23 23 839</span>
                   </li>
-                  <li className={classes["info-link-nav__item"]}>
+                  <li className={classes1["info-link-nav__item"]}>
                     <img
                       alt="Contact Email"
                       src={"http://127.0.0.1:8887/message-icon.png"}
-                      style={{ verticalAlign: "middle" }}
                     />
                     <span> dusan.stanic97@hotmail.com</span>
                   </li>
                 </ul>
               </nav>
             </div>
-            <div className={classes["column"]}>
-              <nav className={classes["info-link-nav"]}>
-                <ul className={classes["info-link-nav__items"]}>
+            <div className={classes1["header-top-nav__items"]}>
+              <nav className={classes1["info-link-nav"]}>
+                <ul className={classes1["info-link-nav__items"]}>
                   {userAuthNav}
-                  <li className={classes["info-link-nav__item"]}>
-                    <div
-                      style={{
-                        backgroundColor: "#fdc90e",
-                        color: "black",
-                        borderRadius: "5px",
-                        padding: "5px",
-                        paddingLeft: "5px",
-                      }}
-                    >
-                      <img
-                        alt="Shopping Cart"
-                        src={"http://127.0.0.1:8887/shopping%20bag%20icon.png"}
-                        style={{
-                          width: "1rem",
-                          height: "15px",
-                          verticalAlign: "top",
-                        }}
-                      />
-                      <span
-                        style={{
-                          verticalAlign: "middle",
-                          display: "inline-block",
-                          paddingLeft: "5px",
-                        }}
-                      >
-                        {" "}
-                        0
-                      </span>
-                    </div>
+                  <li
+                    className={`${classes1["info-link-nav__item"]} ${classes1["cart"]}`}
+                  >
+                    <img
+                      alt="Shopping Cart"
+                      src={"http://127.0.0.1:8887/shopping%20bag%20icon.png"}
+                    />
+                    <span>0</span>
                   </li>
                 </ul>
               </nav>
             </div>
           </div>
         </div>
-        <div className={classes["mobile-main-header"]}>
-          <button className={classes["mobile-button"]}>=</button>
-          <nav className={classes["mobile-main-nav"]}>
-            <ul>
-              <li>
+        <div className={classes1["mobile-main-header"]}>
+          <button className={classes1["mobile-button"]}>=</button>
+          <nav className={classes1["mobile-main-nav"]}>
+            <ul className={classes1["mobile-nav__items"]}>
+              <li className={classes1["mobile-nav__item"]}>
                 <NavLink
                   to={{
                     pathname: "/home",
@@ -240,7 +214,7 @@ const Header = (props: PropsI) => {
                   HOME
                 </NavLink>
               </li>
-              <li>
+              <li className={classes1["mobile-nav__item"]}>
                 <NavLink
                   to={{
                     pathname: "/games",
@@ -249,7 +223,7 @@ const Header = (props: PropsI) => {
                   GAMES
                 </NavLink>
               </li>
-              <li>
+              <li className={classes1["mobile-nav__item"]}>
                 <NavLink
                   to={{
                     pathname: "/consoles",
@@ -258,7 +232,7 @@ const Header = (props: PropsI) => {
                   CONSOLES
                 </NavLink>
               </li>
-              <li>
+              <li className={classes1["mobile-nav__item"]}>
                 <NavLink
                   to={{
                     pathname: "/manageInventory",
@@ -270,32 +244,32 @@ const Header = (props: PropsI) => {
             </ul>
           </nav>
         </div>
-        <div className={classes["main-header"]}>
+        <div className={classes1["main-header"]}>
           <div>
-            <NavLink to="/home" className={classes["main-header__brand"]}>
+            <NavLink to="/home" className={classes1["main-header__brand"]}>
               <img
                 src="http://127.0.0.1:8887/Nintendo%20Logo.png"
                 alt="Nintendo Shop"
-                className={classes["main-header__icon"]}
+                className={classes1["main-header__icon"]}
               />
             </NavLink>
           </div>
-          <nav className={classes["main-nav"]}>
+          <nav className={classes1["main-nav"]}>
             {isSearchClicked ? (
               <SearchBar setIsSearchClicked={setIsSearchClicked} />
             ) : (
-              <ul className={classes["main-nav__items"]}>
-                <li className={classes["main-nav__item"]}>
+              <ul className={classes1["main-nav__items"]}>
+                <li className={classes1["main-nav__item"]}>
                   <NavLink
                     to="/home"
-                    activeClassName={classes["nav-item-active"]}
+                    activeClassName={classes1["nav-item-active"]}
                   >
                     Home
                   </NavLink>
                 </li>
-                <li className={classes["main-nav__item"]}>
+                <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes["nav-item-active"]}
+                    activeClassName={classes1["nav-item-active"]}
                     to={{
                       pathname: "/games",
                     }}
@@ -303,9 +277,9 @@ const Header = (props: PropsI) => {
                     Games
                   </NavLink>
                 </li>
-                <li className={classes["main-nav__item"]}>
+                <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes["nav-item-active"]}
+                    activeClassName={classes1["nav-item-active"]}
                     to={{
                       pathname: "/consoles",
                     }}
@@ -313,27 +287,27 @@ const Header = (props: PropsI) => {
                     Consoles
                   </NavLink>
                 </li>
-                <li className={classes["main-nav__item"]}>
+                <li className={classes1["main-nav__item"]}>
                   <NavLink
-                    activeClassName={classes["nav-item-active"]}
-                    to={{
-                      pathname: "/manageGames",
-                    }}
-                  >
-                    Manage Games
-                  </NavLink>
-                  <NavLink
-                    activeClassName={classes["nav-item-active"]}
+                    activeClassName={classes1["nav-item-active"]}
                     to={{
                       pathname: "/manageInventory",
                     }}
                   >
                     Manage Inventory
                   </NavLink>
+                  <NavLink
+                    activeClassName={classes1["nav-item-active"]}
+                    to={{
+                      pathname: "/manageGames",
+                    }}
+                  >
+                    Manage Games
+                  </NavLink>
                 </li>
                 <li
                   className={
-                    classes["main-nav__item"] + " " + classes["search"]
+                    classes1["main-nav__item"] + " " + classes1["search"]
                   }
                 >
                   <input
@@ -354,7 +328,7 @@ const Header = (props: PropsI) => {
           </nav>
         </div>
       </header>
-      <div className={classes["routes"]}>
+      <div className={classes1["routes"]}>
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/games" component={App} />

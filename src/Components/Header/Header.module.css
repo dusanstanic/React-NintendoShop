@@ -78,6 +78,15 @@
   background-color: #fdc90e;
 }
 
+.main-header__brand {
+  display: block;
+  height: 3rem;
+}
+
+.main-header__brand .main-header__icon {
+  height: 100%;
+}
+
 /* .mobile-button:hover + .mobile-main-nav {
   display: block;
 } */
@@ -220,8 +229,4 @@
 .nav-item-active {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-}
-
-.routes {
-  margin-top: 7rem;
 }
