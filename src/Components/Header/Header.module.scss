@@ -5,7 +5,12 @@
   z-index: -1;
   height: 100vh;
   width: 100vw;
-  background: url("http://127.0.0.1:8887/nintendoShop-wallpaper.jpg");
+  background: linear-gradient(
+      to right bottom,
+      rgba($color-red-dark, 0.8),
+      rgba($color-red-light, 0.8)
+    ),
+    url("http://127.0.0.1:8887/nintendoShop-wallpaper.jpg");
 }
 
 .header {
@@ -96,12 +101,12 @@
 .mobile-main-header {
   display: none;
   position: relative;
-  background: #fdc90e;
+  background: $color-yellow-dark;
 
   &:hover {
     background: rgb(208, 206, 206);
 
-    .mobile-main-nav {
+    .mobile-nav {
       display: block;
     }
   }
@@ -131,8 +136,8 @@
   }
 }
 
-.mobile-main-nav {
-  display: none; /**/
+.mobile-nav {
+  display: none;
   position: absolute;
   width: 100%;
   background: #fdc90e;

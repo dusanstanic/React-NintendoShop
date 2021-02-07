@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Route,
   NavLink,
@@ -221,7 +221,7 @@ const Header = (props: PropsI) => {
         </div>
         <div className={classes1["mobile-main-header"]}>
           <button className={classes1["mobile-button"]}>=</button>
-          <nav className={classes1["mobile-main-nav"]}>
+          <nav className={classes1["mobile-nav"]}>
             <ul className={classes1["mobile-nav__items"]}>
               <li className={classes1["mobile-nav__item"]}>
                 <NavLink
@@ -351,6 +351,7 @@ const Header = (props: PropsI) => {
           </nav>
         </div>
       </header>
+
       <div className={classes1["routes"]}>
         <Switch>
           <Route path="/home" component={Home} />
