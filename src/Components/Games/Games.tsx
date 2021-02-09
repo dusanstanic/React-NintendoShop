@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import classes from "./Games.module.css";
+import classes from "./Games.module.scss";
 import { Route } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -55,15 +55,15 @@ const Games = (props: PropsI) => {
 
   return (
     <Aux>
-      <div className={classes["main-game-grid"]}>
-        <div className={classes["game-search-filter-container"]}>
+      <div className={classes["games-grid"]}>
+        <div className={classes["games-grid__search-filter"]}>
           <h2>Nintendo Games</h2>
         </div>
         <GameSearchOptions
-          class={classes["game-search-options"]}
+          class={classes["games-grid__search-options"]}
           routerProps={props}
         ></GameSearchOptions>
-        <div className={classes["games-container"]}>{selectedGames}</div>
+        <div className={classes["games-grid__games"]}>{selectedGames}</div>
       </div>
       <Route path="/games/:id" component={GameDetails} />
     </Aux>

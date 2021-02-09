@@ -1,0 +1,43 @@
+.games-grid {
+  width: 75%;
+  margin: auto;
+  margin-bottom: 2rem;
+  background: black;
+
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: repeat(2, auto) 25rem;
+  grid-template-areas:
+    "filter filter"
+    "search games"
+    "footer footer";
+
+  &__search-filter {
+    grid-area: filter;
+    border-bottom: 1px solid white;
+  }
+
+  &__search-filter h2 {
+    padding-left: 0.5rem;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+  }
+
+  &__search-options {
+    grid-area: search;
+
+    margin-left: 5px;
+    position: sticky;
+    top: 7rem;
+  }
+
+  &__games {
+    padding-left: 0.5rem;
+    grid-area: games;
+
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+}

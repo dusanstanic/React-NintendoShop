@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
-import classes from "./GameSearchOptions.module.css";
+import classes from "./GameSearchOptions.module.scss";
 
 import GameM from "../../../models/GameM";
 
@@ -116,41 +116,67 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
 
   const pgRatingOptions = props.routerProps.pgRatings.map((pgRating) => {
     return (
-      <InputCheckBox
-        key={pgRating}
-        name={"pgRating"}
-        value={pgRating}
-        text={pgRating}
-        click={updateDisplayedGames}
-      />
+      <div key={pgRating} className={classes["options__wrapper"]}>
+        <InputCheckBox
+          key={pgRating}
+          name={"pgRating"}
+          value={pgRating}
+          text={pgRating}
+          click={updateDisplayedGames}
+        />
+      </div>
     );
   });
 
   const genreOptions = props.routerProps.genres.map((genre) => {
     return (
-      <InputCheckBox
-        key={genre.id}
-        name={"genre"}
-        value={genre.type}
-        text={genre.type}
-        click={updateDisplayedGames}
-      />
+      <div key={genre.type} className={classes["options__wrapper"]}>
+        <InputCheckBox
+          key={genre.id}
+          name={"genre"}
+          value={genre.type}
+          text={genre.type}
+          click={updateDisplayedGames}
+        />
+      </div>
+    );
+  });
+
+  const priceRange = [
+    { text: "1 - 20000 RSD", price: 20000 },
+    { text: "20000 - 40000 RSD", price: 40000 },
+    { text: "40000 - 60000 RSD", price: 60000 },
+    { text: "60000 - 80000 RSD", price: 80000 },
+  ];
+
+  const priceRangeOptions = priceRange.map(({ price, text }) => {
+    return (
+      <div key={price} className={classes["options__wrapper"]}>
+        <InputCheckBox
+          key={price}
+          name={"priceRange"}
+          value={price}
+          text={text}
+          click={updateDisplayedGames}
+        />
+      </div>
     );
   });
 
   return (
     <Aux>
       <div className={props.class}>
-        <div className={classes["game-search-option-by-pgRating"]}>
-          <h4 className={classes["game-search-option-title"]}>PEGI RATING</h4>
+        <div className={classes["options"]}>
+          <h4 className={classes["options__title"]}>PEGI Rating</h4>
           {pgRatingOptions}
         </div>
-        <div className={classes["game-search-option-by-genre"]}>
-          <h4 className={classes["game-search-option-title"]}>GENRE</h4>
+        <div className={`${classes["options"]}`}>
+          <h4 className={classes["options__title"]}>Genre</h4>
           {genreOptions}
         </div>
-        <div className={classes["game-search-option-by-price"]}>
-          <h4 className={classes["game-search-option-title"]}>PRICE</h4>
+        <div className={`${classes["options"]}`}>
+          <h4 className={classes["options__title"]}>Price</h4>
+          {priceRangeOptions}
         </div>
       </div>
     </Aux>
