@@ -7,6 +7,12 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import { connect } from "react-redux";
+import {
+  FaUserCircle,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaShoppingBag,
+} from "react-icons/fa";
 
 import classes from "./Header.module.css";
 import classes1 from "./Header.module.scss";
@@ -138,6 +144,7 @@ const Header = (props: PropsI) => {
   if (props.isAuthenticated) {
     userAuthNav = (
       <Aux>
+        <FaUserCircle className={classes1["nav__image"]} />
         <li
           className={`${classes1["nav__item"]}  ${classes1["nav__item--user"]}`}
         >
@@ -182,20 +189,14 @@ const Header = (props: PropsI) => {
               <nav className={classes1["nav__nav"]}>
                 <ul className={classes1["nav__items"]}>
                   <li className={classes1["nav__item"]}>
-                    <img
-                      alt="Phone"
-                      src={"http://127.0.0.1:8887/telephone-icon.png"}
-                      className={classes1["nav__image"]}
-                    />
+                    <FaPhoneAlt className={classes1["nav__image"]} />
                     <span className={classes1["nav__info"]}>065 23 23 839</span>
                   </li>
                   <li className={classes1["nav__item"]}>
-                    <img
-                      alt="Contact Email"
-                      src={"http://127.0.0.1:8887/message-icon.png"}
-                      className={classes1["nav__image"]}
-                    />
-                    <span> dusan.stanic97@hotmail.com</span>
+                    <FaEnvelope className={classes1["nav__image"]} />
+                    <span className={classes1["nav__info"]}>
+                      dusan.stanic97@hotmail.com
+                    </span>
                   </li>
                 </ul>
               </nav>
@@ -207,11 +208,7 @@ const Header = (props: PropsI) => {
                   <li
                     className={`${classes1["nav__item"]} ${classes1["nav__item--cart"]}`}
                   >
-                    <img
-                      alt="Shopping Cart"
-                      src={"http://127.0.0.1:8887/shopping%20bag%20icon.png"}
-                      className={classes1["nav__image"]}
-                    />
+                    <FaShoppingBag className={classes1["nav__image"]} />
                     <span className={classes1["nav__info--quantity"]}>0</span>
                   </li>
                 </ul>
