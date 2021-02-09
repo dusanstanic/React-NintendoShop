@@ -1,0 +1,176 @@
+@import "../../sass//main.scss";
+
+.features {
+  padding: 15rem 2rem;
+
+  &__heading {
+    opacity: 0;
+    margin: 0;
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 100;
+    animation: moveInLeft 1s ease-out 0.2s forwards;
+  }
+
+  &__quote {
+    color: white;
+    font-size: 0.8rem;
+    animation: moveInRight 1s ease-out;
+  }
+
+  &__author {
+    display: block;
+    opacity: 0;
+    animation: moveInLeft 1s ease-out 0.5s forwards;
+  }
+}
+
+.home {
+  display: block;
+  width: 90%;
+  margin: auto;
+  margin: auto;
+  background: black;
+  padding: 0.2rem;
+  background: rgb(142, 0, 0);
+}
+
+.slideshow {
+  display: inline-block;
+  position: relative;
+  width: 60%;
+  background: rgba(255, 255, 255, 0.2);
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    margin: auto;
+    transform-origin: 50% 50%;
+    overflow: hidden;
+  }
+
+  &__slider {
+    height: 30rem;
+    display: flex;
+    position: relative;
+    width: 10000px;
+
+    &.shifting {
+      transition: left 0.4s ease-out;
+    }
+  }
+}
+
+.slideshow__btn {
+  position: absolute;
+  top: 45%;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.slideshow__btn:focus {
+  outline: none;
+}
+.slideshow__btn:hover {
+  opacity: 1;
+  background: rgb(142, 0, 0);
+  color: wheat;
+}
+
+.slideshow__btn--left {
+  left: 1%;
+}
+
+.slideshow__btn--right {
+  right: 1%;
+}
+
+.main {
+  display: inline-block;
+  width: 38%;
+  margin-left: 2%;
+  vertical-align: top;
+
+  &__items {
+    width: 100%;
+    height: 15rem;
+    padding: 0px 0px;
+    opacity: 1;
+    transition: all 0.5s;
+  }
+
+  &__items--merch {
+    margin-top: 1rem;
+  }
+
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      opacity: 1;
+      transform: skewX(-5deg) scale(1.05) rotateZ(5deg);
+    }
+  }
+
+  &__wrapper--merch {
+    height: 14rem;
+    margin-left: 0rem;
+  }
+
+  &__img {
+    width: 33.33333%;
+    height: 100%;
+  }
+
+  &__img--merch {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin-left: 0rem;
+  }
+}
+
+.category {
+  display: inline-block;
+  width: 48%;
+  margin-right: 2%;
+
+  &__wrapper {
+    width: 100%;
+    height: 20rem;
+    cursor: pointer;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      filter: brightness(90%);
+    }
+  }
+}
+
+.game-slider {
+  &__wrapper {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  display: flex;
+  position: relative;
+  height: 10rem;
+
+  &.transition {
+    transition: left 0.2s ease-out;
+  }
+}
