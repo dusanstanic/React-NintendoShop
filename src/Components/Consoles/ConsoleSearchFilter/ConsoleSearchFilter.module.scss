@@ -1,0 +1,58 @@
+@import "../../../sass//main.scss";
+
+.filter {
+  border-bottom: 1px white solid;
+  padding: 1rem 0.5rem;
+  color: white;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 650px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+    margin-left: 5px;
+  }
+
+  &__sort {
+    margin-left: auto;
+    margin-right: 2%;
+  }
+
+  &__show {
+    margin-top: 0;
+
+    @media (max-width: 650px) {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__label {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+
+  &__select {
+    background-color: #ffffff;
+    color: black;
+    padding: 0.2rem 0.2rem;
+  }
+
+  &__select:focus {
+    outline: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .filter__sort {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
