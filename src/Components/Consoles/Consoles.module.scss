@@ -1,0 +1,164 @@
+@import "../../sass//main.scss";
+
+.consoles {
+  position: relative;
+  width: 75%;
+  margin: auto;
+  margin-bottom: 2rem;
+  background: $color-red-dark;
+  color: $color-white-1;
+
+  &__search-options {
+    position: sticky;
+    top: 7rem;
+
+    display: inline-block;
+    width: 20%;
+    padding-left: 0.5rem;
+
+    vertical-align: top;
+    text-align: left;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__consoles {
+    display: inline-block;
+    width: 80%;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .consoles__consoles {
+    width: 100%;
+  }
+
+  //   .consoles__search-options {
+  //     text-align: center;
+  //     display: block;
+  //     position: relative;
+  //     width: 90%;
+  //     margin: auto;
+  //     top: 0;
+  //   }
+}
+
+.search {
+  position: relative;
+  display: none;
+
+  @include respond(tab-port) {
+    display: block;
+  }
+
+  &__background {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+    z-index: -2;
+    transform: translate(-50%, -50%);
+
+    height: 2rem;
+    // width: 2rem;
+    width: 50%;
+
+    background: linear-gradient(
+      to right,
+      rgba($color-red-dark, 0.9),
+      rgba($color-red-light, 0.9)
+    );
+
+    transition: all 0.2s;
+  }
+
+  &__label {
+    position: relative;
+    z-index: 2000;
+
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+
+    background: linear-gradient(
+      to right,
+      rgba($color-white-1, 1) 40%,
+      rgba($color-white-2, 1) 60%
+    );
+    cursor: pointer;
+  }
+
+  &__label:hover &__icon::before {
+    top: 0.7rem;
+  }
+
+  &__label:hover &__icon::after {
+    top: -0.7rem;
+  }
+
+  &__icon,
+  &__icon::before,
+  &__icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 1rem;
+    height: 0.1rem;
+    background: black;
+    transition: top 0.2s;
+  }
+
+  &__icon::before {
+    content: "";
+    top: 0.5rem;
+  }
+
+  &__icon::after {
+    content: "";
+    top: -0.5rem;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__main {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2000;
+    transform: translate(-50%, -50%);
+  }
+
+  &__input:checked ~ &__background {
+    z-index: 1500;
+    transform: scale(80);
+  }
+
+  &__input:checked ~ &__main {
+    display: block;
+  }
+
+  &__input:checked + &__label &__icon {
+    background: transparent;
+  }
+
+  &__input:checked + &__label &__icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  &__input:checked + &__label &__icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+}
