@@ -1,0 +1,49 @@
+.options {
+  margin-bottom: 10px;
+
+  &__title {
+    padding-top: 1rem;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: 0.8rem;
+    vertical-align: middle;
+    margin-top: -1.5px;
+  }
+
+  &__input {
+    margin: 0;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+}
+
+.console-search-options-title:first-child {
+  margin-top: 0.5rem;
+}
+
+.console-search-options-by-type {
+  margin-top: 0rem;
+}
+
+@media (max-width: 650px) {
+  .console-search-options-title {
+    font-size: 20px;
+  }
+
+  .console-search-options-by-type label {
+    font-size: 15px;
+  }
+
+  .console-search-options {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .console-search-options-by-type,
+  .console-search-options-by-price,
+  .console-search-options-by-condition {
+    text-align: left;
+  }
+}

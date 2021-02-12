@@ -1,14 +1,19 @@
 .console-search-options {
-  font-family: "Rubik", sans-serif;
+  margin-bottom: 10px;
+}
+
+.console-search-options-wrapper {
+}
+
+.console-search-options-title:first-child {
+  margin-top: 0.5rem;
 }
 
 .console-search-options-title {
   font-size: 13px;
-  font-weight: 600;
   margin: 0;
-  margin-left: 0.2rem;
   margin-top: 1rem;
-  color: rgb(235, 231, 10);
+  color: rgb(255, 255, 255);
 }
 
 .console-search-options-by-type label,
@@ -16,8 +21,40 @@
 .console-search-options-by-condition label {
   font-size: 12px;
   color: #cccccc;
+  vertical-align: middle;
+}
+
+.console-search-options-by-type input,
+.console-search-options-by-price input,
+.console-search-options-by-condition input {
+  margin: 0;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 .console-search-options-by-type {
   margin-top: 0rem;
+}
+
+@media (max-width: 650px) {
+  .console-search-options-title {
+    font-size: 20px;
+  }
+
+  .console-search-options-by-type label,
+  .console-search-options-by-price label,
+  .console-search-options-by-condition label {
+    font-size: 15px;
+  }
+
+  .console-search-options {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .console-search-options-by-type,
+  .console-search-options-by-price,
+  .console-search-options-by-condition {
+    text-align: left;
+  }
 }

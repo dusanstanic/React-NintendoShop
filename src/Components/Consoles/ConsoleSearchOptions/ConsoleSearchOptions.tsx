@@ -1,12 +1,13 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 import { connect } from "react-redux";
 
-import classes from "./ConsoleSearchOptions.module.css";
+import classes from "./ConsoleSearchOptions.module.scss";
 
 import ConsoleM from "../../../models/ConsoleM";
 import * as consoleDisplayActions from "../../../store/actions/index";
 
-import { InputCheckBox } from "../../../shared/UI/Input/Input";
+import { InputCheckBox1 as InputCheckBox } from "../../../shared/UI/Input/Input";
+import { LabelInput as Label } from "../../../shared/UI/Label/Label";
 import Aux from "../../../hoc/Auxiliary";
 
 interface PropsI {
@@ -33,7 +34,23 @@ enum InputName {
   PRICE_RANGE = "priceRange",
 }
 
-const ConsoleSearchOptions = (props: PropsI) => {
+const ConsoleSearchOptions = ({
+  consoles,
+  selectedCondition,
+  selectedConsoles,
+  selectedConsolesByCondition,
+  selectedConsolesByPriceRange,
+  selectedConsolesByType,
+  selectedPriceRanges,
+  selectedTypes,
+  setSelectedCondition,
+  setSelectedConsoles,
+  setSelectedConsolesByCondition,
+  setSelectedConsolesByPriceRange,
+  setSelectedConsolesByType,
+  setSelectedPriceRanges,
+  setSelectedTypes,
+}: PropsI) => {
   const updateSelectedOptions = (
     selectedOptions: string[],
     currentSelectedOption: string
@@ -58,71 +75,67 @@ const ConsoleSearchOptions = (props: PropsI) => {
     selectedOptions: string[],
     property: InputName
   ) => {
-    const selectedConsoles = props.consoles.filter(
-      (currentConsole: ConsoleM) => {
-        if (property === InputName.TYPE || property === InputName.CONDITION)
-          return selectedOptions.includes(currentConsole[property]);
-      }
-    );
+    const selectedConsoles = consoles.filter((currentConsole: ConsoleM) => {
+      if (property === InputName.TYPE || property === InputName.CONDITION)
+        return selectedOptions.includes(currentConsole[property]);
+    });
     return selectedConsoles;
   };
 
   const updateDisplayedConsoles = (event: ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name;
     const currentSelectedOption = event.target.value;
-    let selectedConsolesByTypes: ConsoleM[] = props.selectedConsolesByType;
-    let selectedConsolesByCondition: ConsoleM[] =
-      props.selectedConsolesByCondition;
-    let selectedConsolesByPriceRange: ConsoleM[] =
-      props.selectedConsolesByPriceRange;
+
+    let selectedProductsByTypes = selectedConsolesByType;
+    let selectedProductsByCondition = selectedConsolesByCondition;
+    let selectedProductsByPriceRange = selectedConsolesByPriceRange;
 
     if (inputName === InputName.TYPE) {
       let selectedTypeOptions = updateSelectedOptions(
-        props.selectedTypes,
+        selectedTypes,
         currentSelectedOption
       );
 
-      selectedConsolesByTypes = filterConsolesBySelectedOptions(
+      selectedProductsByTypes = filterConsolesBySelectedOptions(
         selectedTypeOptions,
         InputName.TYPE
       );
 
-      props.setSelectedTypes(selectedTypeOptions);
-      props.setSelectedConsolesByType(selectedConsolesByTypes);
+      setSelectedTypes(selectedTypeOptions);
+      setSelectedConsolesByType(selectedProductsByTypes);
     }
 
     if (inputName === InputName.CONDITION) {
-      selectedConsolesByCondition = filterConsolesBySelectedOptions(
+      selectedProductsByCondition = filterConsolesBySelectedOptions(
         [currentSelectedOption],
         InputName.CONDITION
       );
 
-      props.setSelectedConsolesByCondition(selectedConsolesByCondition);
+      setSelectedCondition(currentSelectedOption);
+      setSelectedConsolesByCondition(selectedProductsByCondition);
     }
 
     if (inputName === InputName.PRICE_RANGE) {
       let selectedPriceRangeOptions = updateSelectedOptions(
-        props.selectedPriceRanges,
+        selectedPriceRanges,
         currentSelectedOption
       );
 
-      selectedConsolesByPriceRange = props.consoles.filter((console) => {
-        const isInPriceRange = selectedPriceRangeOptions.find((price) => {
-          const priceMax = +price;
-          const priceMin = priceMax - 20000;
-          return priceMin <= console.price && console.price <= priceMax;
-        });
+      selectedProductsByPriceRange = consoles.filter((console) => {
+        const isInPriceRange = selectedPriceRangeOptions.find(
+          (price) => console.price <= +price
+        );
         return isInPriceRange;
       });
 
-      props.setSelectedConsolesByPriceRange(selectedConsolesByPriceRange);
-      props.setSelectedPriceRanges(selectedPriceRangeOptions);
+      setSelectedPriceRanges(selectedPriceRangeOptions);
+      setSelectedConsolesByPriceRange(selectedProductsByPriceRange);
     }
 
     let selectedConsoles = [
-      ...selectedConsolesByTypes,
-      ...selectedConsolesByCondition,
-      ...selectedConsolesByPriceRange,
+      ...selectedProductsByTypes,
+      ...selectedProductsByCondition,
+      ...selectedProductsByPriceRange,
     ];
 
     let consoleIDS = selectedConsoles.map((console: ConsoleM) => {
@@ -135,27 +148,55 @@ const ConsoleSearchOptions = (props: PropsI) => {
 
     let selectedConsolesWithoutDuplicates = consoleIDSWithoutDuplicates.map(
       (id) => {
-        return props.consoles.find((console) => console.id === id);
+        return consoles.find((console) => console.id === id);
       }
     );
 
     if (selectedConsolesWithoutDuplicates.length === 0) {
-      props.setSelectedConsoles(props.consoles);
+      setSelectedConsoles(consoles);
     } else {
-      props.setSelectedConsoles(selectedConsolesWithoutDuplicates);
+      setSelectedConsoles(selectedConsolesWithoutDuplicates);
     }
   };
 
-  const consolesTypes = ["3DS", "2DS", "Switch"];
-  const consolesTypeOptions = consolesTypes.map((type: string) => {
+  const types = ["3DS", "2DS", "Switch"];
+  const typeOpts = useMemo(() => {
+    return types.map((type) => {
+      let isChecked = !!selectedTypes.find(
+        (selectedType) => selectedType === type
+      );
+
+      return (
+        <div key={type}>
+          <InputCheckBox
+            name={"type"}
+            value={type}
+            click={updateDisplayedConsoles}
+            checked={isChecked}
+            className={classes["options__input"]}
+          />
+          <Label text={type} className={classes["options__label"]} />
+        </div>
+      );
+    });
+  }, [updateDisplayedConsoles]);
+
+  const conditions = ["new", "used"];
+  const conditionOpts = conditions.map((condition) => {
+    let isChecked = selectedCondition === condition;
+
     return (
-      <InputCheckBox
-        key={type}
-        name={"type"}
-        value={type}
-        text={type}
-        click={updateDisplayedConsoles}
-      />
+      <div key={condition}>
+        <input
+          type="radio"
+          name={"condition"}
+          value={condition}
+          onChange={updateDisplayedConsoles}
+          checked={isChecked}
+          className={classes["options__input"]}
+        />
+        <Label text={condition} className={classes["options__label"]} />
+      </div>
     );
   });
 
@@ -165,50 +206,39 @@ const ConsoleSearchOptions = (props: PropsI) => {
     { text: "40000 - 60000 RSD", price: 60000 },
     { text: "60000 - 80000 RSD", price: 80000 },
   ];
-  const priceRangeOptions = priceRange.map(
-    (priceRange: { text: string; price: number }) => {
-      return (
-        <InputCheckBox
-          key={priceRange.price}
-          name={"priceRange"}
-          value={priceRange.price}
-          text={priceRange.text}
-          click={updateDisplayedConsoles}
-        />
-      );
-    }
-  );
+  const priceRangeOpts = priceRange.map(({ price, text }) => {
+    let isChecked = !!selectedPriceRanges.find(
+      (priceRange) => +priceRange === price
+    );
 
-  const conditions = ["new", "used"];
-  const conditonOptions = conditions.map((condition: string) => {
     return (
-      <Aux key={condition}>
-        <div>
-          <input
-            type="radio"
-            name={"condition"}
-            value={condition}
-            onChange={updateDisplayedConsoles}
-          />
-          <label>{condition}</label>
-        </div>
-      </Aux>
+      <div key={price}>
+        <InputCheckBox
+          key={price}
+          name={"priceRange"}
+          value={price}
+          click={updateDisplayedConsoles}
+          checked={isChecked}
+          className={classes["options__input"]}
+        />
+        <Label text={text} className={classes["options__label"]} />
+      </div>
     );
   });
 
   return (
-    <div className={classes["console-search-options"]}>
-      <h4 className={classes["console-search-options-title"]}>TYPE</h4>
-      <div className={classes["console-search-options-by-type"]}>
-        {consolesTypeOptions}
+    <div className={classes["options"]}>
+      <div>
+        <h4 className={classes["options__title"]}>Type</h4>
+        <div className={classes["options__options"]}>{typeOpts}</div>
       </div>
-      <h4 className={classes["console-search-options-title"]}>CONDITION</h4>
-      <div className={classes["console-search-options-by-condition"]}>
-        {conditonOptions}
+      <div>
+        <h4 className={classes["options__title"]}>Condition</h4>
+        <div className={classes["options__options"]}>{conditionOpts}</div>
       </div>
-      <h4 className={classes["console-search-options-title"]}>PRICE</h4>
-      <div className={classes["console-search-options-by-price"]}>
-        {priceRangeOptions}
+      <div>
+        <h4 className={classes["options__title"]}>Price</h4>
+        <div className={classes["options__options"]}>{priceRangeOpts}</div>
       </div>
     </div>
   );
