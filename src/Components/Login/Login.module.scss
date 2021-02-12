@@ -1,0 +1,149 @@
+@import "../../sass//main.scss";
+
+.login {
+  position: relative;
+  background-color: $color-yellow-dark;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  border: 0px black solid;
+
+  &__heading {
+    padding: 1rem;
+    background-color: $color-yellow-dark;
+  }
+
+  &__title {
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  &__exit {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+
+    &:hover {
+      color: $color-red-light-1;
+    }
+  }
+}
+
+.form {
+  padding: 0.5rem;
+  background-color: $color-white-1;
+
+  &__group {
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+  }
+
+  &__label,
+  &__input {
+    display: block;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+  }
+
+  &__input {
+    font-family: inherit;
+    padding: 0.5rem;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    transition: all 0.5s;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0rem 1rem 2rem 0rem rgba($color-black-1, 0.4);
+    }
+  }
+
+  &__submit {
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: none;
+    border: 1px solid black;
+    background: $color-yellow-dark;
+
+    &:hover {
+      color: white;
+      background: $color-yellow-dark-1;
+    }
+
+    &:disabled {
+      border: 1px solid #cccc;
+      background: rgba($color-red-light-1, 0.5);
+      color: rgb(243, 243, 243);
+      cursor: not-allowed;
+    }
+
+    &:disabled:hover {
+      background: rgba(255, 3, 3, 0.5);
+    }
+  }
+}
+
+.valid {
+  border-bottom: 1px rgb(0, 255, 0) solid;
+}
+
+.invalid {
+  border-bottom: 1px rgb(255, 0, 0) solid;
+}
+
+.register {
+  padding-top: 2rem;
+
+  &__label {
+    display: block;
+    width: 50%;
+    margin: auto;
+    margin-right: 0;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  &__btn {
+    display: block;
+    width: 50%;
+    margin: auto;
+    margin-right: 0;
+    margin-top: 0.8rem;
+    padding: 0.2rem 0;
+    border: 1px solid $color-black-1;
+    background-color: $color-yellow-dark;
+
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: $color-yellow-dark-1;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+label[for="forgotPassword"] {
+  display: block;
+  width: 80%;
+  text-align: left;
+  margin: auto;
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 12px;
+  color: rgb(159, 23, 41);
+  cursor: pointer;
+}

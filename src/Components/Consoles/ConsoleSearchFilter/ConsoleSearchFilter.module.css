@@ -7,17 +7,18 @@ select {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-start;
   border-bottom: 1px white solid;
+  padding: 0px;
   color: white;
 }
 
 .console-search-filter-title {
+  margin-left: 5px;
   font-family: Calibri;
   font-size: 20px;
   font-weight: 400;
-  margin-left: 5px;
 }
 
 .console-search-sort-options {
@@ -26,6 +27,7 @@ select {
 }
 
 .console-search-show-options {
+  margin-top: 0;
 }
 
 .console-search-sort-options label,
@@ -37,4 +39,20 @@ select {
 .console-search-sort-options select:focus,
 .console-search-show-options select:focus {
   outline: none;
+}
+
+@media (max-width: 650px) {
+  .console-search-filter {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .console-search-show-options {
+    margin-top: 0.5rem;
+  }
+
+  .console-search-sort-options {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

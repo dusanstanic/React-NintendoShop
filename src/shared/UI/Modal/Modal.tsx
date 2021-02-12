@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
+import { CSSTransition } from "react-transition-group";
 
-import classes from "./Modal.module.css";
+import classes from "./Modal.module.scss";
 
 import Aux from "../../../hoc/Auxiliary";
 import Backdrop from "../Backdrop/Backdrop";
@@ -10,17 +11,27 @@ interface PropsI {
   closeModal: Function;
 }
 
+const animationTiming = {
+  enter: 1000,
+  exit: 1000,
+};
+
 const Modal: FunctionComponent<PropsI> = ({ show, closeModal, children }) => {
-  let modalClasses = [classes["modal"]];
-
-  if (show) {
-    modalClasses.push(classes["showModal"]);
-  }
-
   return (
     <Aux>
       <Backdrop show={show} clicked={closeModal} />
-      <div className={modalClasses.join(" ")}>{children}</div>
+      <CSSTransition
+        in={show}
+        timeout={animationTiming}
+        classNames={{
+          enterActive: classes["showModal"],
+          exitActive: classes["hideModal"],
+        }}
+        mountOnEnter
+        unmountOnExit
+      >
+        <div className={classes["modal"]}>{children}</div>
+      </CSSTransition>
     </Aux>
   );
 };

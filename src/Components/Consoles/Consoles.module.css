@@ -3,30 +3,38 @@
   background: black;
   width: 75%;
   margin: auto;
-  /* height: 20rem; */
+  margin-bottom: 2rem;
 }
 
-.console-search-filter-container {
-}
+.consoles__search-options {
+  position: sticky;
+  top: 7rem;
 
-.console-games-container {
-  width: 85%;
-  margin: auto;
-  margin-right: 0;
-}
+  display: inline-block;
+  width: 20%;
+  padding-left: 5px;
 
-.console-search-options-container {
-  position: absolute;
-  top: 4rem;
-  left: 0.5rem;
-  width: 10%;
-  color: white;
+  vertical-align: top;
   text-align: left;
+  color: white;
 }
 
-@media (max-width: 28rem) {
-  .console-search-options-container {
-    left: 0rem;
-    top: 8rem;
+.consoles__consoles {
+  display: inline-block;
+  width: 80%;
+}
+
+@media (max-width: 650px) {
+  .consoles__consoles {
+    width: 100%;
+  }
+
+  .consoles__search-options {
+    text-align: center;
+    display: block;
+    position: relative;
+    width: 90%;
+    margin: auto;
+    top: 0;
   }
 }

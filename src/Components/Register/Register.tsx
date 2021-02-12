@@ -4,7 +4,6 @@ import React, {
   FunctionComponent,
   useEffect,
   useState,
-  MouseEvent,
 } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
@@ -364,180 +363,244 @@ const Register: FunctionComponent<PropsI> = (props) => {
 
   return (
     <div className={classes["register"]}>
-      <div className={classes["header"]}>
-        <h4>Registration</h4>
-        <button onClick={() => props.closeModal()}> X</button>
+      <div className={classes["register__header"]}>
+        <h3 className={classes["register__title"]}>Registration</h3>
+        <button
+          onClick={() => props.closeModal()}
+          className={classes["register__exit"]}
+        >
+          X
+        </button>
       </div>
-      <form onSubmit={register}>
-        <div className={classes["row"]}>
-          <div className={classes["column"]}>
-            <div className={classes["form-group"]}>
-              <label htmlFor="firstName">First Name</label>
+      <form onSubmit={register} className={classes["form"]}>
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="firstName" className={classes["form__label"]}>
+                First Name
+              </label>
               <input
                 type="text"
                 name={InputName.FIRST_NAME}
                 onBlur={registerHandler}
                 onChange={registerHandler}
                 value={enteredFirstName}
+                className={classes["form__input"]}
               />
               <Label errorMessages={firstNameInputErrorMessage} />
             </div>
           </div>
-          <div className={classes["column"]}>
-            <div className={classes["form-group"]}>
-              <label htmlFor="lastName">Last Name</label>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="lastName" className={classes["form__label"]}>
+                Last Name
+              </label>
               <input
                 type="text"
                 name={InputName.LAST_NAME}
                 onBlur={registerHandler}
                 onChange={registerHandler}
                 value={enteredLastName}
+                className={classes["form__input"]}
               />
               <Label errorMessages={lastNameInputErrorMessage} />
             </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name={InputName.EMAIL}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredEmail}
-            />
-            <Label errorMessages={emailInputErrorMessage} />
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="email" className={classes["form__label"]}>
+                Email
+              </label>
+              <input
+                type="text"
+                name={InputName.EMAIL}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredEmail}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={emailInputErrorMessage} />
+            </div>
+          </div>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="phoneNumber" className={classes["form__label"]}>
+                Phone Number
+              </label>
+              <input
+                type="text"
+                name={InputName.PHONE_NUMBER}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredPhoneNumber}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={phoneNumberInputErrorMessage} />
+            </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="phoneNumber">Phone Number</label>
-            <input
-              type="text"
-              name={InputName.PHONE_NUMBER}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredPhoneNumber}
-            />
-            <Label errorMessages={phoneNumberInputErrorMessage} />
-          </div>
-        </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="city">City</label>
-            {/* <input
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="city" className={classes["form__label"]}>
+                City
+              </label>
+              {/* <input
               type="text"
               name={InputName.CITY}
               onBlur={registerHandler}
               onChange={registerHandler}
               value={enteredCity}
             /> */}
-            <select
-              name={InputName.CITY}
-              onChange={registerHandler}
-              onFocus={registerHandler}
-            >
-              {cityOptions}
-            </select>
-            <Label errorMessages={cityInputErrorMessage} />
+              <select
+                name={InputName.CITY}
+                onChange={registerHandler}
+                onFocus={registerHandler}
+                className={classes["form__select"]}
+              >
+                {cityOptions}
+              </select>
+              <Label errorMessages={cityInputErrorMessage} />
+            </div>
+          </div>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="postalCode" className={classes["form__label"]}>
+                Postal Code
+              </label>
+              <input
+                type="text"
+                name={InputName.POSTAL_CODE}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredPostalCode}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={postalCodeInputErrorMessage} />
+            </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="postalCode">Postal Code</label>
-            <input
-              type="text"
-              name={InputName.POSTAL_CODE}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredPostalCode}
-            />
-            <Label errorMessages={postalCodeInputErrorMessage} />
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="street" className={classes["form__label"]}>
+                Street
+              </label>
+              <input
+                type="text"
+                name={InputName.STREET}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredStreet}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={streetInputErrorMessage} />
+            </div>
+          </div>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="streetNumber" className={classes["form__label"]}>
+                Street Number
+              </label>
+              <input
+                type="text"
+                name={InputName.STREET_NUMBER}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredStreetNumber}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={streetNumberInputErrorMessage} />
+            </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="street">Street</label>
-            <input
-              type="text"
-              name={InputName.STREET}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredStreet}
-            />
-            <Label errorMessages={streetInputErrorMessage} />
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="password" className={classes["form__label"]}>
+                Password
+              </label>
+              <input
+                type="password"
+                name={InputName.PASSWORD}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredPassword}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={passwordInputErrorMessage} />
+            </div>
+          </div>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label
+                htmlFor="confirmPassword"
+                className={classes["form__label"]}
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name={InputName.CONFIRM_PASSWORD}
+                onBlur={registerHandler}
+                onChange={registerHandler}
+                value={enteredConfirmPassword}
+                className={classes["form__input"]}
+              />
+              <Label errorMessages={confirmPasswordInputErrorMessage} />
+            </div>
           </div>
         </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="streetNumber">Street Number</label>
-            <input
-              type="text"
-              name={InputName.STREET_NUMBER}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredStreetNumber}
-            />
-            <Label errorMessages={streetNumberInputErrorMessage} />
-          </div>
-        </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name={InputName.PASSWORD}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredPassword}
-            />
-            <Label errorMessages={passwordInputErrorMessage} />
-          </div>
-        </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              name={InputName.CONFIRM_PASSWORD}
-              onBlur={registerHandler}
-              onChange={registerHandler}
-              value={enteredConfirmPassword}
-            />
-            <Label errorMessages={confirmPasswordInputErrorMessage} />
-          </div>
-        </div>
-        <div className={classes["column"]}>
-          <div className={classes["form-group"]}>
-            <label htmlFor="gender">Gender</label>
-            <input
-              type="radio"
-              value="M"
-              name={InputName.GENDER}
-              onChange={registerHandler}
-            />
-            <label htmlFor="genderType">Male</label>
-            <input
-              type="radio"
-              value="F"
-              name={InputName.GENDER}
-              onChange={registerHandler}
-            />
-            <label htmlFor="genderType">Female</label>
+        <div className={classes["form__row"]}>
+          <div className={classes["form__column"]}>
+            <div className={classes["form__group"]}>
+              <label htmlFor="gender" className={classes["form__label"]}>
+                Gender
+              </label>
+              <input
+                type="radio"
+                value="M"
+                name={InputName.GENDER}
+                onChange={registerHandler}
+                className={classes["form__input"]}
+              />
+              <label htmlFor="genderType" className={classes["form__label"]}>
+                Male
+              </label>
+              <input
+                type="radio"
+                value="F"
+                name={InputName.GENDER}
+                onChange={registerHandler}
+                className={classes["form__input"]}
+              />
+              <label htmlFor="genderType" className={classes["form__label"]}>
+                Female
+              </label>
+            </div>
           </div>
         </div>
         <div className={classes["submit"]}>
-          <button type="submit" disabled={!isValid}>
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={classes["submit__btn"]}
+          >
             Register
           </button>
         </div>
         <div className={classes["error-message"]}>{serverSideErrorMessage}</div>
         <div className={classes["login"]}>
-          <button onClick={() => props.showLoginForm()}>Login</button>
+          <button
+            onClick={() => props.showLoginForm()}
+            className={classes["login__btn"]}
+          >
+            Login &rarr;
+          </button>
         </div>
       </form>
-      <div className={classes["charmander"]}>We hope you a Merry Christmas</div>
     </div>
   );
 };

@@ -32,4 +32,23 @@ const renderErrorMessages = (errorMessages: string[]) => {
   return errorMessagesJSX;
 };
 
+interface LabelInputProps {
+  text: string;
+  htmlFor?: string;
+  className?: string;
+}
+
+const LabelInput: FunctionComponent<LabelInputProps> = ({
+  text,
+  className,
+  htmlFor,
+}) => {
+  return (
+    <label className={className} htmlFor={htmlFor}>
+      {text}
+    </label>
+  );
+};
+
 export default Label;
+export { LabelInput };

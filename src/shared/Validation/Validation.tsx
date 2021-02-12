@@ -18,7 +18,7 @@ const checkValidation = (requierments: string[], inputValue: string) => {
 
   if (requierments.includes(validationOptions.REQUIRED)) {
     if (inputValue.length === 0) {
-      errorMessage.push("*Field is required");
+      errorMessage.push("* Field is required");
       return { isInputValid, errorMessage };
     }
   }

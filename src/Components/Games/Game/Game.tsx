@@ -9,7 +9,7 @@ import GamesM from "../../../models/GameM";
 const Game = (props: { game: GamesM; showGame: any }) => {
   return (
     <Aux>
-      <div className={classes["product__tile"]}>
+      <div className={classes["product"]}>
         <div className={classes["product__wrapper"]}>
           <img
             alt="Nintendo Product"
