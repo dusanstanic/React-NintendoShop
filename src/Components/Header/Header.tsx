@@ -96,7 +96,6 @@ const Header = (props: PropsI) => {
 
   const hideModal = () => {
     setShowModal(false);
-    setUserForm(<></>);
   };
 
   const showUserModal = (type: FormType) => {
@@ -115,6 +114,7 @@ const Header = (props: PropsI) => {
         />
       );
     }
+
     setShowModal(true);
   };
 
