@@ -35,7 +35,7 @@ class ConsoleMain extends Component<PropsI, { bannerImage: string }> {
     return (
       <Aux>
         <Consoles {...this.props} />
-        <div className={classes["banner-wrapper"]}>
+        {/* <div className={classes["banner-wrapper"]}>
           <div className={classes["banner-info"]}>Details ...</div>
           <img
             className={classes["banner"]}
@@ -44,7 +44,7 @@ class ConsoleMain extends Component<PropsI, { bannerImage: string }> {
             onMouseEnter={this.enterBannerHandler}
             onMouseLeave={this.leaveBannerHandler}
           />
-        </div>
+        </div> */}
       </Aux>
     );
   }
