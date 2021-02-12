@@ -1,177 +1,165 @@
 @import "./../_variables.scss";
 @import "Register1.scss";
+@import "../../sass//main.scss";
 
-.register-main {
-  margin: auto;
-  width: 100%;
-  max-width: 700px;
-  margin: auto;
-  background-color: /*$main-color*/ lighten(map-get($colors, main), 0%);
-  border: $border-default;
-}
+// .register-main {
+//   background-color: /*$main-color*/ lighten(map-get($colors, main), 0%);
+//   border: $border-default;
+// }
 
 .register {
-  @extend .register-main;
+  // @extend .register-main;
+  background-color: $color-yellow-dark;
 
-  .header {
+  &__header {
     position: relative;
     text-align: center;
     text-transform: uppercase;
+  }
 
-    h4 {
-      margin: 0;
-      padding: 1rem;
-      font-size: 18px;
-      text-align: center;
-    }
+  &__title {
+    padding: 1rem;
+    text-align: center;
+  }
 
-    button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: transparent;
-      border: 0px solid black;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
+  &__exit {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    background: transparent;
+    border: 0px solid black;
+    font-size: 1rem;
+
+    &:hover {
+      color: $color-red-light-1;
     }
   }
 
-  form {
+  // @media (min-width: 40rem) {
+  //   background-color: rgb(15, 165, 165);
+  // }
+}
+
+.form {
+  padding: 0.5rem;
+  background: $color-white-1;
+
+  &__row {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  &__column {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+    padding: 0 0.5rem;
+  }
+
+  &__group {
+  }
+
+  &__label,
+  &__input {
+    display: block;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: $color-grey-1;
+  }
+
+  &__input[type="text"],
+  &__input[type="password"] {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid #cccc;
+    border-radius: 5px;
+    font-family: inherit;
+    transition: all 0.5s;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0rem 1rem 2rem 0rem rgba($color-black-1, 0.4);
+    }
+  }
+
+  &__select {
+    width: 100%;
     padding: 0.5rem;
-    background: white;
+    border: 1px solid #cccc;
 
-    .row {
-      display: block;
-    }
-
-    .column {
-      vertical-align: top;
-      display: inline-block;
-      width: 50%;
-      padding: 0 10px;
-
-      .form-group {
-        margin-bottom: 15px;
-
-        label {
-          font: {
-            size: 0.9rem;
-            weight: 400;
-          }
-          color: #4a4b5c;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-          height: 34px;
-          width: 100%;
-          border: 1px solid #cccc;
-          border-radius: 5px;
-          font-size: 14px;
-          color: #555;
-        }
-
-        select {
-          width: 100%;
-          height: 34px;
-          border: 1px solid #cccc;
-          color: black;
-          background: white;
-
-          &:focus {
-            outline: none;
-          }
-        }
-
-        input[type="text"],
-        label {
-          display: block;
-        }
-
-        input:focus {
-          outline: none;
-        }
-
-        input[type="radio"] {
-          margin: 0;
-        }
-
-        label[for="genderType"] {
-          padding: 5px;
-          display: inline-block;
-        }
-      }
+    &:focus {
+      outline: none;
     }
   }
 
-  .submit {
-    text-align: center;
+  &__input[type="radio"] {
+    margin: 0;
+    display: inline-block;
+  }
 
-    button {
-      height: $size-default * 2;
-      width: 50%;
-      background: rgb(0, 0, 0);
-      font: {
-        size: 12px;
-        weight: 600;
-      }
-      color: white;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
+  &__label[for="genderType"] {
+    padding: 5px;
+    display: inline-block;
+  }
+}
 
-    button:hover {
-      background: white;
+.submit {
+  text-align: center;
+
+  &__btn {
+    width: 50%;
+    border: 1px solid black;
+    padding: 0.5rem;
+    background-color: $color-yellow-dark;
+    font-size: 0.8rem;
+    color: black;
+
+    &:hover {
+      background: $color-yellow-dark-1;
       color: black;
     }
 
-    button:disabled {
-      cursor: not-allowed;
-      background: rgba(172, 24, 24, 0.5);
-      color: rgb(255, 255, 255);
-    }
-
-    button:disabled:hover {
-      color: rgba(140, 40, 40, 0.5);
+    &:disabled {
+      background: rgba(255, 0, 0, 0.5);
+      color: rgb(243, 243, 243);
+      border: 1px solid #cccc;
       cursor: not-allowed;
     }
-  }
 
-  .error-message {
-    margin-top: 1rem;
-    font-weight: bold;
-    color: red;
-    text-align: center;
+    &:disabled:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
   }
+}
 
-  .login {
-    width: 70%;
+.error-message {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.login {
+  &__btn {
+    display: block;
+    width: 40%;
     margin: auto;
-    text-align: center;
-    height: 1.5rem;
+    margin-right: 0;
+    padding: 0.2rem;
+    border: 1px solid black;
+    background-color: $color-yellow-dark;
+    color: black;
+    transition: all 0.5s;
 
-    button {
-      width: 100%;
-      height: 100%;
-      background-color: $main-color;
-      border: 1px solid black;
-      color: black;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.5s;
-
-      &:hover {
-        background-color: #ffde67;
-      }
-
-      &:focus {
-        outline: none;
-      }
+    &:hover {
+      background-color: #ffde67;
     }
-  }
 
-  @media (min-width: 40rem) {
-    background-color: rgb(15, 165, 165);
+    &:focus {
+      outline: none;
+    }
   }
 }
