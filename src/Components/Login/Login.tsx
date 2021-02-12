@@ -2,12 +2,17 @@ import React, { Component, ChangeEvent, FormEvent } from "react";
 import { withRouter, RouteComponentProps, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import classes from "./Login.module.css";
+import classes from "./Login.module.scss";
 
 import * as AuthActions from "../../store/actions/index";
 
+import checkValidation, {
+  validationOptions,
+} from "../../shared/Validation/Validation";
+
 import Spinner from "../../shared/UI/Spinner/Spinner";
 import Error from "../../shared/UI/Error/Error";
+import { Input } from "../../shared/UI/Input/Input";
 
 interface PropsI extends RouteComponentProps<{}> {
   closeModal: Function;
@@ -72,28 +77,35 @@ class Login extends Component<PropsI, StateI> {
   };
 
   loginHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const {
-      name: inputName,
-      value: inputValue,
-      validity: { valid: isInputValid },
-    } = event.target;
+    const { name: inputName, value: inputValue } = event.target;
+    let validation;
 
     if (inputName === InputName.EMAIL) {
-      this.setState({ isEmailValid: isInputValid });
-      this.setState({ email: inputValue }, () => {
-        this.isValid();
-      });
+      validation = checkValidation(
+        [validationOptions.REQUIRED, validationOptions.TEXT],
+        inputValue
+      );
+
+      this.setState(
+        { isEmailValid: validation.isInputValid, email: inputValue },
+        () => {
+          this.isValid();
+        }
+      );
     }
+
     if (inputName === InputName.PASSWORD) {
-      const passwordRegex = /(?=.*?[a-z]).{8,}/;
-      if (inputValue.match(passwordRegex)) {
-        this.setState({ isPasswordValid: true });
-      } else {
-        this.setState({ isPasswordValid: false });
-      }
-      this.setState({ password: inputValue }, () => {
-        this.isValid();
-      });
+      validation = checkValidation(
+        [validationOptions.REQUIRED, validationOptions.PASSWORD],
+        inputValue
+      );
+
+      this.setState(
+        { isPasswordValid: validation.isInputValid, password: inputValue },
+        () => {
+          this.isValid();
+        }
+      );
     }
   };
 
@@ -109,60 +121,87 @@ class Login extends Component<PropsI, StateI> {
     if (this.props.isAuthenticated) {
       return <Redirect to="/home" />;
     }
+    console.log(this.state.isEmailValid);
 
     let emailValid = "";
     let passwordValid = "";
+
     if (this.state.isEmailValid) {
       emailValid = classes["valid-input"];
     }
+
     if (this.state.isPasswordValid) {
       passwordValid = classes["valid-input"];
     }
+
     return (
       <div className={classes["login"]}>
-        <div className={classes["login-title"]}>
-          <h1>Login</h1>
+        <div className={classes["login__heading"]}>
+          <h3 className={classes["login__title"]}>Login</h3>
+          <button
+            onClick={() => this.props.closeModal()}
+            className={classes["login__exit"]}
+          >
+            X
+          </button>
         </div>
+
         <Spinner showSpinner={this.props.loading} />
-        <form onSubmit={this.login}>
-          <div className={classes["login-form-group"]}>
-            <label htmlFor="username">Email</label>
-            <input
-              className={emailValid}
-              type="email"
+
+        <form className={classes["form"]} onSubmit={this.login}>
+          <div className={classes["form__group"]}>
+            <label className={classes["form__label"]} htmlFor="email">
+              Email
+            </label>
+            <Input
+              className={classes["form__input"]}
               placeholder="Email"
+              type="text"
               name={InputName.EMAIL}
               value={this.state.email}
-              onChange={this.loginHandler}
+              change={this.loginHandler}
+              isValid={this.state.isEmailValid}
+              validClassName={classes["valid"]}
+              invalidClassName={classes["invalid"]}
             />
           </div>
-          <div className={classes["login-form-group"]}>
-            <label htmlFor="password">Password</label>
-            <input
-              className={passwordValid}
+          <div className={classes["form__group"]}>
+            <label className={classes["form__label"]} htmlFor="password">
+              Password
+            </label>
+            <Input
+              className={classes["form__input"]}
               type="text"
               placeholder="Password"
               name={InputName.PASSWORD}
               value={this.state.password}
-              onChange={this.loginHandler}
+              change={this.loginHandler}
+              isValid={this.state.isPasswordValid}
+              validClassName={classes["valid"]}
+              invalidClassName={classes["invalid"]}
             />
           </div>
+
           <label htmlFor="forgotPassword">Forgot Password ?</label>
+
           <button
             type="submit"
             disabled={!this.state.isValid}
-            className={classes["login-submit-btn"]}
+            className={classes["form__submit"]}
           >
             Login
           </button>
+
           <Error errorMessage={this.props.error} />
-          <div style={{ marginBottom: "0px", paddingBottom: "1rem" }}>
-            <label htmlFor="newUser">New User ?</label>
+          <div className={classes["register"]}>
+            <label htmlFor="newUser" className={classes["register__label"]}>
+              New User ?
+            </label>
             <button
-              className={classes["login-register-btn"]}
+              className={classes["register__btn"]}
               onClick={() => this.props.showRegisterForm()}
             >
-              Register
+              Register &rarr;
             </button>
           </div>
         </form>
