@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import classes from "./Console.module.css";
+import classes from "./Console.module.scss";
 
 import ConsoleM from "../../../models/ConsoleM";
 import Aux from "../../../hoc/Auxiliary";
@@ -19,7 +19,7 @@ const Console = (props: PropsI) => {
   const gameConsole = props.console;
   let newBanner: JSX.Element = <Aux>{null}</Aux>;
   if (gameConsole.type === "Switch") {
-    newBanner = <div className={classes["console-banner-new"]}>New</div>;
+    newBanner = <div className={classes["product__banner--new"]}>New</div>;
   }
 
   const showConsoleQuickView = () => {
@@ -41,34 +41,38 @@ const Console = (props: PropsI) => {
       <Modal show={showModal} closeModal={closeConsoleQuickView}>
         {quickView}
       </Modal>
-      <div className={classes["console-tile"]}>
-        <div className={classes["console-image-wrapper"]}>
+      <div className={classes["product"]}>
+        <div className={classes["product__wrapper"]}>
           <img
-            className={classes["console-image"]}
+            className={classes["product__image"]}
             alt="Nintendo Console"
             src={gameConsole.image}
           />
-          <div className={classes["console-caption-icons"]}>
+          <div className={classes["caption"]}>
             <div
-              className={classes["console-caption-icon-show"]}
+              className={`${classes["caption__icon"]} ${classes["caption__icon--show"]}`}
               // onClick={showConsoleQuickView}
               onClick={setModalQuickView}
             ></div>
-            <div className={classes["console-caption-icon-compare"]}></div>
-            <div className={classes["console-caption-icon-favorite"]}></div>
+            <div
+              className={`${classes["caption__icon"]} ${classes["caption__icon--compare"]}`}
+            ></div>
+            <div
+              className={`${classes["caption__icon"]} ${classes["caption__icon--favorite"]}`}
+            ></div>
           </div>
         </div>
         <img
-          className={classes["console-logo"]}
+          className={classes["product__logo"]}
           alt="logo"
           src={gameConsole.logo}
         />
-        <h4 className={classes["console-title"]}>{gameConsole.title}</h4>
-        <div className={classes["console-price-item"]}>
-          <div className={classes["console-price"]}>
+        <h4 className={classes["product__title"]}>{gameConsole.title}</h4>
+        <div className={classes["price-item"]}>
+          <div className={classes["price-item__price"]}>
             {gameConsole.price} RSD
           </div>
-          <button className={classes["console-add-to-cart-btn"]} />
+          <button className={classes["price-item__cart"]} />
         </div>
         {newBanner}
       </div>
