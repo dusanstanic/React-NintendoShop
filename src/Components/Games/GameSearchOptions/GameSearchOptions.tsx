@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./GameSearchOptions.module.scss";
 
-import GameM from "../../../models/GameM";
+import GameM from "../../../shared/models/GameM";
 
 import Aux from "../../../hoc/Auxiliary";
 import { InputCheckBox } from "../../../shared/UI/Input/Input";

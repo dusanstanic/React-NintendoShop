@@ -1,6 +1,6 @@
 import * as actionTypes from "./ActionTypes/consoleDisplayActionTypes";
 
-import Console from "../../models/ConsoleM";
+import Console from "../../shared/models/ConsoleM";
 
 export const set_selected_consoles = (consoles: (Console | undefined)[]) => {
   return {

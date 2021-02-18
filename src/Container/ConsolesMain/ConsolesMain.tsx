@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./ConsolesMain.module.css";
 
-import ConsoleM from "../../models/ConsoleM";
+import ConsoleM from "../../shared/models/ConsoleM";
 
 import Aux from "../../hoc/Auxiliary";
 import Consoles from "../../Components/Consoles/Consoles";

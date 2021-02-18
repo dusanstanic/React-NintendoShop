@@ -2,8 +2,8 @@ import * as actionTypes from "../actions/ActionTypes/gameDataActionTypes";
 import { ActionTypes } from "../actions/gameData";
 import { updateObject } from "./utility";
 
-import Game from "../../models/GameM";
-import { GenreM } from "../../models/GenreM";
+import Game from "../../shared/models/GameM";
+import { GenreM } from "../../shared/models/GenreM";
 
 export interface GameDataState {
   games: Game[];

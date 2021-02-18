@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./ConsoleQuickView.module.css";
 
-import ConsoleM from "../../models/ConsoleM";
+import ConsoleM from "../../shared/models/ConsoleM";
 
 const ConsoleQuickView = (props: { console: ConsoleM }) => {
   return (

@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/ActionTypes/consoleDataActionTypes";
 import { ActionTypes } from "../actions/consoleData";
 import { updateObject } from "./utility";
 
-import Console from "../../models/ConsoleM";
+import Console from "../../shared/models/ConsoleM";
 
 export interface ConsoleDataState {
   consoles: Console[];

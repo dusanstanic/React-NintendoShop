@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import classes from "./UserPanelInfo.module.css";
 
 import Aux from "../../../hoc/Auxiliary";
-import { UserInfo } from "../../../models/UserInfo";
+import { UserInfo } from "../../../shared/models/UserInfo";
 
 interface PropsI {
   userRole: string;

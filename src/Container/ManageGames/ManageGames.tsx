@@ -3,10 +3,10 @@ import { Route, NavLink, withRouter } from "react-router-dom";
 
 import classes from "./ManageGames.module.css";
 
-import RouterProps from "../../models/Route";
-import GameM from "../../models/GameM";
+import RouterProps from "../../shared/models/Route";
+import GameM from "../../shared/models/GameM";
 
-import * as GameService from "../../service/GamesService";
+import * as GameService from "../../shared/service/GamesService";
 
 import Aux from "../../hoc/Auxiliary";
 import GameForm from "../../Components/GameForm/GameForm";

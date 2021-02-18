@@ -1,9 +1,9 @@
 import * as actionTypes from "./ActionTypes/gameDataActionTypes";
 
-import GameM from "../../models/GameM";
-import { GenreM } from "../../models/GenreM";
+import GameM from "../../shared/models/GameM";
+import { GenreM } from "../../shared/models/GenreM";
 
-import * as GameService from "../../service/GamesService";
+import * as GameService from "../../shared/service/GamesService";
 
 export const set_games = (games: GameM[]) => {
   return {

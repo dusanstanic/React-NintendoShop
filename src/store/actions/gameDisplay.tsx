@@ -1,6 +1,6 @@
 import * as actionTypes from "./ActionTypes/gameDisplayActionTypes";
 
-import GameM from "../../models/GameM";
+import GameM from "../../shared/models/GameM";
 
 export const set_selected_pgRatings = (selectedPgRatings: string[]) => {
   return {

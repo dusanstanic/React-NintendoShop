@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import classes from "./Console.module.scss";
 
-import ConsoleM from "../../../models/ConsoleM";
+import ConsoleM from "../../../shared/models/ConsoleM";
 import Aux from "../../../hoc/Auxiliary";
 import Modal from "../../../shared/UI/Modal/ModalConsole/Modal";
 

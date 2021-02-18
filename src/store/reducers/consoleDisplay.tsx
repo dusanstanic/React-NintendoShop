@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/ActionTypes/consoleDisplayActionTypes";
 import { ConsoleDisplayActions } from "../actions/consoleDisplay";
 import { updateObject } from "./utility";
 
-import Console from "./../../models/ConsoleM";
+import Console from "../../shared/models/ConsoleM";
 
 export interface ConsoleDisplayState {
   selectedConsoles: Console[];

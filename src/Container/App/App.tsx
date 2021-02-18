@@ -6,7 +6,7 @@ import "./App.css";
 import * as gameDataActions from "../../store/actions/index";
 import * as gameDisplayActions from "../../store/actions/index";
 
-import GameM from "../../models/GameM";
+import GameM from "../../shared/models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 import Games from "../../Components/Games/Games";

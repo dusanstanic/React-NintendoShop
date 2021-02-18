@@ -3,7 +3,7 @@ import classes from "./Games.module.scss";
 import { Route } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 
-import GameM from "../../models/GameM";
+import GameM from "../../shared/models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 

@@ -1,6 +1,6 @@
 import * as actionTypes from "./ActionTypes/authentication";
-import * as CustomerService from "../../service/CustomerService";
-import { UserInfo } from "../../models/UserInfo";
+import * as CustomerService from "../../shared/service/CustomerService";
+import { UserInfo } from "../../shared/models/UserInfo";
 
 export const authCheckState = () => {
   return async (dispatch: any) => {

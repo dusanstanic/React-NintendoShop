@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import classes from "./ConsoleSearchOptions.module.scss";
 
-import ConsoleM from "../../../models/ConsoleM";
+import ConsoleM from "../../../shared/models/ConsoleM";
 import * as consoleDisplayActions from "../../../store/actions/index";
 
 import { InputCheckBox1 as InputCheckBox } from "../../../shared/UI/Input/Input";

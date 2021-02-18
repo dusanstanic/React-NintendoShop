@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/ActionTypes/gameDisplayActionTypes";
 import { GameDisplayActionTypes } from "../actions/gameDisplay";
 
-import Game from "../../models/GameM";
+import Game from "../../shared/models/GameM";
 import { updateObject } from "./utility";
 
 export interface GameDisplayState {

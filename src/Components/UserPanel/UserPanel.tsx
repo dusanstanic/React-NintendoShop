@@ -12,10 +12,10 @@ import classes from "./UserPanel.module.scss";
 import * as actionTypes from "../../store/actions/index";
 
 import UserPanelInfo from "./UserPanelInfo/UserPanelInfo";
-import { UserInfo } from "../../models/UserInfo";
+import { UserInfo } from "../../shared/models/UserInfo";
 import UserPanelUpdateInfo from "./UserPanelUpdateInfo/UserPanelUpdateInfo";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import { customerAxios } from "../../service/axios-main";
+import { customerAxios } from "../../shared/service/axios-main";
 import didMount from "../../shared/customHooks/didMount";
 
 interface PropsI extends RouteComponentProps {

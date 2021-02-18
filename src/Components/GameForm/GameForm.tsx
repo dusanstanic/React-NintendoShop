@@ -4,13 +4,13 @@ import "./GameForm.css";
 
 import Aux from "../../hoc/Auxiliary";
 
-import { GenreM } from "../../models/GenreM";
-import GameM from "../../models/GameM";
-import ConsoleM from "../../models/ConsoleM";
+import { GenreM } from "../../shared/models/GenreM";
+import GameM from "../../shared/models/GameM";
+import ConsoleM from "../../shared/models/ConsoleM";
 
-import * as GenreService from "../../service/GenreService";
-import * as GameService from "../../service/GamesService";
-import * as ConsoleService from "../../service/ConsoleService";
+import * as GenreService from "../../shared/service/GenreService";
+import * as GameService from "../../shared/service/GamesService";
+import * as ConsoleService from "../../shared/service/ConsoleService";
 
 import Modal from "../../shared/UI/Modal/Modal";
 import PostGameSummary from "../PostGameSummary/PostGameSummary";

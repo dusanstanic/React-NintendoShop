@@ -8,11 +8,11 @@ import React, {
 
 import classes from "./UserPanelUpdateInfo.module.css";
 
-import * as CustomerService from "../../../service/CustomerService";
+import * as CustomerService from "../../../shared/service/CustomerService";
 
 import Aux from "../../../hoc/Auxiliary";
-import { UserInfo } from "../../../models/UserInfo";
-import { User } from "../../../models/User";
+import { UserInfo } from "../../../shared/models/UserInfo";
+import { User } from "../../../shared/models/User";
 
 enum InputName {
   FIRST_NAME = "firstName",
