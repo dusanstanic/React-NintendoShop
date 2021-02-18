@@ -4,7 +4,7 @@ import classes from "./Game.module.scss";
 
 import Aux from "../../../hoc/Auxiliary";
 
-import GamesM from "../../../models/GameM";
+import GamesM from "../../../shared/models/GameM";
 
 const Game = (props: { game: GamesM; showGame: any }) => {
   return (

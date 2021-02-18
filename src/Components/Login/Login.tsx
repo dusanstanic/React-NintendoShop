@@ -82,7 +82,7 @@ class Login extends Component<PropsI, StateI> {
 
     if (inputName === InputName.EMAIL) {
       validation = checkValidation(
-        [validationOptions.REQUIRED, validationOptions.TEXT],
+        [validationOptions.REQUIRED, validationOptions.EMAIL],
         inputValue
       );
 

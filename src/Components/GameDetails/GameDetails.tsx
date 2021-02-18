@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import classes from "./GameDetails.module.css";
 
-import * as GameService from "../../service/GamesService";
+import * as GameService from "../../shared/service/GamesService";
 
-import GameM from "../../models/GameM";
+import GameM from "../../shared/models/GameM";
 
 import Aux from "../../hoc/Auxiliary";
 import Backdrop from "../../shared/UI/Backdrop/Backdrop";

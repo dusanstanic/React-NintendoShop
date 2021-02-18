@@ -5,7 +5,7 @@ import Aux from "../../hoc/Auxiliary";
 
 import classes from "./SearchResult.module.css";
 
-import Product from "../../models/Product";
+import Product from "../../shared/models/Product";
 
 interface PropsI extends RouteComponentProps {
   location: {

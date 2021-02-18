@@ -13,8 +13,8 @@ import classes from "./Register.module.scss";
 import checkValidation, {
   validationOptions,
 } from "../../shared/Validation/Validation";
-import { Customer } from ".././../models/CustomerM";
-import * as CustomerService from "../../service/CustomerService";
+import { Customer } from "../../shared/models/CustomerM";
+import * as CustomerService from "../../shared/service/CustomerService";
 import * as AuthActions from "../../store/actions/index";
 
 import Label from "../../shared/UI/Label/Label";

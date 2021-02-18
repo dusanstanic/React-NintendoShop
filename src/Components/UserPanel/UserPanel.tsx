@@ -7,15 +7,15 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 
-import classes from "./UserPanel.module.css";
+import classes from "./UserPanel.module.scss";
 
 import * as actionTypes from "../../store/actions/index";
 
 import UserPanelInfo from "./UserPanelInfo/UserPanelInfo";
-import { UserInfo } from "../../models/UserInfo";
+import { UserInfo } from "../../shared/models/UserInfo";
 import UserPanelUpdateInfo from "./UserPanelUpdateInfo/UserPanelUpdateInfo";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import { customerAxios } from "../../service/axios-main";
+import { customerAxios } from "../../shared/service/axios-main";
 import didMount from "../../shared/customHooks/didMount";
 
 interface PropsI extends RouteComponentProps {
@@ -53,14 +53,14 @@ const UserPanel: FunctionComponent<PropsI> = ({
   return (
     <div className={classes.userPanel}>
       {redirect}
-      <div className={classes["userPanel-header"]}>
+      <div className={classes["userPanel__header"]}>
         <div className={classes["column"]}>
           <img
             src={"http://127.0.0.1:8887/user.png"}
-            style={{ verticalAlign: "middle" }}
             alt="user"
+            className={classes["column__img"]}
           />
-          <div style={{ display: "inline-block", verticalAlign: "middle" }}>
+          <div className={classes["column__info--user"]}>
             {userInfo?.firstName + " " + userInfo?.lastName}
           </div>
         </div>
@@ -80,46 +80,46 @@ const UserPanel: FunctionComponent<PropsI> = ({
           <div>Deactivate</div>
         </div>
       </div>
-      <div className={classes["userPanel-body"]}>
-        <div className={classes["userPanel-body-options"]}>
-          <div className={classes["userPanel-body-option"]}>
+      <div className={classes["userPanel__body"]}>
+        <div className={classes["options"]}>
+          <div className={classes["options__opt"]}>
             <h2>User Panel</h2>
           </div>
-          <div className={classes["userPanel-body-option"]}>
+          <div className={classes["options__opt"]}>
             <NavLink
               to={{ pathname: match.url + "/userPanelInfo" }}
-              className={classes["userPanel-body-option__link"]}
+              className={classes["options__link"]}
               ref={userInfoBtn}
             >
               User information
             </NavLink>
           </div>
-          <div className={classes["userPanel-body-option"]}>
+          <div className={classes["options__opt"]}>
             <NavLink
               to={{ pathname: match.url + "/userPanelUpdateInfo" }}
-              className={classes["userPanel-body-option__link"]}
+              className={classes["options__link"]}
             >
               Update information
             </NavLink>
           </div>
-          <div className={classes["userPanel-body-option"]}>
+          <div className={classes["options__opt"]}>
             <NavLink
               to={{ pathname: match.url + "/wishList" }}
-              className={classes["userPanel-body-option__link"]}
+              className={classes["options__link"]}
             >
               WishList
             </NavLink>
           </div>
-          <div className={classes["userPanel-body-option"]}>
+          <div className={classes["options__opt"]}>
             <NavLink
               to={{ pathname: "/userPanel/wishList" }}
-              className={classes["userPanel-body-option__link"]}
+              className={classes["options__link"]}
             >
               Package Status
             </NavLink>
           </div>
         </div>
-        <div className={classes["userPanel-body-info"]}>
+        <div className={classes["userPanel__body-routes"]}>
           <Route
             path={match.url + "/userPanelInfo"}
             render={() => (

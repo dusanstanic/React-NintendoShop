@@ -16,8 +16,8 @@ import validation, {
   validationOptions,
 } from "../../../shared/Validation/Validation";
 
-import Console from "../../../models/ConsoleM";
-import * as ConsoleService from "../../../service/ConsoleService";
+import Console from "../../../shared/models/ConsoleM";
+import * as ConsoleService from "../../../shared/service/ConsoleService";
 import checkValidation from "../../../shared/Validation/Validation";
 import Label from "../../../shared/UI/Label/Label";
 

@@ -1,4 +1,4 @@
-import { UserInfo } from "../../models/UserInfo";
+import { UserInfo } from "../../shared/models/UserInfo";
 import * as actionTypes from "../actions/ActionTypes/authentication";
 import { ActionTypes } from "../actions/authentication";
 import { updateObject } from "./utility";

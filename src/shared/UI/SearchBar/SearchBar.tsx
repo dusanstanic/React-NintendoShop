@@ -8,8 +8,8 @@ import React, {
 
 import classes from "./SearchBar.module.css";
 
-import * as GameService from "../../../service/GamesService";
-import * as ConsoleService from "../../../service/ConsoleService";
+import * as GameService from "../../service/GamesService";
+import * as ConsoleService from "../../service/ConsoleService";
 import { NavLink } from "react-router-dom";
 
 interface PropsI {

@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router-dom";
 
 import classes from "./Consoles.module.scss";
 
-import ConsoleM from "../../models/ConsoleM";
+import ConsoleM from "../../shared/models/ConsoleM";
 
 import Aux from "../../hoc/Auxiliary";
 import Console from "./Console/Console";

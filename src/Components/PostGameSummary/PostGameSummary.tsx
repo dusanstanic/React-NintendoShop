@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./PostGameSummary.module.css";
 
-import GameM from "../../models/GameM";
+import GameM from "../../shared/models/GameM";
 
 const PostGameSummary = (props: { game?: GameM }) => {
   let game: GameM | undefined = props.game;
