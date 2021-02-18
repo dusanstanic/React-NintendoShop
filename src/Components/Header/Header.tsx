@@ -17,13 +17,13 @@ import {
 import classes from "./Header.module.css";
 import classes1 from "./Header.module.scss";
 
-import GameM from "../../models/GameM";
-import { GenreM } from "../../models/GenreM";
-import ConsoleM from "../../models/ConsoleM";
+import GameM from "../../shared/models/GameM";
+import { GenreM } from "../../shared/models/GenreM";
+import ConsoleM from "../../shared/models/ConsoleM";
 
-import * as GameService from "../../service/GamesService";
-import * as GenreService from "../../service/GenreService";
-import * as ConsoleService from "../../service/ConsoleService";
+import * as GameService from "../../shared/service/GamesService";
+import * as GenreService from "../../shared/service/GenreService";
+import * as ConsoleService from "../../shared/service/ConsoleService";
 
 import Aux from "../../hoc/Auxiliary";
 
@@ -39,7 +39,7 @@ import UserPanel from "../UserPanel/UserPanel";
 import Home from "../../Container/Home/Home";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Logout from "../Logout/Logout";
-import { UserInfo } from "../../models/UserInfo";
+import { UserInfo } from "../../shared/models/UserInfo";
 import ManageInventory from "../../Container/ManageInventory/ManageInventory";
 import SearchBar from "../../shared/UI/SearchBar/SearchBar";
 import SearchResult from "../../Container/SearchResult/SearchResult";
@@ -64,7 +64,7 @@ enum FormType {
 }
 
 const Header = (props: PropsI) => {
-  const [userForm, setUserForm] = useState<JSX.Element>();
+  const [isShowLogin, setIsShowLogin] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   const [isSearchClicked, setIsSearchClicked] = useState(false);
@@ -100,19 +100,9 @@ const Header = (props: PropsI) => {
 
   const showUserModal = (type: FormType) => {
     if (type === FormType.LOGIN) {
-      setUserForm(
-        <Login
-          closeModal={hideModal}
-          showRegisterForm={() => showUserModal(FormType.REGISTER)}
-        />
-      );
+      setIsShowLogin(true);
     } else {
-      setUserForm(
-        <Register
-          closeModal={hideModal}
-          showLoginForm={() => showUserModal(FormType.LOGIN)}
-        />
-      );
+      setIsShowLogin(false);
     }
 
     setShowModal(true);
@@ -174,12 +164,22 @@ const Header = (props: PropsI) => {
       routers.push(<Route path="/manageGames" component={ManageGames} />);
     }
   }
-
+  console.log(classes1);
   return (
     <Aux>
       <div className={classes1["background"]}></div>
       <Modal show={showModal} closeModal={hideModal}>
-        {userForm}
+        {isShowLogin ? (
+          <Login
+            closeModal={hideModal}
+            showRegisterForm={() => showUserModal(FormType.REGISTER)}
+          />
+        ) : (
+          <Register
+            closeModal={hideModal}
+            showLoginForm={() => showUserModal(FormType.LOGIN)}
+          />
+        )}
       </Modal>
 
       <header className={classes1["header"]}>
@@ -210,6 +210,10 @@ const Header = (props: PropsI) => {
                   >
                     <FaShoppingBag className={classes1["nav__image"]} />
                     <span className={classes1["nav__info--quantity"]}>0</span>
+                    {/* <div className={classes1["product"]}>
+                      <div>Mario Party</div>
+                      <div>Image</div>
+                    </div> */}
                   </li>
                 </ul>
               </nav>
