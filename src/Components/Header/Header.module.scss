@@ -71,6 +71,7 @@
   }
 
   &__item--cart {
+    position: relative;
     background: $color-yellow-dark;
     color: black;
     border-radius: 5px;
@@ -119,6 +120,21 @@
     display: block;
   }
 }
+
+.nav__nav .product {
+  width: 25rem;
+  height: 5rem;
+  top: 100%;
+  right: 0;
+  color: red;
+  position: absolute;
+  z-index: 100;
+  background: white;
+}
+
+// .product {
+//   position: absolute;
+// }
 
 .mobile-button {
   display: block;
