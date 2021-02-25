@@ -43,42 +43,37 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
   };
 
   const updateDisplayedGames = (event: ChangeEvent<HTMLInputElement>) => {
-    let selectedGames: GameM[] = props.routerProps.selectedGames;
-    let selectedGamesByPgRating: GameM[] =
-      props.routerProps.selectedGamesByPgRating;
-    let selectedGamesByGenre: GameM[] = props.routerProps.selectedGamesByGenre;
+    let selectedGames = props.routerProps.selectedGames;
+    let selectedGamesByPgRating = props.routerProps.selectedGamesByPgRating;
+    let selectedGamesByGenre = props.routerProps.selectedGamesByGenre;
 
     if (event.target.name === "pgRating") {
       let selectedPgRating = event.target.value;
-      let selectedPgRatings: string[] = [
-        ...props.routerProps.selectedPgRatings,
-      ];
+      let selectedPgRatings = [...props.routerProps.selectedPgRatings];
       selectedPgRatings = updateSelectedOptions(
         selectedPgRatings,
         selectedPgRating
       );
       props.routerProps.setSelectedPgRatings(selectedPgRatings);
 
-      selectedGamesByPgRating = props.routerProps.games.filter(
-        (game: GameM) => {
-          let found = false;
-          for (const pgRating of selectedPgRatings) {
-            if (game.pgRating === pgRating) {
-              found = true;
-            }
+      selectedGamesByPgRating = props.routerProps.games.filter((game) => {
+        let found = false;
+        for (const pgRating of selectedPgRatings) {
+          if (game.pgRating === pgRating) {
+            found = true;
           }
-          return found;
         }
-      );
+        return found;
+      });
     }
 
     if (event.target.name === "genre") {
-      let selectedGenre: string = event.target.value;
-      let selectedGenres: string[] = [...props.routerProps.selectedGenres];
+      let selectedGenre = event.target.value;
+      let selectedGenres = [...props.routerProps.selectedGenres];
       selectedGenres = updateSelectedOptions(selectedGenres, selectedGenre);
       props.routerProps.setSelectedGenres(selectedGenres);
 
-      selectedGamesByGenre = props.routerProps.games.filter((game: GameM) => {
+      selectedGamesByGenre = props.routerProps.games.filter((game) => {
         let found = false;
         for (const genre of selectedGenres) {
           if (game.genre.type === genre) {
@@ -99,11 +94,8 @@ const GameSearchOptions = (props: { routerProps: PropsI; class: string }) => {
         return array.indexOf(id) === index;
       });
 
-    let selectedGamesWithoutDuplicates: (
-      | GameM
-      | undefined
-    )[] = selectedGamesId.map((id) => {
-      return props.routerProps.games.find((game: GameM) => game.id === id);
+    let selectedGamesWithoutDuplicates = selectedGamesId.map((id) => {
+      return props.routerProps.games.find((game) => game.id === id);
     });
 
     props.routerProps.setSelectedGamesByPgRating(selectedGamesByPgRating);

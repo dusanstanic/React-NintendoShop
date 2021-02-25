@@ -1,5 +1,6 @@
 .manage-product-header {
-  width: 98%;
+  /* width: 98%; */
+
   margin: auto;
   margin-bottom: 1rem;
   padding-top: 1rem;
@@ -11,7 +12,8 @@
 }
 
 .manage-products-add-btn-wrapper {
-  width: 98%;
+  /* width: 98%; */
+
   margin: auto;
   margin-bottom: 1rem;
 }
@@ -37,12 +39,24 @@
   outline: none;
 }
 
+.product-table-wrapper {
+  overflow: hidden;
+  height: 35rem;
+  overflow-y: scroll;
+}
+
 .product-table {
   width: 100%;
   margin: auto;
   border-collapse: collapse;
   border: 1px solid black;
   font-size: 13px;
+}
+
+.product-table-header {
+  /* position: sticky;
+  top: 0; */
+  background: black;
 }
 
 thead tr:first-child {
@@ -53,6 +67,16 @@ thead tr:first-child {
 
 thead tr:first-child:hover {
   background: black;
+}
+
+th {
+  position: sticky;
+  background-color: black;
+  z-index: 2;
+  top: 0;
+}
+
+tbody {
 }
 
 tr {
@@ -76,12 +100,12 @@ tr:nth-child(even):hover {
 }
 
 .product-row img {
-  width: 2rem;
-  height: 2rem;
+  width: 4rem;
+  height: 3rem;
 }
 
-.console-update-btn,
-.console-delete-btn {
+.product-update-btn,
+.product-delete-btn {
   padding: 5px;
   text-transform: uppercase;
   cursor: pointer;

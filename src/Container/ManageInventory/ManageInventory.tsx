@@ -42,12 +42,6 @@ class ManageInventory extends Component<IProps, IState> {
         <div className={classes["background"]}></div>
         <div className={classes["manage-inventory-panel"]}>
           <div className={classes["manage-inventory-panel-user"] + " " + hide}>
-            <button
-              className={classes["toggle-panel-user-btn"]}
-              onClick={this.toggleUserPanel}
-            >
-              {isUserPanelOpened ? "<" : ">"}
-            </button>
             <div className={classes["column"]}>
               <button>Users</button>
               <NavLink
@@ -66,6 +60,12 @@ class ManageInventory extends Component<IProps, IState> {
               </NavLink>
               <button>Merchandise</button>
             </div>
+            <button
+              className={classes["toggle-panel-user-btn"]}
+              onClick={this.toggleUserPanel}
+            >
+              {isUserPanelOpened ? "=" : "="}
+            </button>
           </div>
           <div
             className={classes["manage-inventory-panel-product"] + " " + resize}

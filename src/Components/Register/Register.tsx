@@ -117,25 +117,19 @@ const Register: FunctionComponent<PropsI> = (props) => {
   ] = useState(false);
   const [isGenderValid, setIsGenderValid] = useState(false);
 
-  const isRegistrationValid = () => {
-    if (
-      isEnteredFirstNameValid &&
-      isEnteredLastNameValid &&
-      isEnteredEmailValid &&
-      isEnteredPhoneNumberValid &&
-      isEnteredCityValid &&
-      isEnteredPostalCodeValid &&
-      isEnteredStreetValid &&
-      isEnteredStreetNumberValid &&
-      isEnteredPasswordValid &&
-      isEnteredConfirmPasswordValid &&
-      isGenderValid
-    ) {
-      setIsValid(true);
-    } else {
-      setIsValid(false);
-    }
-  };
+  const formIsValidValues = [
+    isEnteredFirstNameValid,
+    isEnteredLastNameValid,
+    isEnteredEmailValid,
+    isEnteredPhoneNumberValid,
+    isEnteredCityValid,
+    isEnteredPostalCodeValid,
+    isEnteredStreetValid,
+    isEnteredStreetNumberValid,
+    isEnteredPasswordValid,
+    isEnteredConfirmPasswordValid,
+    isGenderValid,
+  ];
 
   useEffect(() => {
     CustomerService.getCities().then((names: string[]) => {
@@ -162,6 +156,14 @@ const Register: FunctionComponent<PropsI> = (props) => {
       setCityOptions(cities);
     });
   }, []);
+
+  const isRegistrationValid = () => {
+    if (!formIsValidValues.includes(false)) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  };
 
   useEffect(() => {
     isRegistrationValid();
@@ -265,8 +267,6 @@ const Register: FunctionComponent<PropsI> = (props) => {
           inputValue
         );
 
-        console.log(validation);
-
         const phoneNumberRegex = /^\d{10}$/;
         isInputValid = !!inputValue.match(phoneNumberRegex);
 
@@ -281,6 +281,7 @@ const Register: FunctionComponent<PropsI> = (props) => {
         }
 
         setCityInputErrorMessage([""]);
+        setIsEnteredCityValid(true);
         setEnteredCity(inputValue);
         break;
       case InputName.POSTAL_CODE:
