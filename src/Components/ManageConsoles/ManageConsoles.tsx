@@ -1,12 +1,19 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, {
+  FunctionComponent,
+  TableHTMLAttributes,
+  UIEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { connect } from "react-redux";
 import { Route, RouteComponentProps } from "react-router-dom";
 import classes from "./ManageConsoles.module.css";
 import Aux from "../../hoc/Auxiliary";
-import Console from "../../models/ConsoleM";
-import * as ConsoleService from "../../service/ConsoleService";
+import Console from "../../shared/models/ConsoleM";
+import * as ConsoleService from "../../shared/service/ConsoleService";
 import ConsoleForm from "./ConsoleForm/ConsoleForm";
-import Product from "../../models/Product";
+import Product from "../../shared/models/Product";
 
 interface IProps extends RouteComponentProps {
   match: {
@@ -20,6 +27,11 @@ interface IProps extends RouteComponentProps {
 const ManageProducts: FunctionComponent<IProps> = (props) => {
   const [productData, setProductData] = useState<Product[]>();
   const [type, setType] = useState<string>("");
+  const tableRef = useRef<HTMLTableElement>(null);
+  const trRef = useRef<HTMLTableRowElement>(null);
+  const thRef = useRef<HTMLTableHeaderCellElement>(null);
+
+  useEffect(() => () => console.log("umount"), []);
 
   useEffect(() => {
     const getProducts = async (type: string) => {
@@ -47,7 +59,7 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
 
     getProducts(type);
     setType(type);
-  }, []);
+  }, [props.match.params]);
 
   const generateProductRows = () => {
     let proudctRows: JSX.Element[] = [];
@@ -138,19 +150,34 @@ const ManageProducts: FunctionComponent<IProps> = (props) => {
       <div className={classes["manage-products-add-btn-wrapper"]}>
         <button onClick={() => manageProduct("add", 0)}>Add +</button>
       </div>
-      <table className={classes["product-table"]}>
-        <thead>
-          <tr className={classes["product-row"]}>
-            <th>Title</th>
-            <th>Release Date</th>
-            <th>Price</th>
-            <th>Image</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{generateProductRows()}</tbody>
-      </table>
+      <div
+        className={classes["product-table-wrapper"]}
+        onScroll={(event) => {
+          // console.log(tableRef.current?.getClientRects());
+          //console.log(trRef.current?.getClientRects());
+          console.log(thRef.current?.getClientRects());
+        }}
+      >
+        {/* <table className={classes["product-table"]} ref={tableRef}> */}
+        <table className={classes["product-table"]}>
+          <thead className={classes["product-table-header"]}>
+            <tr className={`${classes["product-row"]}`}>
+              <th>Title</th>
+              <th>Release Date</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {generateProductRows()}
+            {/* <tr ref={trRef}>
+              <td>TIII</td>
+            </tr> */}
+          </tbody>
+        </table>
+      </div>
       <div className={classes["product-form"]}>
         <Route
           path={props.match.url + "/consoleForm/:id"}
