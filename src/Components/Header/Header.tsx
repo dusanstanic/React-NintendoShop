@@ -164,7 +164,7 @@ const Header = (props: PropsI) => {
       routers.push(<Route path="/manageGames" component={ManageGames} />);
     }
   }
-  console.log(classes1);
+
   return (
     <Aux>
       <div className={classes1["background"]}></div>
