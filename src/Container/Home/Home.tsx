@@ -182,12 +182,13 @@ const Home = (props: PropsI) => {
   const handleResize1 = () => {
     if (!slider.current || !wrapper.current) return;
 
-    console.log("offsetLeft: " + slider.current.offsetLeft);
-    console.log("left: " + slider.current.getClientRects()[0].left);
+    // console.log("offsetLeft: " + slider.current.offsetLeft);
+    // console.log("left: " + slider.current.getClientRects()[0].left);
 
     const wrapperWidth = wrapper.current.offsetWidth;
     const slides = slider.current.children;
     const slideWidth = wrapperWidth / showSlides;
+    // console.log(slides.length);
 
     slider.current.style.width = slides.length * slideWidth + "px";
 
@@ -195,15 +196,21 @@ const Home = (props: PropsI) => {
     for (const slide of slidesArray) {
       slide.style.width = slideWidth + "px";
     }
+
     slider.current.style.left = `-${slideWidth}px`;
+
     setSlideSize1(slideWidth);
   };
 
   useEffect(() => {
+    handleResize1();
+
     if (!slider.current) return;
 
     const slides = slider.current.children;
     const slidesLength = slides.length;
+
+    // console.log(slides.length);
 
     const firstSlide = slides[0];
     const lastSlide = slides[slidesLength - 1];
@@ -217,8 +224,6 @@ const Home = (props: PropsI) => {
     slider.current.insertBefore(cloneLast, firstSlide);
 
     setSlidesLength1(slidesLength - showSlides + 1);
-
-    handleResize1();
   }, []);
 
   window.addEventListener("resize", handleResize1);
@@ -287,6 +292,8 @@ const Home = (props: PropsI) => {
       slider.current.style.left = posInitial1 + slideSize1 + "px";
       index1--;
     }
+
+    allowShift1 = false;
   };
 
   const checkIndex1 = () => {
